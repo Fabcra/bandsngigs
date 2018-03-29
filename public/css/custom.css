@@ -1,0 +1,26 @@
+.mymapstyle p{
+    width : 300px;
+    text-align: left;
+    line-height: 100%;
+    font-size: 12px;
+    margin-top : 10px;
+}
+
+.mymapstyle h3{
+    font-size : 16px;
+    text-transform: uppercase;
+}
+
+.address p{
+
+    margin : 5px; !important;
+    padding : 0; !important;
+
+}
+
+
+
+.margin-top{
+
+    margin-top : 10px;
+}

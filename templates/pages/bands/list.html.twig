@@ -1,0 +1,63 @@
+<!--  section  -->
+<section class="gray-bg no-pading no-top-padding" id="sec1">
+    <div class="col-list-wrap  center-col-list-wrap left-list">
+
+        <div class="container">
+
+            <!-- list-main-wrap-->
+            <div class="list-main-wrap fl-wrap card-listing">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Subscribed bands</h2>
+                        <div class="section-subtitle">Subscribed Bands</div>
+                        <span class="section-separator"></span>
+                        <p>Browse the latest articles from our blog.</p>
+                    </div>
+                </div>
+                {% for b in bands %}
+                    <!-- listing-item -->
+                    <div class="listing-item">
+
+                        <article class="geodir-category-listing fl-wrap">
+                            <div class="geodir-category-img">
+                                <img src="{{ b.logo.url }}" alt="">
+                                <div class="overlay"></div>
+                                <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
+                            </div>
+                            <div class="geodir-category-content fl-wrap">
+                                {% for s in b.styles %}
+                                    <a class="listing-geodir-category" href="#">{{ s.style }}</a>
+                                {% endfor %}
+                                {% for u in b.users %}
+                                <div class="listing-avatar"><a href="#"><img
+
+                                                src="{{ u.avatar.url }}"
+                                                alt=""></a>
+                                    <span class="avatar-tooltip">Added By  <strong>{{ u.firstName}}</strong></span>
+                                </div>
+                                {% endfor %}
+                                <h3><a href="listing-single.html">{{ b.name }}</a></h3>
+                                <p>{{ b.description }}</p>
+                                <div class="geodir-category-options fl-wrap">
+
+                                    <div class="geodir-category-location"><a href="#"><i class="fa fa-map-marker"
+                                                                                         aria-hidden="true"></i>
+                                            {{ b.locality.locality }}</a></div>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                {% endfor %}
+                <!-- listing-item end-->
+
+                <!-- pagination-->
+                <div class="pagination">
+                    {{ knp_pagination_render(bands) }}
+                </div>
+            </div>
+            <!-- list-main-wrap end-->
+        </div>
+    </div>
+</section>
+<!--  section  end-->

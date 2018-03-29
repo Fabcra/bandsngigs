@@ -1,0 +1,114 @@
+<section id="sec2">
+    <div class="container">
+        <div class="section-title">
+            <h2>Featured Categories</h2>
+            <div class="section-subtitle">Catalog of Categories</div>
+            <span class="section-separator"></span>
+            <p>Explore some of the best tips from around the city from our partners and friends.</p>
+        </div>
+        <!-- portfolio start -->
+
+        <div class="gallery-items fl-wrap mr-bot spad">
+            <!-- gallery-item-->
+            {% for v in venues|slice(0,5) %}
+                {% if loop.index0 ==1 %}
+                    {% set gallery='gallery-item-second' %}
+                {% else %}
+                    {% set gallery = '' %}
+                {% endif %}
+                <div class="gallery-item {{ gallery }}">
+                    <div class="grid-item-holder">
+                        <div class="listing-item-grid">
+                            <img src="{{ v.photo.url }}" alt="{{ v.name }}">
+                            <div class="listing-counter"><span>10 </span> Locations</div>
+                            <div class="listing-item-cat">
+                                <h3><a href="#">{{ v.name }}</a></h3>
+                                <p>{{ v.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+            <!-- gallery-item end-->
+            {# <!-- gallery-item-->
+             {% for v in venues %}
+                 {% if loop.index0 == 1 %}
+                     <div class="gallery-item gallery-item-second">
+                         <div class="grid-item-holder">
+                             <div class="listing-item-grid">
+                                 <img src="{{ v.photo.url }}" alt="{{ v.name }}">
+                                 <div class="listing-counter"><span>6 </span> Locations</div>
+                                 <div class="listing-item-cat">
+                                     <h3><a href="listing.html">Cafe - Pub</a></h3>
+                                     <p>Constant care and attention to the patients makes good record</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 {% endif %}
+             {% endfor %}
+             <!-- gallery-item end-->#}
+            {#  <!-- gallery-item-->
+              {% for v in venues %}
+                  {% if loop.index0 == 2 %}
+                      <div class="gallery-item">
+                          <div class="grid-item-holder">
+                              <div class="listing-item-grid">
+                                  <img src="{{ v.photo.url }}" alt="{{ v.name }}">
+                                  <div class="listing-counter"><span>21 </span> Locations</div>
+                                  <div class="listing-item-cat">
+                                      <h3><a href="listing.html">Gym - Fitness</a></h3>
+                                      <p>Constant care and attention to the patients makes good record</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  {% endif %}
+              {% endfor %}
+              <!-- gallery-item end-->
+              <!-- gallery-item-->
+              {% for v in venues %}
+                  {% if loop.index0 == 3 %}
+                      <div class="gallery-item">
+                          <div class="grid-item-holder">
+                              <div class="listing-item-grid">
+                                  <img src="{{ v.photo.url }}" alt="{{ v.name }}">
+                                  <div class="listing-counter"><span>7 </span> Locations</div>
+                                  <div class="listing-item-cat">
+                                      <h3><a href="listing.html">Hotels</a></h3>
+                                      <p>Constant care and attention to the patients makes good record</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  {% endif %}
+              {% endfor %}
+              <!-- gallery-item end-->
+              <!-- gallery-item-->
+              {% for v in venues %}
+                  {% if loop.index0 == 4 %}
+                      <div class="gallery-item">
+                          <div class="grid-item-holder">
+                              <div class="listing-item-grid">
+                                  <img src="{{ v.photo.url }}" alt="{{ v.name }}">
+                                  <div class="listing-counter"><span>15 </span> Locations</div>
+                                  <div class="listing-item-cat">
+                                      <h3><a href="listing.html">Shop - Store</a></h3>
+                                      <p>Constant care and attention to the patients makes good record</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  {% endif %}
+              {% endfor %}
+              <!-- gallery-item end-->#}
+        </div>
+
+        <!-- portfolio end -->
+        <a href="listing.html" class="btn  big-btn circle-btn dec-btn  color-bg flat-btn">View All<i
+                    class="fa fa-eye"></i></a>
+    </div>
+</section>

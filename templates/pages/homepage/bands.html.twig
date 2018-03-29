@@ -1,0 +1,15 @@
+<section class="gray-section">
+    <div class="container">
+        <div class="fl-wrap spons-list">
+
+            <ul class="client-carousel">
+                {% for b in bands %}
+                <li><a href="#"><img src="{{ b.logo.url }}" alt=""></a></li>
+                {% endfor %}
+            </ul>
+
+            <div class="sp-cont sp-cont-prev"><i class="fa fa-angle-left"></i></div>
+            <div class="sp-cont sp-cont-next"><i class="fa fa-angle-right"></i></div>
+        </div>
+    </div>
+</section>

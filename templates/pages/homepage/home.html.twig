@@ -1,0 +1,33 @@
+{% extends 'pages/default/layout.html.twig' %}
+
+{% block content %}
+    <!-- wrapper -->
+    <div id="wrapper">
+        <!-- Content-->
+
+        <div class="content">
+
+            <!-- Slider -->
+            {% include 'pages/homepage/slider.html.twig' %}
+            <!-- end slider -->
+
+            <!--bands -->
+            {% include 'pages/homepage/bands.html.twig' %}
+            <!-- bands end -->
+
+            <!-- home-map-->
+            {% include 'pages/homepage/googlemap.html.twig' %}
+            <!-- home-map end-->
+
+            <!--venues -->
+            {% include 'pages/homepage/venues.html.twig' %}
+            <!-- venues end -->
+
+        </div>
+        <!-- Content end -->
+    </div>
+    <!-- wrapper end -->
+
+
+
+{% endblock %}

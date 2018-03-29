@@ -1,0 +1,58 @@
+<!--  section  -->
+<section class="gray-bg no-pading no-top-padding" id="sec1">
+    <div class="col-list-wrap  center-col-list-wrap left-list">
+        <div class="container">
+
+            <!-- list-main-wrap-->
+            <div class="list-main-wrap fl-wrap card-listing">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Subscribed Venues</h2>
+                        <div class="section-subtitle">Subscribed Venues</div>
+                        <span class="section-separator"></span>
+                        <p>Browse the latest articles from our blog.</p>
+                    </div>
+                </div>
+                <!-- listing-item -->
+                {% for v in venues %}
+                    <div class="listing-item list-layout">
+                        <article class="geodir-category-listing fl-wrap">
+                            <div class="geodir-category-img">
+                                <img src="{{ v.photo.url }}" alt="">
+                                <div class="overlay"></div>
+                                <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
+                            </div>
+                            <div class="geodir-category-content fl-wrap">
+                                <a class="listing-geodir-category" href="listing.html">Restourants</a>
+                                {% for u in v.users %}
+                                    <div class="listing-avatar"><a href="author-single.html"><img src="{{ u.avatar.url }}"
+                                                                                                  alt="{{ u.firstName }}"></a>
+
+                                        <span class="avatar-tooltip">Managed By  <strong>{{ u.firstName }}</strong></span>
+                                    </div>
+                                {% endfor %}
+                                <h3><a href="listing-single.html">{{ v.name }}</a></h3>
+                                <p>{{ v.description }}</p>
+                                <div class="geodir-category-options fl-wrap">
+                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
+                                        <span>(7 reviews)</span>
+                                    </div>
+                                    <div class="geodir-category-location"><a href="#"><i class="fa fa-map-marker"
+                                                                                         aria-hidden="true"></i>{{ v.streetName }}
+                                            , {{ v.houseNb }}-{{ v.locality.locality }}</a></div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+                <!-- listing-item end-->
+                <!-- pagination-->
+                <div class="pagination">
+                    {{ knp_pagination_render(venues) }}
+                </div>
+            </div>
+            <!-- list-main-wrap end-->
+        </div>
+    </div>
+</section>
+<!--  section  end-->
