@@ -114,26 +114,26 @@
         }
 
 
-        {% for v in venues %}
+        {% for e in events %}
         var contentString =
             '<div id="content" class="mymapstyle">' +
                 '<div ' +
                     'id="siteNotice">' +
                 '</div>' +
-                '<b><h3 id="firstHeading">{{ v.name }}</h3></b>' +
+                '<b><h3 id="firstHeading">{{ e.name }}</h3></b>' +
                 '<div id="bodyContent">' +
-                    '<a href="#"><img src="{{ v.photo.url }}" alt="{{ v.name }}" width="300px"/></a>' +
-                    '<p>{{ v.description }}</p>' +
+                    '<a href="{{ path('event', {'slug':e.slug}) }}"><img src="{{ e.folder.url }}" alt="{{ e.name }}" width="300px"/></a>' +
+                    '<p>{{ e.description }}</p>' +
                 '<div class="address">' +
-                    '<p><i class="fa fa-address-book"> {{ v.streetName }}, {{ v.houseNb }}, {{ v.locality.locality }}</i></p>'  +
-                    '<p><i class="fa fa-phone"> {{ v.phone }}</i></p>' +
-                    '<p><i class="fa fa-desktop"><a href="{{ v.website }}"> {{ v.website }}</a></i></p>' +
+                    '<p><i class="fa fa-address-book"> {{ e.venue.streetName }}, {{ e.venue.houseNb }}, {{ e.venue.locality.locality }}</i></p>'  +
+                    '<p><i class="fa fa-phone"> {{ e.venue.phone }}</i></p>' +
+                    '<p><i class="fa fa-desktop"><a href="{{ e.venue.website }}"> {{ e.venue.website }}</a></i></p>' +
                 '</div>' +
                 '</div>' +
             '</div>';
 
 
-        var venue = {lat:{{ v.lat }}, lng: {{ v.lng }} };
+        var venue = {lat:{{ e.venue.lat }}, lng: {{ e.venue.lng }} };
         var marker = new google.maps.Marker({
             position: venue,
             icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Classical_music_%E2%80%93_Culture_%26_Entertainment_%E2%80%93_Default.png',

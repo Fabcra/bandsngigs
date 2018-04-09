@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -39,7 +41,7 @@ class User
     private $gender;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $mail;
 
@@ -95,11 +97,34 @@ class User
      */
     private $venues;
 
+    /**
+     * @Gedmo\Slug(fields={"mail"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $description;
+
 
     public function __construct()
     {
         $this->instruments = new ArrayCollection();
         $this->styles = new ArrayCollection();
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+
+    public function getUsername()
+    {
+        return $this->mail;
     }
 
 
@@ -321,7 +346,6 @@ class User
     }
 
 
-
     /**
      * @return mixed
      */
@@ -354,9 +378,49 @@ class User
         $this->venues = $venues;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
 
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
 
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 
 
 

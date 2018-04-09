@@ -42,4 +42,18 @@ class VenueController extends Controller
 
     }
 
+    /**
+     * @Route("/venues/{slug}", name="venue"))
+     */
+    public function viewAction($slug)
+    {
+        $dotrine = $this->getDoctrine();
+
+        $venue = $dotrine->getRepository(Venue::class)->findOneBy(['slug'=>$slug]);
+
+        return $this->render('pages/venues/venue.html.twig',[
+            'venue'=>$venue
+        ]);
+    }
+
 }

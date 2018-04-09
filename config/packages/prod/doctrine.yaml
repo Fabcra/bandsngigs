@@ -10,6 +10,8 @@ doctrine:
             type: service
             id: doctrine.result_cache_provider
 
+
+
 services:
     doctrine.result_cache_provider:
         class: Symfony\Component\Cache\DoctrineProvider
@@ -21,6 +23,8 @@ services:
         public: false
         arguments:
             - '@doctrine.system_cache_pool'
+
+
 
 framework:
     cache:

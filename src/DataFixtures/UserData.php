@@ -21,17 +21,18 @@ class UserData extends Fixture implements DependentFixtureInterface
 
 
 
-        for ($i = 1; $i < 20; $i++) {
+        for ($i = 1; $i < 49; $i++) {
             $j = mt_rand(1, 6);
             $x = mt_rand(1,49);
             $user1 = new User();
 
-            $user1->setFirstName($faker->firstName());
+            $user1->setFirstName($faker->firstName('male'));
             $user1->setLastName($faker->lastName);
             $user1->setAge(mt_rand(20, 60));
             $user1->setGender($faker->title());
             $user1->setMail($faker->email);
             $user1->setPhone($faker->phoneNumber);
+            $user1->setDescription($faker->text(400));
 
             $user1->setInstruments($this->getReference('instru' . $j));
             $user1->setStyles($this->getReference('style' . $j));

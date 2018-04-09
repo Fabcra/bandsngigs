@@ -20,11 +20,11 @@ class VideoData extends Fixture implements DependentFixtureInterface
     {
 
 
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i < 15; $i++) {
 
             $video = new Video();
 
-            $video->setUrl('https://youtu.be/6Xpl9R0ndiQ');
+            $video->setUrl('-ST85Sui43Q');
             $video->setBand($this->getReference('band' . $i));
             $video->setVenue($this->getReference('venue' . $i));
 

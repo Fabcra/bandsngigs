@@ -1443,7 +1443,7 @@ section.color-bg .section-title .breadcrumbs a:before {
 	pointer-events: none;
 	opacity:0;
 	margin-top:-20px;
-	min-width:200px;
+	min-width:100px;
 	-webkit-transition: all 200ms linear;
     transition: all 200ms linear;
 }
@@ -3585,7 +3585,7 @@ article .list-single-main-item {
 }
 .user-profile-avatar img {
 	width:150px;
-	height:150px;
+
 }
 .user-profile-rating i {
 	margin:0 4px;

@@ -32,7 +32,7 @@ class EventData extends Fixture implements DependentFixtureInterface
 
            $event = new Event();
 
-           $event->setName($faker->userName);
+           $event->setName($faker->word. "-LIVE SHOW");
            $event->setDescription($faker->text());
            $event->setDate($faker->dateTimeThisYear());
            $event->setTime($faker->dateTime());
@@ -44,7 +44,8 @@ class EventData extends Fixture implements DependentFixtureInterface
            }
            $event->setVenue($this->getReference('venue'. $v));
            $event->setStyles($this->getReference('style'. $s));
-           $event->setFolder($this->getReference('image'. $i));
+           $x=$i+64;
+           $event->setFolder($this->getReference('image'. $x));
 
 
            $manager->persist($event);

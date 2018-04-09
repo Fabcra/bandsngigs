@@ -20,7 +20,7 @@
 
                         <article class="geodir-category-listing fl-wrap">
                             <div class="geodir-category-img">
-                                <img src="{{ b.logo.url }}" alt="">
+                                <img src="{{ b.logo.url }}" alt="" width="200px">
                                 <div class="overlay"></div>
                                 <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
                             </div>
@@ -29,18 +29,18 @@
                                     <a class="listing-geodir-category" href="#">{{ s.style }}</a>
                                 {% endfor %}
                                 {% for u in b.users %}
-                                <div class="listing-avatar"><a href="#"><img
+                                <div class="listing-avatar"><a href="{{ path('user', {'id':u.id}) }}"><img
 
                                                 src="{{ u.avatar.url }}"
-                                                alt=""></a>
-                                    <span class="avatar-tooltip">Added By  <strong>{{ u.firstName}}</strong></span>
+                                                alt="{{ u.firstName }}"></a>
+                                    <span class="avatar-tooltip">With <strong>{{ u.firstName}}</strong></span>
                                 </div>
                                 {% endfor %}
-                                <h3><a href="listing-single.html">{{ b.name }}</a></h3>
+                                <h3><a href="{{ path('band',{'slug':b.slug}) }}">{{ b.name }}</a></h3>
                                 <p>{{ b.description }}</p>
                                 <div class="geodir-category-options fl-wrap">
 
-                                    <div class="geodir-category-location"><a href="#"><i class="fa fa-map-marker"
+                                    <div class="geodir-category-location"><a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ b.locality.locality }}"><i class="fa fa-map-marker"
                                                                                          aria-hidden="true"></i>
                                             {{ b.locality.locality }}</a></div>
                                 </div>

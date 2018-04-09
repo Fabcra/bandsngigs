@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Band;
 use App\Entity\Event;
+use App\Entity\Style;
 use App\Entity\Venue;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,13 +31,14 @@ class DefaultController extends Controller
         $bands = $doctrine->getRepository(Band::class)->findAll();
         $venues = $doctrine->getRepository(Venue::class)->findAll();
         $events = $doctrine->getRepository(Event::class)->findAll();
-
+        $styles = $doctrine->getRepository(Style::class)->findAll();
 
 
         return $this->render('pages/homepage/home.html.twig', [
             'bands' => $bands,
             'venues' => $venues,
-            'events' => $events
+            'events' => $events,
+            'styles' => $styles
 
         ]);
     }

@@ -23,15 +23,14 @@
                                 <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
                             </div>
                             <div class="geodir-category-content fl-wrap">
-                                <a class="listing-geodir-category" href="listing.html">Restourants</a>
                                 {% for u in v.users %}
-                                    <div class="listing-avatar"><a href="author-single.html"><img src="{{ u.avatar.url }}"
+                                    <div class="listing-avatar"><a href="{{ path('user', {'id': u.id}) }}"><img src="{{ u.avatar.url }}"
                                                                                                   alt="{{ u.firstName }}"></a>
 
                                         <span class="avatar-tooltip">Managed By  <strong>{{ u.firstName }}</strong></span>
                                     </div>
                                 {% endfor %}
-                                <h3><a href="listing-single.html">{{ v.name }}</a></h3>
+                                <h3><a href="{{ path('venue',{'slug': v.slug}) }}">{{ v.name }}</a></h3>
                                 <p>{{ v.description }}</p>
                                 <div class="geodir-category-options fl-wrap">
                                     <div class="listing-rating card-popup-rainingvis" data-starrating2="5">

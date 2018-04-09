@@ -24,7 +24,7 @@ class Locality
     /**
      * @ORM\ManyToOne(targetEntity="PostCode")
      */
-    private $post_code;
+    private $postCode;
 
     /**
      * @ORM\OneToMany(targetEntity="User", mappedBy="locality")
@@ -82,16 +82,18 @@ class Locality
      */
     public function getPostCode()
     {
-        return $this->post_code;
+        return $this->postCode;
     }
 
     /**
-     * @param mixed $post_code
+     * @param mixed $postCode
      */
-    public function setPostCode($post_code)
+    public function setPostCode($postCode)
     {
-        $this->post_code = $post_code;
+        $this->postCode = $postCode;
     }
+
+
 
 
     /**

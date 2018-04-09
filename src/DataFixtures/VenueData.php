@@ -22,7 +22,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_BE');
 
-        for ($i = 1; $i < 11; $i++) {
+        for ($i = 1; $i < 15; $i++) {
 
             $n = range(1, 19);
             shuffle($n);
@@ -30,10 +30,10 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $l = mt_rand(1, 49);
             $s = mt_rand(1, 6);
 
-            $lat1=mt_rand(50,51);
-            $latlng2=mt_rand(111111,999999);
+            $lat1 = mt_rand(50, 51);
+            $latlng2 = mt_rand(111111, 999999);
 
-            $lng1=mt_rand(3,5);
+            $lng1 = mt_rand(3, 5);
 
 
             $venue = new Venue();
@@ -44,9 +44,9 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $venue->setHouseNb(mt_rand(1, 99));
             $venue->setPhone($faker->phoneNumber);
             $venue->setMail($faker->companyEmail);
-            $venue->setLat($lat1.'.'.$latlng2);
-            $venue->setLng($lng1.'.'.$latlng2);
-            $venue->setWebsite('http://www.'.$faker->word.'.com');
+            $venue->setLat($lat1 . '.' . $latlng2);
+            $venue->setLng($lng1 . '.' . $latlng2);
+            $venue->setWebsite('http://www.' . $faker->word . '.com');
 
 
             for ($j = 1; $j < 3; $j++) {
@@ -54,7 +54,10 @@ class VenueData extends Fixture implements DependentFixtureInterface
             }
             $venue->setLocality($this->getReference('locality' . $l));
             $venue->setStyles($this->getReference('style' . $s));
-            $venue->setPhoto($this->getReference('image' . $i));
+
+            $x=$i+64;
+            $venue->setPhoto($this->getReference('image' . $x));
+
 
             $manager->persist($venue);
 

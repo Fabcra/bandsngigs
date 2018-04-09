@@ -21,7 +21,7 @@ class PostCodeData extends Fixture
     {
         $faker = Faker\Factory::create('fr_BE');
 
-        for($i=1; $i<50 ; $i++){
+        for($i=1; $i<51 ; $i++){
 
             $postcode = new PostCode();
 

@@ -25,7 +25,7 @@ class LocalityData extends Fixture implements DependentFixtureInterface
         $faker = Faker\Factory::create('fr_BE');
 
 
-        for ($i=1; $i<50; $i++){
+        for ($i=1; $i<51; $i++){
 
             $locality = new Locality();
 

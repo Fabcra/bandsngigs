@@ -39,4 +39,23 @@ class BandController extends Controller
             'bands'=>$pagination
             ]);
     }
+
+
+    /**
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("bands/{slug}", name="band")
+     */
+    public function showAction($slug)
+    {
+
+        $doctrine = $this->getDoctrine();
+
+        $band = $doctrine->getRepository(Band::class)->findOneBy(['slug'=>$slug]);
+
+
+        return $this->render('pages/bands/band.html.twig',['band'=>$band]);
+
+
+    }
 }

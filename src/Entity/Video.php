@@ -22,7 +22,7 @@ class Video
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Band")
+     * @ORM\ManyToOne(targetEntity="Band", inversedBy="videos")
      */
     private $band;
 

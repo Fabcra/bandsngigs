@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BandRepository")
@@ -78,6 +79,18 @@ class Band
      * @ORM\ManyToMany(targetEntity="Style", inversedBy="bands")
      */
     private $styles;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Video", mappedBy="band")
+     */
+    private $videos;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
 
 
@@ -281,5 +294,40 @@ class Band
     {
         $this->website = $website;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVideos()
+    {
+        return $this->videos;
+    }
+
+    /**
+     * @param mixed $videos
+     */
+    public function setVideos($videos)
+    {
+        $this->videos = $videos;
+    }
+
+
+
 
 }

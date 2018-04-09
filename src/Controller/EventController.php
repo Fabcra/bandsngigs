@@ -41,6 +41,21 @@ class EventController extends Controller
             'events' => $pagination
         ]);
 
+    }
 
+    /**
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/events/{slug}", name="event")
+     */
+    public function showAction($slug){
+
+        $doctrine = $this->getDoctrine();
+
+        $event = $doctrine->getRepository(Event::class)->findOneBy(['slug'=>$slug]);
+
+        return $this->render('pages/events/event.html.twig', [
+            'event'=>$event
+        ]);
     }
 }
