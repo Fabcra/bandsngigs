@@ -1,0 +1,158 @@
+{% extends "pages/default/layout.html.twig" %}
+
+{% block content %}
+
+        <!-- content -->
+        <div class="content">
+            <!--section -->
+            <section class="parallax-section" data-scrollax-parent="true">
+                <div class="bg par-elem " data-bg="{{ band.logo.url }}"
+                     data-scrollax="properties: { translateY: '30%' }"></div>
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="section-title center-align">
+                        <h2><span>{{ band.name }}</span></h2>
+
+                        <span class="section-separator"></span>
+                    </div>
+                </div>
+                <div class="header-sec-link">
+                    <div class="container"><a href="#sec1" class="custom-scroll-link">Let's Start</a></div>
+                </div>
+            </section>
+            <!-- section end -->
+            <!--section -->
+            <section class="gray-section" id="sec1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="list-single-main-wrapper fl-wrap" id="sec2">
+                                <!-- article> -->
+                                <article>
+                                    <div class="list-single-main-media fl-wrap">
+                                        <div class="single-slider-wrapper fl-wrap">
+                                            <div class="single-slider fl-wrap">
+                                                <div class="slick-slide-item"><img src="{{ band.logo.url }}" alt="{{ band.name }}"></div>
+                                            </div>
+                                            <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i>
+                                            </div>
+                                            <div class="swiper-button-next sw-btn"><i
+                                                        class="fa fa-long-arrow-right"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="list-single-main-item fl-wrap">
+                                        <div class="list-single-main-item-title fl-wrap">
+                                            <h3>Description</h3>
+                                        </div>
+                                        <p>{{ band.description }}</p>
+                                        {% for u in band.users %}
+                                        <div class="post-author"><a href="{{ path('user', {'id':u.id}) }}"><img src="{{ u.avatar.url }}"
+                                                                                  alt="{{ u.firstName }}"><span>{{ u.firstName }}</span></a>
+                                        </div>
+                                        {% endfor %}
+
+                                        <span class="fw-separator"></span>
+                                        <div class="list-single-main-item-title fl-wrap">
+                                            <h3>Tags</h3>
+                                        </div>
+                                        <div class="list-single-tags tags-stylwrap blog-tags">
+                                            {% for s in band.styles %}
+                                            <a href="#">{{ s.style }}</a>
+                                          {% endfor %}
+                                        </div>
+                                        <div class="share-holder hid-share">
+                                            <div class="showshare"><span>Share </span><i class="fa fa-share"></i></div>
+                                            <div class="share-container  isShare"></div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <!-- article end -->
+                                <span class="section-separator"></span>
+
+                            </div>
+                            <!-- list-single-main-item-->
+                            <div class="list-single-main-item fl-wrap" id="sec3">
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>Promo Video</h3>
+                                </div>
+                                <div class="iframe-holder fl-wrap">
+                                    {% for v in band.videos %}
+                                    <div class="resp-video">
+                                        <iframe width="640" height="480" src="https://www.youtube.com/embed/{{ v.url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- list-single-main-item end -->
+                        </div>
+                        <!--box-widget-wrap -->
+                        <div class="col-md-4">
+                            <div class="box-widget-wrap">
+
+                                <!--box-widget-item -->
+                                {% for u in band.users %}
+                                    <div class="box-widget-item fl-wrap">
+
+                                        <div class="box-widget list-author-widget">
+                                            <div class="list-author-widget-header shapes-bg-small  color-bg fl-wrap">
+                                                <span class="list-author-widget-link"><a href="{{ path('user',{'id':u.id}) }}">{{ u.firstName }} {{ u.lastName }}</a></span>
+                                                <img src="{{ u.avatar.url }}" alt="{{ u.firstName }}">
+                                            </div>
+                                            <div class="box-widget-content">
+                                                <div class="list-author-widget-text">
+                                                    {% for i in u.instruments %}
+                                                    <p>{{ i.name }}</p>
+                                                    {% endfor %}
+                                                    <div class="list-author-widget-contacts">
+                                                        <ul>
+                                                            <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="tel:{{ u.phone }}">{{ u.phone }}</a></li>
+                                                            <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="mailto:{{ u.mail }}">{{ u.mail }}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <a href="{{ path('user',{'id':u.id}) }}" class="btn transparent-btn">View Profile <i class="fa fa-eye"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+                                <!--box-widget-item end -->
+                                <!--box-widget-item -->
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>Events : </h3>
+                                    </div>
+                                    <div class="box-widget widget-posts blog-widgets">
+                                        <div class="box-widget-content">
+                                            <ul>
+                                                {% for e in band.events %}
+                                                <li class="clearfix">
+                                                    <a href="{{ path('event', {'slug':e.slug}) }}" class="widget-posts-img"><img src="{{ e.folder.url }}"
+                                                                                              alt="{{ e.name }}"></a>
+                                                    <div class="widget-posts-descr">
+                                                        <a href="{{ path('event', {'slug':e.slug}) }}" title="">{{ e.name }}</a>
+                                                        <span class="widget-posts-date"><i
+                                                                    class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--box-widget-item end -->
+                            </div>
+                        </div>
+                        <!--box-widget-wrap end -->
+                    </div>
+                </div>
+            </section>
+            <!--section end -->
+            <div class="limit-box fl-wrap"></div>
+
+        </div>
+        <!--content end -->
+
+
+{% endblock %}

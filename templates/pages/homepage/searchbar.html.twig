@@ -1,0 +1,30 @@
+<div class="intro-item fl-wrap">
+    <h2>You're searching for events</h2>
+    <h3>Find the best events of your favorite local bands</h3>
+</div>
+<form class="filter" method="GET" action="{{ path('search') }}">
+
+
+    <div class="main-search-input-wrap">
+        <div class="main-search-input fl-wrap">
+            <div class="main-search-input-item">
+                <input type="text" placeholder="Band" name="by_band"/>
+            </div>
+            <div class="main-search-input-item location">
+                <input type="text" placeholder="Location" name="by_location"/>
+                <a href="#"></a>
+            </div>
+            <div class="main-search-input-item">
+                <select class="chosen-select" title="Style" name="by_style">
+                    <option value="" disabled selected>Select your option</option>
+                    {% for s in styles %}
+                        <option value="{{ s.style }}">{{ s.style }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="main-search-button"
+                    onclick="window.location.href='listings-half-screen-map-list.html'">Search
+            </button>
+        </div>
+    </div>
+</form>
