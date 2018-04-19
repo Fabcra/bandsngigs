@@ -1,0 +1,95 @@
+{% extends "pages/default/layout.html.twig" %}
+
+{% block content %}
+        <!--content -->
+        <div class="content">
+            <!--section -->
+            <section>
+                <!-- container -->
+                <div class="container">
+                    <!-- profile-edit-wrap -->
+                    <div class="profile-edit-wrap">
+                        <div class="profile-edit-page-header">
+                            <h2>Edit profile</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% block left %}
+                            {% include 'pages/users/nav.html.twig' %}
+                        {% endblock %}
+                        {% block right %}
+                            <div class="col-md-7">
+                                <!-- profile-edit-container-->
+                                {{ form_start(userForm, {attr:{novalidate:'novalidate'}}) }}
+                                <div class="profile-edit-container">
+                                    <div class="profile-edit-header fl-wrap">
+                                        <h4>My Account</h4>
+                                    </div>
+
+                                    <div class="custom-form">
+                                        {{ form_row(userForm.firstName) }}
+                                        {{ form_row(userForm.lastName) }}
+                                        <div class="col-md-12">
+                                            <div class="col-md-4">
+                                                {{ form_row(userForm.age, {'attr':{'class':'input-age floatleft fontsize14 marginbottom20'}}) }}
+                                            </div>
+                                            <div class="col-md-4">
+                                                {{ form_row(userForm.gender, {'attr':{'class':'floatleft fontsize14 marginbottom20'}}) }}
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                {{ form_row(userForm.locality, {'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
+                                            </div>
+                                        </div>
+
+                                        {{ form_row(userForm.mail) }}
+                                        {{ form_row(userForm.phone) }}
+                                        {# affichage d'erreur à corriger ! #}
+
+
+                                        <section class="check-user floatleft formbackground">
+                                            <div class="col-md-6">
+                                                {{ form_row(userForm.instruments, {'attr':{'class':'test'}}) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ form_row(userForm.styles) }}
+                                            </div>
+                                        </section>
+
+
+                                        {{ form_row(userForm.description) }}
+                                        <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                                    class="fa fa-angle-right"></i></button>
+                                    </div>
+                                </div>
+
+
+                                <!-- profile-edit-container end-->
+                                {{ form_end(userForm) }}
+                            </div>
+                            <div class="col-md-2">
+                                <div class="edit-profile-photo fl-wrap">
+                                    {% if app.user.avatar %}
+                                        <img src="{{ app.user.avatar.url }}" class="respimg" alt="">
+                                    {% else %}
+                                        <img src="/images/avatar/1.jpg" class="respimg" alt="">
+
+                                    {% endif %}
+                                    <div class="change-photo-btn">
+                                        <div class="photoUpload">
+                                            <a href="{{ path('image') }}" class="colorwhite"><i class="fa fa-upload"></i> Upload Photo</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endblock %}
+                    </div>
+                </div>
+                <!--profile-edit-wrap end -->
+                <!--container end -->
+            </section>
+            <!-- section end -->
+            <div class="limit-box fl-wrap"></div>
+
+        </div>
+{% endblock %}

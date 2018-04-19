@@ -1,0 +1,60 @@
+{% extends 'pages/default/layout.html.twig' %}
+
+{% block content %}
+<!--content -->
+<div class="content">
+    <!--section -->
+    <section>
+        <!-- container -->
+        <div class="container">
+            <!-- profile-edit-wrap -->
+            <div class="profile-edit-wrap">
+                <div class="profile-edit-page-header">
+                    <h2>Confirmation profile</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- profile-edit-container-->
+                        {{ form_start(userForm) }}
+                        <div class="profile-edit-container">
+                            <div class="custom-form">
+                                {{ form_row(userForm.firstName) }}
+                                {{ form_row(userForm.lastName) }}
+                                {{ form_row(userForm.mail) }}
+                                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                            class="fa fa-angle-right"></i></button>
+                            </div>
+                        </div>
+                        {{ form_row(userForm._token)}}
+                        {{ form_end(userForm, {'render_rest':false}) }}
+                        <!-- profile-edit-container end-->
+                    </div>
+                </div>
+            </div>
+            <!--profile-edit-wrap end -->
+        </div>
+        <!--container end -->
+    </section>
+    <!-- section end -->
+    <div class="limit-box fl-wrap"></div>
+    <!--section -->
+    <section class="gradient-bg">
+        <div class="cirle-bg">
+            <div class="bg" data-bg="images/bg/circle.png"></div>
+        </div>
+        <div class="container">
+            <div class="join-wrap fl-wrap">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3>Do You Have Questions ?</h3>
+                        <p>Lorem ipsum dolor sit amet, harum dolor nec in, usu molestiae at no.</p>
+                    </div>
+                    <div class="col-md-4"><a href="contacts.html" class="join-wrap-btn">Get In Touch <i
+                                    class="fa fa-envelope-o"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- section end -->
+</div>
+{% endblock %}
