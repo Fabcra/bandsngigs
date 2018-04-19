@@ -9,7 +9,22 @@
         {%  if app.user == null %}
         <a href="{{ path('login') }}"><div class="show-reg-form"><i class="fa fa-sign-in"></i>Sign In</div></a>
        {% else %}
-           <a href="{{ path('logout') }}"><div class="show-reg-form"><i class="fa fa-sign-in"></i>Logout</div></a>
+           <div class="header-user-menu">
+               <div class="header-user-name">
+                   <a href="{{ path('user', {'id':app.user.id}) }}">
+                       {% if (app.user.avatar) %}
+                           <span><img src="{{ app.user.avatar.url }}" alt="{{ app.user.firstName }}"></span>
+                           {% else %}
+                               <span><img src="/images/avatar/avatar-bg.png"></span>
+                       {% endif %}</a>
+                   Hello , {% if (app.user.firstName) %}{{ app.user.firstName }}{% endif %}
+               </div>
+               <ul>
+                   <li><a href="{{ path('profile') }}"> Edit profile</a></li>
+                   <li><a href="{{ path('logout') }}">Log Out</a></li>
+               </ul>
+           </div>
+
         {% endif %}
         <!--  navigation -->
 

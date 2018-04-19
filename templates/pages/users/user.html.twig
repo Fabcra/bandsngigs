@@ -2,130 +2,151 @@
 
 
 {% block content %}
-<!-- wrapper -->
-<div id="wrapper">
-    <!--Content -->
-    <div class="content">
-        <!--section -->
-        <section class="parallax-section small-par color-bg">
-            <div class="shapes-bg-big"></div>
-            <div class="container">
-                <div class="section-title center-align">
-                    <h2><span>{{ user.firstName }} {{ user.lastName }}</span></h2>
-                    <div class="user-profile-avatar"><img src="{{ user.avatar.url }}" alt="{{ user.firstName }}"></div>
+    <!-- wrapper -->
+    <div id="wrapper">
+        <!--Content -->
+        <div class="content">
+            <!--section -->
+            <section class="parallax-section small-par color-bg">
+                <div class="shapes-bg-big"></div>
+                <div class="container">
+                    <div class="section-title center-align">
+                        <h2><span>{{ user.firstName }} {{ user.lastName }}</span></h2>
+                        <div class="user-profile-avatar">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}" alt="{{ user.firstName }}">
+                            {% else %}
 
+                                <img src="/images/avatar/1.jpg">
+                            {% endif %}
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="header-sec-link">
-                <div class="container"><a href="#sec1" class="custom-scroll-link">About {{ user.firstName }}</a></div>
-            </div>
-        </section>
-        <!-- section end -->
-        <!--section -->
-        <section class="gray-bg" id="sec1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="list-single-main-item fl-wrap">
-                            <div class="list-single-main-item-title fl-wrap">
-                                <h3>About <span> {{ user.firstName }}</span></h3>
-                            </div>
-                            <p>{{ user.description  }}</p>
+                <div class="header-sec-link">
+                    <div class="container"><a href="#sec1" class="custom-scroll-link">About {{ user.firstName }}</a>
+                    </div>
+                </div>
+            </section>
+            <!-- section end -->
+            <!--section -->
+            <section class="gray-bg" id="sec1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="list-single-main-item fl-wrap">
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>About <span> {{ user.firstName }}</span></h3>
+                                </div>
+                                <p>{{ user.description }}</p>
 
-                        </div>
-                        <div class="listsearch-header fl-wrap">
-                            <h3>{{ user.firstName }}'s band(s)</h3>
-                        </div>
-                        <!-- list-main-wrap-->
-                        <div class="list-main-wrap fl-wrap card-listing ">
-                            {% for b in user.bands %}
-                            <!-- listing-item -->
-                            <div class="listing-item list-layout">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img">
-                                        <img src="{{ b.logo.url }}" alt="">
-                                        <div class="overlay"></div>
-                                        <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="{{ path('band', {'slug':b.slug}) }}">{{ b.name }}</a></h3>
-                                        <p>{{ b.description }}</p>
-                                        <div class="geodir-category-options fl-wrap">
-                                            <div class="geodir-category-location"><a href="#"><i
-                                                            class="fa fa-map-marker" aria-hidden="true"></i>{{ b.locality.locality }}</a></div>
-                                        </div>
-                                    </div>
-                                </article>
                             </div>
-                            <!-- listing-item end-->
+                            <div class="listsearch-header fl-wrap">
+                                <h3>{{ user.firstName }}'s band(s)</h3>
+                            </div>
+                            <!-- list-main-wrap-->
+                            <div class="list-main-wrap fl-wrap card-listing ">
+                                {% for b in user.bands %}
+                                    <!-- listing-item -->
+                                    <div class="listing-item list-layout">
+                                        <article class="geodir-category-listing fl-wrap">
+                                            <div class="geodir-category-img">
+                                                <img src="{{ b.logo.url }}" alt="">
+                                                <div class="overlay"></div>
+                                                <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i>
+                                                </div>
+                                            </div>
+                                            <div class="geodir-category-content fl-wrap">
+                                                <h3><a href="{{ path('band', {'slug':b.slug}) }}">{{ b.name }}</a></h3>
+                                                <p>{{ b.description }}</p>
+                                                <div class="geodir-category-options fl-wrap">
+                                                    {% if b.locality %}
+                                                    <div class="geodir-category-location"><a href="#"><i
+                                                                    class="fa fa-map-marker"
+                                                                    aria-hidden="true"></i>{{ b.locality.locality }}</a>
+                                                    </div>
+                                                        {% endif %}
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <!-- listing-item end-->
                                 {% endfor %}
 
+                            </div>
+                            <!-- list-main-wrap end-->
                         </div>
-                        <!-- list-main-wrap end-->
-                    </div>
-                    <!--box-widget-wrap -->
-                    <div class="col-md-4">
-                        <div class="fl-wrap">
-                            <!--box-widget-item -->
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>User Contacts : </h3>
+                        <!--box-widget-wrap -->
+                        <div class="col-md-4">
+                            <div class="fl-wrap">
+                                <!--box-widget-item -->
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>User Contacts : </h3>
+                                    </div>
+                                    <div class="box-widget">
+                                        <div class="box-widget-content">
+                                            <div class="list-author-widget-contacts list-item-widget-contacts">
+                                                <ul>
+                                                    {% if user.locality %}
+                                                    <li><span><i class="fa fa-map-marker"></i> City :</span> <a
+                                                                href="http://maps.google.fr/maps?f=q&hl=fr&q={{ user.locality.locality }}">{{ user.locality.locality }}</a>
+                                                    </li>
+                                                        {% endif %}
+                                                    <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                                href="tel:{{ user.phone }}">{{ user.phone }}</a>
+                                                    </li>
+                                                    <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
+                                                                href="mail:{{ user.mail }}">{{ user.mail }}</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="box-widget">
-                                    <div class="box-widget-content">
-                                        <div class="list-author-widget-contacts list-item-widget-contacts">
+                                <!--box-widget-item end -->
+                                <!--box-widget-item -->
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>Next events : </h3>
+                                    </div>
+                                    <div class="box-widget widget-posts">
+                                        <div class="box-widget-content">
                                             <ul>
-                                                <li><span><i class="fa fa-map-marker"></i> City :</span> <a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ user.locality.locality }}">{{ user.locality.locality }}</a></li>
-                                                <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="tel:{{ user.phone }}">{{ user.phone }}</a>
-                                                </li>
-                                                <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="mail:{{ user.mail }}">{{ user.mail }}</a>
-                                                </li>
+                                                {% for b in user.bands %}
+                                                    {% for e in b.events %}
+                                                        <li class="clearfix">
+                                                            <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                               class="widget-posts-img"><img
+                                                                        src="{{ e.folder.url }}"
+                                                                        alt="{{ e.name }}"></a>
+                                                            <div class="widget-posts-descr">
+                                                                <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                                   title="">{{ e.name }}</a>
+                                                                <span class="widget-posts-date"><i
+                                                                            class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                {% endfor %}
 
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                                <!--box-widget-item end -->
                             </div>
-                            <!--box-widget-item end -->
-                            <!--box-widget-item -->
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>Next events : </h3>
-                                </div>
-                                <div class="box-widget widget-posts">
-                                    <div class="box-widget-content">
-                                        <ul>
-                                            {% for b in user.bands %}
-                                                {%   for e in b.events %}
-                                                <li class="clearfix">
-                                                    <a href="{{ path('event', {'slug':e.slug}) }}" class="widget-posts-img"><img
-                                                                src="{{ e.folder.url }}"
-                                                                alt="{{ e.name }}"></a>
-                                                    <div class="widget-posts-descr">
-                                                        <a href="{{ path('event', {'slug':e.slug}) }}" title="">{{ e.name }}</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
-                                                    </div>
-                                                </li>
-                                                {% endfor %}
-                                            {% endfor %}
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--box-widget-item end -->
                         </div>
+                        <!--box-widget-wrap end-->
                     </div>
-                    <!--box-widget-wrap end-->
                 </div>
-            </div>
-        </section>
-        <!-- section end -->
-        <div class="limit-box fl-wrap"></div>
-        <!--section -->
+            </section>
+            <!-- section end -->
+            <div class="limit-box fl-wrap"></div>
+            <!--section -->
+        </div>
+        <!-- content end -->
     </div>
-    <!-- content end -->
-</div>
-<!-- wrapper end -->
+    <!-- wrapper end -->
 {% endblock %}

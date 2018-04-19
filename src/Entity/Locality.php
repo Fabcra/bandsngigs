@@ -94,8 +94,6 @@ class Locality
     }
 
 
-
-
     /**
      * @return mixed
      */
@@ -113,6 +111,10 @@ class Locality
     }
 
 
+    public function __toString()
+    {
+        return $this->getLocality();
+    }
 
 
 }

@@ -6,11 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -18,6 +19,11 @@ class User implements UserInterface
      * @ORM\Column(type="integer", unique=true)
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $googleId;
 
 
     /**
@@ -31,12 +37,13 @@ class User implements UserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     *
      */
     private $age;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $gender;
 
@@ -46,12 +53,14 @@ class User implements UserInterface
     private $mail;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="number_only")
+     *
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
@@ -68,6 +77,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="Style", inversedBy="users")
+     *
      */
     private $styles;
 
@@ -77,7 +87,7 @@ class User implements UserInterface
     private $locality;
 
     /**
-     * @ORM\OneToOne(targetEntity="Image", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $avatar;
@@ -105,9 +115,15 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $description;
+
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $registrationDate;
 
 
     public function __construct()
@@ -135,6 +151,23 @@ class User implements UserInterface
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
 
 
     /**
@@ -402,6 +435,24 @@ class User implements UserInterface
         return $this->description;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+    }
+
+
+
 
     /**
      * @param mixed $description
@@ -422,6 +473,28 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->mail,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
 
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->mail,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
 
 }

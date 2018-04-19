@@ -71,8 +71,10 @@ class Instrument
 
 
 
-
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
 
 }

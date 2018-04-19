@@ -1272,14 +1272,14 @@ section.color-bg .section-title .breadcrumbs a:before {
 	position:relative;
 	top:3px;
 }
-.soc-log a.facebook-log {
-	background:#3b5998;
+.soc-log a.google-log {
+	background:#D75452;
 }
 .soc-log a.twitter-log {
 	background:#55acee;
 }
 .close-reg:hover  , .custom-form .log-submit-btn:hover , .soc-log a:hover{
-	background: #2F3B59;
+	background: #ce3333;
 }
 .log-separator  span{
 	position:relative;

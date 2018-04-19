@@ -21,6 +21,9 @@ class Image
      */
     private $url;
 
+
+    private $file;
+
     /**
      * @ORM\ManyToOne(targetEntity="Band", inversedBy="gallery")
      *
@@ -87,6 +90,22 @@ class Image
     public function setVenue($venue)
     {
         $this->venue = $venue;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
     }
 
 

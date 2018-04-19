@@ -1,28 +1,53 @@
-.mymapstyle p{
-    width : 300px;
+.floatleft{
+    float : left;
+}
+
+.fontsize14{
+    font-size: 14px;
+}
+
+.colorwhite{
+    color : #fff;
+}
+
+.marginbottom20{
+    margin-bottom : 20px;
+}
+
+.formbackground{
+    margin-top: 20px;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    padding: 30px;
+}
+
+.mymapstyle p {
+    width: 300px;
     text-align: left;
     line-height: 100%;
     font-size: 12px;
-    margin-top : 10px;
+    margin-top: 10px;
 }
 
-.mymapstyle h3{
-    font-size : 16px;
+.mymapstyle h3 {
+    font-size: 16px;
     text-transform: uppercase;
 }
 
-.address p{
+.address p {
 
-    margin : 5px; !important;
-    padding : 0; !important;
+    margin: 5px;
+!important;
+    padding: 0;
+!important;
 
 }
-
 
 .alert {
     padding: 15px;
     border: 1px solid transparent;
-    font-size : 16px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -37,3 +62,41 @@
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+
+/* PROFILE */
+
+
+.check-user {
+
+}
+
+.check-user label:first-child {
+    font-weight: bold;
+    font-size: 16px;
+    right: 0px;
+}
+
+.check-user select {
+    padding-left: 10px;
+    float: left;
+    width: 250px;
+    font-size: 14px;
+}
+
+.select-locality {
+    background: #f9f9f9;
+    border: 1px solid #eee;
+}
+
+.input-age{
+    width : 50px;
+}
+
+
+
+
+
+
+
+

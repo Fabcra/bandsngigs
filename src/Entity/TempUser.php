@@ -19,7 +19,7 @@ class TempUser
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $eMail;
+    private $mail;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -32,7 +32,7 @@ class TempUser
     private $token;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $registrationDate;
 
@@ -47,14 +47,14 @@ class TempUser
         return $this->id;
     }
 
-    public function getEMail()
+    public function getMail()
     {
-        return $this->eMail;
+        return $this->mail;
     }
 
-    public function setEMail($eMail)
+    public function setMail($mail)
     {
-        $this->eMail = $eMail;
+        $this->mail = $mail;
 
         return $this;
     }

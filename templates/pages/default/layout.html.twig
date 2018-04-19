@@ -3,29 +3,34 @@
 
 {% block body %}
 
-        {% block header %}
-            {% include 'pages/default/header.html.twig' %}
-        {% endblock %}
+    {% block header %}
+        {% include 'pages/default/header.html.twig' %}
+    {% endblock %}
 
-<!-- wrapper -->
-<div id="wrapper">
-    {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+    <!-- wrapper -->
+    <div id="wrapper">
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         {% block content %}
 
+            {% block left %}
+            {% endblock %}
+            {% block right %}
+            {% endblock %}
+
         {% endblock %}
-</div>
-        {% block footer %}
-            {% include 'pages/default/footer.html.twig' %}
-        {% endblock %}
+    </div>
+    {% block footer %}
+        {% include 'pages/default/footer.html.twig' %}
+    {% endblock %}
 
 {% endblock %}
 

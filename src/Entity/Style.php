@@ -130,4 +130,8 @@ class Style
     }
 
 
+    public function __toString()
+    {
+        return $this->getStyle();
+    }
 }

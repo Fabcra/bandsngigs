@@ -15,7 +15,7 @@ class TempUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('eMail', EmailType::class)
+            ->add('mail', EmailType::class)
             ->add('password', RepeatedType::class,[
                 'type'=> PasswordType::class
             ])

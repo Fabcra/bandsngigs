@@ -7,10 +7,10 @@
         <div class="main-register-holder">
             <div class="main-register fl-wrap">
                 <h3>Sign In <span>Bands N'<strong> Gigs</strong></span></h3>
+                <p>Don't have an account ? <a href="{{ path('registration') }}">click here for register</a></p>
                 <div class="soc-log fl-wrap">
-                    <p>For faster login or register use your social account.</p>
-                    <a href="#" class="facebook-log"><i class="fa fa-facebook-official"></i>Log in with Facebook</a>
-                    <a href="#" class="twitter-log"><i class="fa fa-twitter"></i> Log in with Twitter</a>
+                    <p>For faster login use your social account.</p>
+                    <a href="{{ path('connect_google') }}" class="google-log"><i class="fa fa-google-plus-official"></i>Login with Google</a>
                 </div>
                 <div class="log-separator fl-wrap"><span>or</span></div>
                 <div id="tabs-container">
@@ -27,10 +27,6 @@
                                     <input type="password" name="_password" id="password">
                                     <button type="submit" class="log-submit-btn"><span>Log In</span></button>
                                     <div class="clearfix"></div>
-                                    <div class="filter-tags">
-                                        <input id="check-a" type="checkbox" name="check">
-                                        <label for="check-a">Remember me</label>
-                                    </div>
                                 </form>
                                 <div class="lost_password">
                                     <a href="#">Lost Your Password?</a>

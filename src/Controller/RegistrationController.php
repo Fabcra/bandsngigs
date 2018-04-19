@@ -27,7 +27,7 @@ class RegistrationController extends Controller
      * @Route("/registration", name="registration")
      * @Method({"GET", "POST"})
      */
-    public function preRegistration(Request $request, EncoderFactoryInterface $encoderFactory, Mailer $mailer)
+    public function registration(Request $request, EncoderFactoryInterface $encoderFactory, Mailer $mailer)
     {
 
         $tempuser = new TempUser();
@@ -44,7 +44,7 @@ class RegistrationController extends Controller
             $encoded = $encoder->encodePassword($plainPassword, '');
 
             $registrationdate = $tempuser->getRegistrationDate()->format('d-m-Y');
-            $mail = $tempuser->getEMail();
+            $mail = $tempuser->getMail();
 
             $token = sha1($encoded.$registrationdate.$mail);
 
