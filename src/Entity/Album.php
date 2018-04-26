@@ -17,17 +17,17 @@ class Album
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", length=4)
      */
     private $year;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", length=255)
      */
     private $description;
 

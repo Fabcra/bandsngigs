@@ -17,7 +17,7 @@ class PostCode
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", length=5)
      */
     private $postCode;
 

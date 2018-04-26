@@ -17,22 +17,22 @@ class TempUser
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $mail;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $token;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", length=10)
      */
     private $registrationDate;
 

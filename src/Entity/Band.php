@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -18,27 +19,27 @@ class Band
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(length=50, type="string", unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $mail;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=20)
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=150)
      */
     private $website;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", length=255)
      */
     private $description;
 
@@ -47,8 +48,10 @@ class Band
      */
     private $users;
 
+
+
     /**
-     * @ORM\OneToOne(targetEntity="Image", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      *
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -88,10 +91,23 @@ class Band
 
     /**
      * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=128, unique=true)
+     * @ORM\Column(length=50, unique=true)
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UnscribedMember", mappedBy="band")
+     */
+    private $unscribedMembers;
+
+
+
+    public function __construct()
+    {
+        $this->styles = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->unscribedMembers = new ArrayCollection();
+    }
 
 
     /**
@@ -325,6 +341,22 @@ class Band
     public function setVideos($videos)
     {
         $this->videos = $videos;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUnscribedMembers()
+    {
+        return $this->unscribedMembers;
+    }
+
+    /**
+     * @param mixed $unscribedMembers
+     */
+    public function setUnscribedMembers($unscribedMembers)
+    {
+        $this->unscribedMembers = $unscribedMembers;
     }
 
 

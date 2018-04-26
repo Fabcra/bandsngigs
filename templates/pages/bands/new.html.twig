@@ -1,0 +1,84 @@
+{% extends "pages/default/layout.html.twig" %}
+
+{% block content %}
+
+    <!--content -->
+    <div class="content">
+        <!--section -->
+        <section>
+            <!-- container -->
+            <div class="container">
+                <!-- profile-edit-wrap -->
+                <div class="profile-edit-wrap">
+                    <div class="profile-edit-page-header">
+                        <h2>New band</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% block left %}
+                        {% include 'pages/bands/nav.html.twig' %}
+                    {% endblock %}
+                    {% block right %}
+                        <div class="col-md-7">
+                            <!-- profile-edit-container-->
+                            {{ form_start(bandForm) }}
+                            <div class="profile-edit-container">
+                                <div class="profile-edit-header fl-wrap">
+                                    <h4>My Account</h4>
+                                </div>
+
+                                <div class="custom-form">
+                                    {{ form_row(bandForm.name) }}
+
+                                    <div class="check-user floatleft marginbottom20">
+
+                                        {{ form_row(bandForm.users) }}
+
+                                    </div>
+
+                                    {{ form_row(bandForm.logo, {'attr':{'class': 'floatleft', 'label':'Logo'}}) }}
+                                    {{ form_row(bandForm.mail) }}
+                                    {{ form_row(bandForm.phone) }}
+                                    {{ form_row(bandForm.website) }}
+                                    {{ form_row(bandForm.locality, {'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
+
+
+
+
+
+                                    <section class="check-user floatleft formbackground">
+                                        <div class="col-md-6">
+                                            {{ form_row(bandForm.styles) }}
+                                        </div>
+                                    </section>
+
+                                        {% for unscribedMember in bandForm.unscribedMembers %}
+                                            <div>
+                                            {{ form_row(unscribedMember.nickName) }}
+                                            {{ form_row(unscribedMember.instruments) }}
+                                            </div>
+                                        {% endfor %}
+
+                                    {{ form_row(bandForm.description) }}
+                                    <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                                class="fa fa-angle-right"></i></button>
+                                </div>
+                            </div>
+
+
+                            <!-- profile-edit-container end-->
+                            {{ form_end(bandForm) }}
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+            <!--profile-edit-wrap end -->
+            <!--container end -->
+        </section>
+        <!-- section end -->
+        <div class="limit-box fl-wrap"></div>
+
+    </div>
+
+
+{% endblock %}

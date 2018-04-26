@@ -18,38 +18,38 @@ class Venue
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      */
     private $description;
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $streetName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=5)
      */
     private $houseNb;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $mail;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $website;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=20)
      */
     private $phone;
 

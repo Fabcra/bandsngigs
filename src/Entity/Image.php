@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -17,15 +18,19 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=150)
      */
-    private $url;
+    protected $url;
 
 
-    private $file;
+    /**
+     * @Assert\File(maxSize="2M")
+     */
+    protected $file;
 
     /**
      * @ORM\ManyToOne(targetEntity="Band", inversedBy="gallery")
+     *
      *
      */
     private $band;

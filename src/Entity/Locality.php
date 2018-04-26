@@ -17,7 +17,7 @@ class Locality
     private $id;
 
     /**
-     * @ORM\Column(type="string", name="locality")
+     * @ORM\Column(type="string", name="locality", length=30)
      */
     private $locality;
 

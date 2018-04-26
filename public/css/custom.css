@@ -67,13 +67,9 @@
 /* PROFILE */
 
 
-.check-user {
-
-}
 
 .check-user label:first-child {
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     right: 0px;
 }
 

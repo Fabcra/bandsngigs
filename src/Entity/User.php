@@ -27,40 +27,43 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $lastName;
 
+
+    private $fullName;
+
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, length=3)
      *
      */
     private $age;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, length=7)
      */
     private $gender;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, length=50)
      */
     private $mail;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, length=15)
      * @Assert\Regex(pattern="/^[0-9]*$/", message="number_only")
      *
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, length=50)
      */
     private $password;
 
@@ -109,7 +112,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @Gedmo\Slug(fields={"mail"})
-     * @ORM\Column(length=255, unique=true)
+     * @ORM\Column(length=50, unique=true)
      */
     private $slug;
 
@@ -169,9 +172,8 @@ class User implements UserInterface, \Serializable
     }
 
 
-
     /**
-     * @return mixed
+     *
      */
     public function getFirstName()
     {
@@ -201,6 +203,15 @@ class User implements UserInterface, \Serializable
     {
         $this->lastName = $lastName;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
 
     /**
      * @return mixed
@@ -452,8 +463,6 @@ class User implements UserInterface, \Serializable
     }
 
 
-
-
     /**
      * @param mixed $description
      */
@@ -497,4 +506,13 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->getFullName();
+
+    }
 }

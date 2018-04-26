@@ -39,7 +39,7 @@ class ImageData extends Fixture
 
         $image3 = new Image();
 
-        $image3->setUrl('http://www.celebrityrockstarguitars.com/rock/dave_murry_files/Dave-murray.jpg');
+        $image3->setUrl('http://www.sounds-finder.com/wp-content/uploads/2017/09/Dave_murray.jpg');
 
         $manager->persist($image3);
 

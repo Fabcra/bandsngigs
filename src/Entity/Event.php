@@ -18,27 +18,27 @@ class Event
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=50)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", length=20)
      */
     private $date;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="time", length=20)
      */
     private $time;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", length=4)
      */
     private $price;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", length=255)
      */
     private $description;
 
@@ -69,7 +69,7 @@ class Event
 
     /**
      * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=128, unique=true)
+     * @ORM\Column(length=50, unique=true)
      */
     private $slug;
 
