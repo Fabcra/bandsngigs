@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Band;
-use App\Entity\UnscribedMember;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +31,10 @@ class BandType extends AbstractType
             ->add('unscribedMembers', CollectionType::class, array(
                 'entry_type' => UnscribedMemberType::class,
                 'entry_options' => array('label' => false),
-                'allow_add' => true
+                'by_reference' =>false,
+                'allow_add' => true,
+                'allow_delete' => true,
+
             ))
         ;
     }

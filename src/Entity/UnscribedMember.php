@@ -14,7 +14,7 @@ class UnscribedMember
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -30,8 +30,9 @@ class UnscribedMember
 
     /**
      * @ORM\ManyToOne(targetEntity="Band", inversedBy="unscribedMembers")
+     * @ORM\JoinColumn(name="band_id", referencedColumnName="id", nullable=false)
      */
-    private $band;
+    protected $band;
 
 
     public function getId()

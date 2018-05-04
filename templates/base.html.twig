@@ -1,59 +1,109 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome in Bands n' Gigs{% endblock %}</title>
-        {% block stylesheets %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome in Bands n' Gigs{% endblock %}</title>
+    {% block stylesheets %}
 
-            <link href="{{ asset('css/reset.css') }}" rel="stylesheet" type="text/css">
-            <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css">
-            <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
-            <link href="{{ asset('css/color.css') }}" rel="stylesheet" type="text/css">
-            <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css">
-
-
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}
+        <link href="{{ asset('css/reset.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/color.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css">
 
 
-        {% endblock %}
-        {% block javascripts %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
 
-            <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('js/plugins.js') }}" type="text/javascript"></script>
-            <script src="{{ asset('js/scripts.js') }}" type="text/javascript"></script>
-            {#<script src="{{ asset('js/map_infobox.js') }}" type="text/javascript"></script>#}
-            {#<script src="{{ asset('js/markerclusterer.js') }}" type="text/javascript"></script>#}
 
-            <script>
-                var $collectionHolder;
+{% endblock %}
+{% block javascripts %}
 
-                // setup an "add a tag" link
-                var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-                var $newLinkLi = $('<li></li>').append($addTagLink);
+    <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/plugins.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/scripts.js') }}" type="text/javascript"></script>
+    {#<script src="{{ asset('js/map_infobox.js') }}" type="text/javascript"></script>#}
+    {#<script src="{{ asset('js/markerclusterer.js') }}" type="text/javascript"></script>#}
 
-                jQuery(document).ready(function() {
-                    // Get the ul that holds the collection of tags
-                    $collectionHolder = $('ul.tags');
+    <script>
+        var $collectionHolder;
 
-                    // add the "add a tag" anchor and li to the tags ul
-                    $collectionHolder.append($newLinkLi);
+        // setup an "add a tag" link
+        var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+        var $newLinkLi = $('<li></li>').append($addTagLink);
 
-                    // count the current form inputs we have (e.g. 2), use that as the new
-                    // index when inserting a new item (e.g. 2)
-                    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+        jQuery(document).ready(function () {
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('ul.tags');
 
-                    $addTagLink.on('click', function(e) {
-                        // prevent the link from creating a "#" on the URL
-                        e.preventDefault();
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
 
-                        // add a new tag form (see next code block)
-                        addTagForm($collectionHolder, $newLinkLi);
-                    });
-                });
-            </script>
-        {% endblock %}
-    </body>
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('li').each(function() {
+                addTagFormDeleteLink($(this));
+            });
+
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+        });
+    </script>
+    <script>
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            var newForm = prototype;
+            // You need this only if you didn't set 'label' => false in your tags field in TaskType
+            // Replace '__name__label__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            // newForm = newForm.replace(/__name__label__/g, index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            newForm = newForm.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            // add a delete link to the new form
+            addTagFormDeleteLink($newFormLi);
+        }
+    </script>
+
+    <script>
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<a href="#">delete this tag</a>');
+            $tagFormLi.append($removeFormA);
+
+            $removeFormA.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // remove the li for the tag form
+                $tagFormLi.remove();
+            });
+        }
+    </script>
+{% endblock %}
+</body>
 </html>
