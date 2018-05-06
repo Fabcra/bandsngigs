@@ -6,6 +6,7 @@ use App\Entity\Band;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -31,12 +32,11 @@ class BandType extends AbstractType
             ->add('unscribedMembers', CollectionType::class, array(
                 'entry_type' => UnscribedMemberType::class,
                 'entry_options' => array('label' => false),
-                'by_reference' =>false,
                 'allow_add' => true,
                 'allow_delete' => true,
-
+                'by_reference' => false,
             ))
-        ;
+           ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

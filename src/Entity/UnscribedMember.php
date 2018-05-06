@@ -14,7 +14,7 @@ class UnscribedMember
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -32,7 +32,24 @@ class UnscribedMember
      * @ORM\ManyToOne(targetEntity="Band", inversedBy="unscribedMembers")
      * @ORM\JoinColumn(name="band_id", referencedColumnName="id", nullable=false)
      */
-    protected $band;
+    private $band;
+
+    /**
+     * @return mixed
+     */
+    public function getBand()
+    {
+        return $this->band;
+    }
+
+    /**
+     * @param mixed $band
+     */
+    public function setBand($band)
+    {
+        $this->band = $band;
+    }
+
 
 
     public function getId()
@@ -56,21 +73,6 @@ class UnscribedMember
         $this->nickName = $nickName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBand()
-    {
-        return $this->band;
-    }
-
-    /**
-     * @param mixed $band
-     */
-    public function setBand($band)
-    {
-        $this->band = $band;
-    }
 
     /**
      * @return mixed

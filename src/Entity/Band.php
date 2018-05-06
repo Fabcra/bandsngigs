@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -17,7 +16,7 @@ class Band
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(length=50, type="string", unique=true)
@@ -98,7 +97,7 @@ class Band
     /**
      * @ORM\OneToMany(targetEntity="UnscribedMember", mappedBy="band", cascade={"persist"})
      */
-    protected $unscribedMembers;
+    private $unscribedMembers;
 
 
     public function __construct()
@@ -342,9 +341,15 @@ class Band
         $this->videos = $videos;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUnscribedMembers()
+    {
+        return $this->unscribedMembers;
+    }
 
     public function setUnscribedMembers($unscribedMembers)
-
     {
         $this->unscribedMembers = $unscribedMembers;
 
@@ -364,16 +369,16 @@ class Band
 
     public function removeUnscribedMembers(UnscribedMember $unscribedMember)
     {
+        if ($this->unscribedMembers->contains($unscribedMember)){
         $this->unscribedMembers->removeElement($unscribedMember);
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getUnscribedMembers()
-    {
+        }
         return $this->unscribedMembers;
     }
+
+
+
+
+
+
 
 }
