@@ -12,8 +12,12 @@ class UnscribedMemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nickName')
-            ->add('instruments')
+            ->add('nickName', null, array(
+                'label'=>'Nickname'
+            ))
+            ->add('instruments', null, array(
+                'label'=>'Instrument(s)',
+            ))
         ;
     }
 

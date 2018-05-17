@@ -17,7 +17,7 @@ class Style
     private $id;
 
     /**
-     * @ORM\Column(name="style", length=10)
+     * @ORM\Column(name="style", length=20)
      */
     private $style;
 

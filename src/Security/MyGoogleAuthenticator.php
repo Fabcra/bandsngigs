@@ -61,18 +61,17 @@ class MyGoogleAuthenticator extends SocialAuthenticator
 
         $email = $googleUser->getEmail();
         $user = $this->em->getRepository(User::class)
-            ->findOneBy(['mail' => $email]);
+            ->findOneBy(['email' => $email]);
         if ($user) {
 
             return $user;
         } else {
             $user = new User();
 
-
             $user->setGoogleId($googleUser->getId());
             $user->setFirstName($googleUser->getFirstName());
             $user->setLastName($googleUser->getLastName());
-            $user->setMail($googleUser->getEmail());
+            $user->setEmail($googleUser->getEmail());
             $user->setRegistrationDate(new \DateTime('now'));
             $user->setValid(true);
 

@@ -10,24 +10,40 @@
                 <p>Don't have an account ? <a href="{{ path('registration') }}">click here for register</a></p>
                 <div class="soc-log fl-wrap">
                     <p>For faster login use your social account.</p>
-                    <a href="{{ path('connect_google') }}" class="google-log"><i class="fa fa-google-plus-official"></i>Login with Google</a>
+                    <a href="{{ path('connect_google') }}" class="google-log"><i class="fa fa-google-plus-official"></i>Login
+                        with Google</a>
                 </div>
                 <div class="log-separator fl-wrap"><span>or</span></div>
                 <div id="tabs-container">
                     <div class="tab">
                         <div id="tab-1" class="tab-content">
                             <div class="custom-form">
-                                {% if error %}
-                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                {% endif %}
+
+                                    {% if error %}
+                                    <div class="alert alert-danger">
+                                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                    </div>
+                                    {% endif %}
+
+                              {# <div>
+
+                                    {{ form_start(form) }}
+                                    {{ form_row(form._username) }}
+                                    {{ form_row(form._password) }}
+                                    <button type="submit" class="btn btn-success">Login <span class="fa fa-lock"></span>
+                                    </button>
+
+                                    {{ form_end(form) }}
+
+                                </div>#}
                                 <form method="post" action="{{ path('login') }}">
-                                    <label>Username or Email Address * </label>
-                                    <input type="email" name="_username" id="username" value="{{ last_username }}">
-                                    <label>Password * </label>
-                                    <input type="password" name="_password" id="password">
-                                    <button type="submit" class="log-submit-btn"><span>Log In</span></button>
-                                    <div class="clearfix"></div>
-                                </form>
+                                     <label>Username or Email Address * </label>
+                                     <input type="email" name="_username" id="username" value="{{ last_username }}">
+                                     <label>Password * </label>
+                                      <input type="password" name="_password" id="password">
+                                     <button type="submit" class="log-submit-btn"><span>Log In</span></button>
+                                     <div class="clearfix"></div>
+                                 </form>
                                 <div class="lost_password">
                                     <a href="#">Lost Your Password?</a>
                                 </div>

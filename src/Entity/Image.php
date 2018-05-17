@@ -18,7 +18,7 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=240)
      */
     protected $url;
 
@@ -30,8 +30,6 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity="Band", inversedBy="gallery")
-     *
-     *
      */
     private $band;
 

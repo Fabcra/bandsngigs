@@ -30,7 +30,7 @@ class UserType extends AbstractType
                 ],
                 'multiple'=>false,
             ])
-            ->add('mail', EmailType::class)
+            ->add('email', EmailType::class)
             ->add('phone')
             ->add('description', TextareaType::class)
             ->add('instruments', EntityType::class, array(

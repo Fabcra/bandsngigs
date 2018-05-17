@@ -1,43 +1,42 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
-        App\Entity\User :
-                      algorithm: bcrypt
-                      cost: 12
+        App\Entity\User:
+                    algorithm: bcrypt
+                    cost:      10
 
-        App\Entity\TempUser :
-                      algorithm: bcrypt
-                      cost: 12
+        App\Entity\TempUser:
+                    algorithm: bcrypt
+                    cost:      10
+
 
     providers:
-        our_db_provider:
-                     entity:
-                          class: App:User
-                          property: mail
+        our_users:
+                entity:
+                    class: App:User
+                    property: email
 
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+             pattern: ^/(_(profiler|wdt)|css|images|js)/
+             security: false
         main:
-            pattern: ^/
-            anonymous: true
+             pattern: ^/
+             anonymous: true
 
-            guard:
+             guard:
                 authenticators:
-                  - App\Security\MyGoogleAuthenticator
+                   - App\Security\MyGoogleAuthenticator
 
-            form_login:
+             form_login:
                 login_path: login
                 check_path: login
                 default_target_path: homepage
                 always_use_default_target_path: true
 
 
-
-
-            logout:
+             logout:
                 path: /logout
 
             # activate different ways to authenticate
@@ -50,10 +49,6 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-
 
 
 knpu_oauth2_client:

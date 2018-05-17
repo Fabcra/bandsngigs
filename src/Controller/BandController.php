@@ -10,11 +10,8 @@ namespace App\Controller;
 
 
 use App\Entity\Band;
-use App\Entity\UnscribedMember;
 use App\Form\BandType;
-use App\Form\UnscribedMemberType;
 use App\Service\FileUploader;
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +29,8 @@ class BandController extends Controller
     {
 
         $band = new Band();
+
+
         $user = $this->getUser();
 
         $form = $this->createForm(BandType::class, $band, ['method' => 'POST']);
@@ -41,8 +40,12 @@ class BandController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $img = $band->getLogo();
+
             $file = $img->getFile();
+
             $fileName = $fileUploader->upload($file);
+
+
             $img->setUrl('/uploads/img/' . $fileName);
             $em = $this->getDoctrine()->getManager();
 

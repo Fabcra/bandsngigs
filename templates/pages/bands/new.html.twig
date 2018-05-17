@@ -15,34 +15,23 @@
                     </div>
                 </div>
                 <div class="row">
+
                     {% block left %}
-                        {% include 'pages/bands/nav.html.twig' %}
-                    {% endblock %}
-                    {% block right %}
                         <div class="col-md-7">
                             <!-- profile-edit-container-->
                             {{ form_start(bandForm) }}
                             <div class="profile-edit-container">
-                                <div class="profile-edit-header fl-wrap">
-                                    <h4>My Account</h4>
-                                </div>
-
                                 <div class="custom-form">
                                     {{ form_row(bandForm.name) }}
-
 
                                     <div class="check-user floatleft marginbottom20">
                                         {{ form_row(bandForm.users) }}
                                     </div>
 
-                                    <section class="floatleft check-user">
+                                    <section class="check-user test">
                                         <p>You can add unscribed people in the website on your band page</p>
-                                        <ul class="tags"
-                                            data-prototype="{{ form_row(bandForm.unscribedMembers.vars.prototype)|e('html_attr') }}">
-                                            {% for unscribedMember in bandForm.unscribedMembers %}
-                                                <li>{{ form_row(unscribedMember.nickName) }}</li>
-                                                <li>{{ form_row(unscribedMember.instruments) }}</li>
-                                            {% endfor %}
+                                        <ul class="members"
+                                            data-prototype="{{ form_row(bandForm.unscribedMembers.vars.prototype)|e }}">
                                         </ul>
                                     </section>
 
@@ -66,7 +55,6 @@
                                                 class="fa fa-angle-right"></i></button>
                                 </div>
                             </div>
-
 
                             <!-- profile-edit-container end-->
                             {{ form_end(bandForm) }}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BandRepository")
@@ -51,8 +52,8 @@ class Band
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
-     *
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\Valid()
      */
     private $logo;
 
@@ -349,6 +350,9 @@ class Band
         return $this->unscribedMembers;
     }
 
+    /**
+     * @param $unscribedMembers
+     */
     public function setUnscribedMembers($unscribedMembers)
     {
         $this->unscribedMembers = $unscribedMembers;
@@ -356,18 +360,28 @@ class Band
     }
 
 
-    public function addUnscribedMembers(UnscribedMember $unscribedMember)
+    /**
+     * @param UnscribedMember $unscribedMember
+     * @return ArrayCollection
+     */
+    public function addUnscribedMember(UnscribedMember $unscribedMember)
     {
 
         if (! $this->unscribedMembers->contains($unscribedMember)) {
+
             $unscribedMember->setBand($this);
             $this->unscribedMembers->add($unscribedMember);
+
         }
 
         return $this->unscribedMembers;
     }
 
-    public function removeUnscribedMembers(UnscribedMember $unscribedMember)
+    /**
+     * @param UnscribedMember $unscribedMember
+     * @return ArrayCollection
+     */
+    public function removeUnscribedMember(UnscribedMember $unscribedMember)
     {
         if ($this->unscribedMembers->contains($unscribedMember)){
         $this->unscribedMembers->removeElement($unscribedMember);

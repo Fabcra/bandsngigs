@@ -33,6 +33,7 @@ services:
         class: App\Security\MyGoogleAuthenticator
         autowire: true
 
+
     App\Service\FileUploader:
         arguments:
             $targetDir: '%files_directory%'

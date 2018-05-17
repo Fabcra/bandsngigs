@@ -29,27 +29,10 @@ class UnscribedMember
     private $instruments;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Band", inversedBy="unscribedMembers")
+     * @ORM\ManyToOne(targetEntity="Band", inversedBy="unscribedMembers", cascade={"persist"})
      * @ORM\JoinColumn(name="band_id", referencedColumnName="id", nullable=false)
      */
     private $band;
-
-    /**
-     * @return mixed
-     */
-    public function getBand()
-    {
-        return $this->band;
-    }
-
-    /**
-     * @param mixed $band
-     */
-    public function setBand($band)
-    {
-        $this->band = $band;
-    }
-
 
 
     public function getId()
@@ -91,5 +74,20 @@ class UnscribedMember
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function getBand()
+    {
+        return $this->band;
+    }
+
+    /**
+     * @param mixed $band
+     */
+    public function setBand($band)
+    {
+        $this->band = $band;
+    }
 
 }

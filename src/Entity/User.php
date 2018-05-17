@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="Vous avez déjà un compte avec cette adresse")
  */
 class User implements UserInterface, \Serializable
 {
@@ -19,6 +21,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer", unique=true)
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="simple_array")
+     */
+    private $roles = [];
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -51,9 +58,9 @@ class User implements UserInterface, \Serializable
     private $gender;
 
     /**
-     * @ORM\Column(type="string", unique=true, length=50)
+     * @ORM\Column(type="string", unique=true, length=100)
      */
-    private $mail;
+    private $email;
 
     /**
      * @ORM\Column(type="string", nullable=true, length=15)
@@ -63,9 +70,15 @@ class User implements UserInterface, \Serializable
     private $phone;
 
     /**
-     * @ORM\Column(type="string", nullable=true, length=50)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
+
+    /**
+     * @ORM\Column(name="old_pwd", nullable=true))
+     */
+    private $oldPassword;
+
 
     /**
      * @ORM\Column(type="boolean")
@@ -111,7 +124,7 @@ class User implements UserInterface, \Serializable
     private $venues;
 
     /**
-     * @Gedmo\Slug(fields={"mail"})
+     * @Gedmo\Slug(fields={"email"})
      * @ORM\Column(length=50, unique=true)
      */
     private $slug;
@@ -137,13 +150,27 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
+    }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
     }
 
 
     public function getUsername()
     {
-        return $this->mail;
+        return $this->email;
     }
 
 
@@ -248,17 +275,17 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
-    public function getMail()
+    public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**
-     * @param mixed $mail
+     * @param mixed $email
      */
-    public function setMail($mail)
+    public function setEmail($email)
     {
-        $this->mail = $mail;
+        $this->email = $email;
     }
 
     /**
@@ -274,6 +301,7 @@ class User implements UserInterface, \Serializable
      */
     public function setPhone($phone)
     {
+
         $this->phone = $phone;
     }
 
@@ -473,13 +501,13 @@ class User implements UserInterface, \Serializable
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return null;
     }
 
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        return null;
     }
 
     /** @see \Serializable::serialize() */
@@ -487,7 +515,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->mail,
+            $this->email,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -499,11 +527,28 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->mail,
+            $this->email,
             $this->password,
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param mixed $oldPassword
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
     }
 
 

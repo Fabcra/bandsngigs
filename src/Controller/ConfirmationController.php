@@ -43,7 +43,7 @@ class ConfirmationController extends Controller
             $password = $tempuser->getPassword();
 
             $user = new User();
-            $user->setMail($mail);
+            $user->setEmail($mail);
             $user->setRegistrationDate($registrationDate);
             $user->setPassword($password);
 
@@ -57,6 +57,7 @@ class ConfirmationController extends Controller
                 $em = $this->getDoctrine()->getManager();
 
                 $user->setValid(true);
+                $user->setRoles(['ROLE_USER']);
 
                 $em->remove($tempuser);
                 $em->persist($user);
