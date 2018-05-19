@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -510,6 +512,8 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
+
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -517,8 +521,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
-            // see section on salt below
-            // $this->salt,
         ));
     }
 
@@ -529,8 +531,6 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
-            // see section on salt below
-            // $this->salt
             ) = unserialize($serialized);
     }
 
@@ -560,4 +560,8 @@ class User implements UserInterface, \Serializable
         return $this->getFullName();
 
     }
+
+
+
+
 }

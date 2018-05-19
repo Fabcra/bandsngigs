@@ -9,14 +9,35 @@
 namespace App\Controller;
 
 
-
 use App\Entity\Event;
+use App\Form\EventType;
+use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class EventController extends Controller
 {
+
+
+    public function newAction(Request $request, FileUploader $fileUploader)
+    {
+        $event = new Event();
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(EventType::class, $event, ['method' => 'POST']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+        }
+        return $this->render("pages/events/new.html.twig", [
+            'eventForm' => $form->createView()
+        ]);
+    }
+
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -48,14 +69,15 @@ class EventController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/events/{slug}", name="event")
      */
-    public function showAction($slug){
+    public function showAction($slug)
+    {
 
         $doctrine = $this->getDoctrine();
 
-        $event = $doctrine->getRepository(Event::class)->findOneBy(['slug'=>$slug]);
+        $event = $doctrine->getRepository(Event::class)->findOneBy(['slug' => $slug]);
 
         return $this->render('pages/events/event.html.twig', [
-            'event'=>$event
+            'event' => $event
         ]);
     }
 }

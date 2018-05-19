@@ -13,6 +13,7 @@ use App\Form\PwdType;
 use App\Service\Mailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -40,10 +41,11 @@ class SecurityController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/password", name="new-password")
+     * @Route("/password", name="password-update")
+     * @Security("is_granted('ROLE_USER')")
      * @Method({"GET","POST"})
      */
-    public function updatePwd(Request $request, EncoderFactoryInterface $encoderFactory)
+    public function updatePwd(Request $request, EncoderFactoryInterface $encoderFactory, Mailer $mailer)
     {
         $user = $this->getUser();
         $id = $user->getId();
@@ -69,6 +71,13 @@ class SecurityController extends Controller
                 $em->persist($user);
                 $em->flush();
 
+                $mail = $user->getEmail();
+                $subject = "Changement du mot de passe";
+                $body = $this->renderView('pages/security/modif-pwd-mail.html.twig', array('user'=>$user));
+
+
+                $mailer->sendMail($mail, $subject, $body);
+
                 $this->addFlash('success', 'password modifié avec succès');
                 return $this->redirectToRoute('homepage');
 
@@ -76,12 +85,12 @@ class SecurityController extends Controller
 
             $this->addFlash('danger', 'password incorrect');
             return $this->render('pages/security/newpassword.html.twig', [
-                'pwdForm' => $form->createView(), 'id' => $id
+                'pwdForm' => $form->createView()
             ]);
 
         }
         return $this->render('pages/security/newpassword.html.twig', [
-            'pwdForm' => $form->createView(), 'id' => $id
+            'pwdForm' => $form->createView()
         ]);
 
 

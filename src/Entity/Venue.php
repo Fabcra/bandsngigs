@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -84,19 +85,19 @@ class Venue
     private $events;
 
     /**
-     * @ORM\OneToOne(targetEntity="Image", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      *
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $photo;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $lat;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $lng;
 
@@ -106,6 +107,11 @@ class Venue
      */
     private $slug;
 
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->styles = new ArrayCollection();
+    }
 
     /**
      * @return mixed
