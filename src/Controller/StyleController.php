@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class StyleController extends Controller
 {
 
-    /**
+    /** LISTER LES STYLES (non utilisé)
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listStyle()

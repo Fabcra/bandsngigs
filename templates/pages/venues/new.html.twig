@@ -1,0 +1,69 @@
+{% extends "pages/default/layout.html.twig" %}
+
+{% block content %}
+
+    <!--content -->
+    <div class="content">
+        <!--section -->
+        <section>
+            <!-- container -->
+            <div class="container">
+                <!-- profile-edit-wrap -->
+                <div class="profile-edit-wrap">
+                    <div class="profile-edit-page-header">
+                        <h2>New venue</h2>
+                    </div>
+                </div>
+                <div class="row">
+
+                    {% block left %}
+                        <div class="col-md-7">
+                            <!-- profile-edit-container-->
+                            {{ form_start(venueForm) }}
+                            <div class="profile-edit-container">
+                                <div class="custom-form">
+                                    {{ form_row(venueForm.name) }}
+
+                                    <div class="check-user floatleft marginbottom20">
+                                        {{ form_row(venueForm.users) }}
+                                    </div>
+
+
+                                    {{ form_row(venueForm.photo, {'attr':{'class': 'floatleft', 'label':'Photo'}}) }}
+                                    {{ form_row(venueForm.mail) }}
+                                    {{ form_row(venueForm.phone) }}
+                                    {{ form_row(venueForm.website) }}
+                                    {{ form_row(venueForm.streetName) }}
+                                    {{ form_row(venueForm.houseNb) }}
+                                    {{ form_row(venueForm.locality, {'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
+
+
+                                    <section class="check-user floatleft formbackground">
+                                        <div class="col-md-6">
+                                            {{ form_row(venueForm.styles) }}
+                                        </div>
+
+                                    </section>
+
+                                    {{ form_row(venueForm.description) }}
+                                    <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                                class="fa fa-angle-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- profile-edit-container end-->
+                            {{ form_end(venueForm) }}
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+            <!--profile-edit-wrap end -->
+            <!--container end -->
+        </section>
+        <!-- section end -->
+        <div class="limit-box fl-wrap"></div>
+
+    </div>
+
+
+{% endblock %}

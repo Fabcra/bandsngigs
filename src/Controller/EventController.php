@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,14 @@ class EventController extends Controller
 {
 
 
+    /** CREER UN NOUVEL EVENEMENT
+     *
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("events/new", name="event-new")
+     * @Method({"GET","POST"})
+     */
     public function newAction(Request $request, FileUploader $fileUploader)
     {
         $event = new Event();
@@ -32,13 +41,32 @@ class EventController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // upload d'un flyers
+            $img = $event->getFlyer();
+            $file = $img->getFile();
+            $fileName = $fileUploader->upload($file);
+
+            $img->setUrl('/uploads/img/' .$fileName);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $event->setUsers($user);
+
+            $em->persist($event);
+
+            $em->flush();
+
+            $this->addFlash('success', "Vous avez créé l'évènement ". $event->getName());
+
+            return $this->redirectToRoute('homepage');
         }
         return $this->render("pages/events/new.html.twig", [
             'eventForm' => $form->createView()
         ]);
     }
 
-    /**
+    /** LISTER LES EVENEMENTS
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/events", name="events")
@@ -50,8 +78,8 @@ class EventController extends Controller
 
         $events = $doctrine->getRepository(Event::class)->findAll();
 
+        //pagination
         $paginator = $this->get('knp_paginator');
-
         $pagination = $paginator->paginate(
             $events,
             $request->query->getInt('page', 1),
@@ -64,7 +92,8 @@ class EventController extends Controller
 
     }
 
-    /**
+    /** AFFICHER LA PAGE D'UN EVENEMENT
+     *
      * @param $slug
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/events/{slug}", name="event")

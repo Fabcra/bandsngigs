@@ -2,12 +2,11 @@
 
 {% block content %}
 <!-- wrapper -->
-<div id="wrapper">
-    <!-- content-->
+
     <div class="content">
         <!--  section  -->
         <section class="parallax-section single-par list-single-section" data-scrollax-parent="true" id="sec1">
-            <div class="bg par-elem "  data-bg="{{ event.folder.url }}" data-scrollax="properties: { translateY: '30%' }"></div>
+            <div class="bg par-elem "  data-bg="{{ event.flyer.url }}" data-scrollax="properties: { translateY: '30%' }"></div>
             <div class="overlay"></div>
             <div class="bubble-bg"></div>
             <div class="list-single-header absolute-header fl-wrap">
@@ -182,7 +181,7 @@
                                         <ul>
                                             {% for e in event.venue.events %}
                                             <li class="clearfix">
-                                                <a href="{{ path('event', {'slug':e.slug}) }}"  class="widget-posts-img"><img src="{{ e.folder.url }}"  alt=""></a>
+                                                <a href="{{ path('event', {'slug':e.slug}) }}"  class="widget-posts-img"><img src="{{ e.flyer.url }}"  alt=""></a>
                                                 <div class="widget-posts-descr">
                                                     <a href="{{ path('event', {'slug':e.slug}) }}" title="">{{ e.name }}</a>
                                                     <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i>{{ e.date|date("d/m/Y") }} </span>
@@ -201,11 +200,11 @@
             </div>
         </section>
         <!-- section end-->
+        <div class="limit-box fl-wrap"></div>
 
 
     </div>
     <!-- content end-->
-</div>
-<!-- wrapper end -->
+
 
 {% endblock %}

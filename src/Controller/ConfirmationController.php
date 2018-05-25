@@ -22,7 +22,8 @@ class ConfirmationController extends Controller
 {
 
 
-    /**
+    /** CONFIRMATION D'INSCRIPTION SUITE RECEPTION MAIL
+     *
      * @param Request $request
      * @param $token
      * @param $id
@@ -33,13 +34,14 @@ class ConfirmationController extends Controller
     {
 
         $doctrine = $this->getDoctrine();
-        $tempuser = $doctrine->getRepository(TempUser::class)->findOneBy(['id'=>$id]);
+        $tempuser = $doctrine->getRepository(TempUser::class)->findOneBy(['id' => $id]);
 
+        // si le token récupéré dans l'url = le token enregistré dans l'utilisateur temporaire
+        if ($token === $tempuser->getToken()) {
 
-        if($token === $tempuser->getToken()){
-
-            $mail=$tempuser->getMail();
-            $registrationDate=$tempuser->getRegistrationDate();
+            //récupération des données de l'utilisateur temporaire
+            $mail = $tempuser->getMail();
+            $registrationDate = $tempuser->getRegistrationDate();
             $password = $tempuser->getPassword();
 
             $user = new User();
@@ -48,11 +50,11 @@ class ConfirmationController extends Controller
             $user->setPassword($password);
 
 
-            $form = $this->createForm(UserType::class, $user, ['method'=>'POST']);
+            $form = $this->createForm(UserType::class, $user, ['method' => 'POST']);
 
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()){
+            if ($form->isSubmitted() && $form->isValid()) {
 
                 $em = $this->getDoctrine()->getManager();
 
@@ -83,7 +85,7 @@ class ConfirmationController extends Controller
             }
 
             return $this->render('pages/registration/confirmation.html.twig', [
-                'userForm'=>$form->createView()
+                'userForm' => $form->createView()
             ]);
 
         }

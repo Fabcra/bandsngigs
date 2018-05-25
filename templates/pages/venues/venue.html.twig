@@ -2,8 +2,6 @@
 
 {% block content %}
 
-    <!-- wrapper -->
-    <div id="wrapper">
         <!--  content  -->
         <div class="content">
             <!--  section  -->
@@ -11,7 +9,6 @@
                 <div class="bg par-elem" data-bg="{{ venue.photo.url }}"
                      data-scrollax="properties: { translateY: '30%' }"></div>
                 <div class="overlay"></div>
-                <div class="bubble-bg"></div>
                 <div class="list-single-header absolute-header fl-wrap">
                     <div class="container">
                         <div class="list-single-header-item">
@@ -195,7 +192,7 @@
                                                 {% for e in venue.events %}
                                                     <li class="clearfix">
                                                         <a href="{{ path('event', {'slug':e.slug}) }}" class="widget-posts-img"><img
-                                                                    src="{{ e.folder.url }}"
+                                                                    src="{{ e.flyer.url }}"
                                                                     alt="{{ e.name }}"></a>
                                                         <div class="widget-posts-descr">
                                                             <a href="{{ path('event', {'slug':e.slug}) }}" title="">{{ e.name }}</a>
@@ -217,9 +214,9 @@
                 </div>
             </section>
             <!--  section end -->
+            <div class="limit-box fl-wrap"></div>
 
         </div>
         <!--  content end  -->
-    </div>
-    <!-- wrapper end -->
+
 {% endblock %}

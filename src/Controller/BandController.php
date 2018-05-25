@@ -19,7 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BandController extends Controller
 {
-    /**
+    /** CREATION D'UN GROUPE
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("bands/new", name="band-new")
@@ -27,6 +28,7 @@ class BandController extends Controller
      */
     public function newAction(Request $request, FileUploader $fileUploader)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $band = new Band();
 
@@ -67,7 +69,8 @@ class BandController extends Controller
 
     }
 
-    /**
+    /** LISTE LES GROUPES INSCRITS
+     *
      * @Route("/bands", name="bands")
      */
     public function listAction(Request $request)
@@ -77,6 +80,7 @@ class BandController extends Controller
 
         $bands = $doctrine->getRepository(Band::class)->findAll();
 
+        //pagination
         $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
@@ -91,7 +95,8 @@ class BandController extends Controller
     }
 
 
-    /**
+    /** AFFICHE LA PAGE DU GROUPE
+     *
      * @param $slug
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("bands/{slug}", name="band")

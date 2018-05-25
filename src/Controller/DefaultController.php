@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
 
-    /**
+    /** HOMEPAGE
      * @return Response
      * @Route("/", name="homepage")
      */

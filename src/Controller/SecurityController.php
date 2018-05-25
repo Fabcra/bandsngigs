@@ -20,7 +20,8 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class SecurityController extends Controller
 {
-    /**
+    /** AUTHENTIFICATION
+     *
      * @Route("/login", name="login")
      */
     public function loginAction()
@@ -38,7 +39,8 @@ class SecurityController extends Controller
     }
 
 
-    /**
+    /** MODIFICATION MOT DE PASSE
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/password", name="password-update")
@@ -48,19 +50,21 @@ class SecurityController extends Controller
     public function updatePwd(Request $request, EncoderFactoryInterface $encoderFactory, Mailer $mailer)
     {
         $user = $this->getUser();
-        $id = $user->getId();
         $pwd = $user->getPassword();
 
-        $form = $this->createForm(PwdType::class, $user, ['method' => 'POST']);
+        $form = $this->createForm(PwdType::class,['method'=>'POST']);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $oldPwd = $user->getOldPassword();
+            $oldPwd = $request->request->get('pwd');
+            $oldPwd = $oldPwd['oldPassword'];
 
 
+            //vérification de l'ancien mot de passe
             if (password_verify($oldPwd, $pwd)) {
+                // cryptage du nouveau mot de passe
                 $plainPassword = $user->getPassword();
                 $encoder = $encoderFactory->getEncoder($user);
                 $encoded = $encoder->encodePassword($plainPassword, '');
@@ -71,6 +75,7 @@ class SecurityController extends Controller
                 $em->persist($user);
                 $em->flush();
 
+                //envoi du mail
                 $mail = $user->getEmail();
                 $subject = "Changement du mot de passe";
                 $body = $this->renderView('pages/security/modif-pwd-mail.html.twig', array('user'=>$user));
@@ -81,13 +86,17 @@ class SecurityController extends Controller
                 $this->addFlash('success', 'password modifié avec succès');
                 return $this->redirectToRoute('homepage');
 
+                //todo: envoyer un mail de confirmation
+
             }
 
+            // si l'ancien mot de passe est incorrect
             $this->addFlash('danger', 'password incorrect');
             return $this->render('pages/security/newpassword.html.twig', [
                 'pwdForm' => $form->createView()
             ]);
 
+            //todo: envoyer un mail d'avertissement
         }
         return $this->render('pages/security/newpassword.html.twig', [
             'pwdForm' => $form->createView()

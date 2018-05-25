@@ -55,7 +55,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $venue->setLocality($this->getReference('locality' . $l));
             $venue->setStyles($this->getReference('style' . $s));
 
-            $x=$i+64;
+            $x = $i + 64;
             $venue->setPhoto($this->getReference('image' . $x));
 
 
@@ -63,6 +63,9 @@ class VenueData extends Fixture implements DependentFixtureInterface
 
             $this->addReference('venue' . $i, $venue);
         }
+        
+
+
         $manager->flush();
     }
 

@@ -19,7 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ImageController extends Controller
 {
 
-    /**
+    /** INSERTION D'UN AVATAR
+     *
      * @param Request $request
      * @param FileUploader $fileUploader
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -40,6 +41,7 @@ class ImageController extends Controller
 
         if($form->isSubmitted() && $form->isValid()){
 
+            //upload de l'image
             $file = $image->getFile();
             $filename = $fileUploader->upload($file);
             $image->setUrl('/uploads/img/'.$filename);

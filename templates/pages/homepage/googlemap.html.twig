@@ -117,23 +117,28 @@
         {% for e in events %}
         var contentString =
             '<div id="content" class="mymapstyle">' +
-                '<div ' +
-                    'id="siteNotice">' +
-                '</div>' +
-                '<b><h3 id="firstHeading">{{ e.name }}</h3></b>' +
-                '<div id="bodyContent">' +
-                    '<a href="{{ path('event', {'slug':e.slug}) }}"><img src="{{ e.folder.url }}" alt="{{ e.name }}" width="300px"/></a>' +
-                    '<p>{{ e.description }}</p>' +
-                '<div class="address">' +
-                    '<p><i class="fa fa-address-book"> {{ e.venue.streetName }}, {{ e.venue.houseNb }}, {{ e.venue.locality.locality }}</i></p>'  +
-                    '<p><i class="fa fa-phone"> {{ e.venue.phone }}</i></p>' +
-                    '<p><i class="fa fa-desktop"><a href="{{ e.venue.website }}"> {{ e.venue.website }}</a></i></p>' +
-                '</div>' +
-                '</div>' +
+            '<div ' +
+            'id="siteNotice">' +
+            '</div>' +
+            '<b><h3 id="firstHeading">{{ e.name }}</h3></b>' +
+            '<div id="bodyContent">' +
+            '<a href="{{ path('event', {'slug':e.slug}) }}"><img src="{{ e.flyer.url }}" alt="{{ e.name }}" width="300px"/></a>' +
+            '<p>{{ e.description }}</p>' +
+
+            '<div class="address">' +
+                {% if e.venue %}
+            '<p><i class="fa fa-address-book"> {{ e.venue.streetName }}, {{ e.venue.houseNb }}, {{ e.venue.locality.locality }}</i></p>' +
+            '<p><i class="fa fa-phone"> {{ e.venue.phone }}</i></p>' +
+            '<p><i class="fa fa-desktop"><a href="{{ e.venue.website }}"> {{ e.venue.website }}</a></i></p>' +
+                {% endif %}
+            '</div>' +
+            '</div>' +
             '</div>';
 
-
+        {% if e.venue %}
         var venue = {lat:{{ e.venue.lat }}, lng: {{ e.venue.lng }} };
+
+
         var marker = new google.maps.Marker({
             position: venue,
             icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Classical_music_%E2%80%93_Culture_%26_Entertainment_%E2%80%93_Default.png',
@@ -141,6 +146,8 @@
         });
 
         addInfoWindowToMarker(map, marker, contentString);
+
+        {% endif %}
 
         {% endfor %}
 

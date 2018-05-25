@@ -21,7 +21,8 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 class RegistrationController extends Controller
 {
 
-    /**
+    /** INSCRIPTION D'UN NOUVEL UTILISATEUR
+     *
      * @param Request $request
      * @return mixed
      * @Route("/registration", name="registration")
@@ -29,7 +30,7 @@ class RegistrationController extends Controller
      */
     public function registration(Request $request, EncoderFactoryInterface $encoderFactory, Mailer $mailer)
     {
-
+        //créer un utilisateur temporaire
         $tempuser = new TempUser();
 
         $form = $this->createForm(TempUserType::class, $tempuser, ['method'=>'POST']);
@@ -39,6 +40,7 @@ class RegistrationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()){
 
+            //hashage du password
             $plainPassword = $tempuser->getPassword();
             $encoder = $encoderFactory->getEncoder($tempuser);
             $encoded = $encoder->encodePassword($plainPassword, '');
@@ -46,7 +48,8 @@ class RegistrationController extends Controller
             $registrationdate = $tempuser->getRegistrationDate()->format('d-m-Y');
             $mail = $tempuser->getMail();
 
-            $token = sha1($encoded.$registrationdate.$mail);
+            //création d'un token unique
+            $token = sha1($registrationdate.$mail);
 
             $tempuser->setToken($token);
             $tempuser->setPassword($encoded);
@@ -57,6 +60,7 @@ class RegistrationController extends Controller
 
             $this->addFlash('success', 'Veuillez confirmer votre inscription via le mail envoyé');
 
+            //envoi du mail avec le service Mailer
             $subject = 'Nouvelle inscription';
             $body = $this->renderView('pages/registration/registration-mail.html.twig', array('tempuser'=>$tempuser));
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -54,6 +55,7 @@ class Event
 
     /**
      * @ORM\ManyToOne(targetEntity="Venue", inversedBy="events")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $venue;
 
@@ -63,15 +65,33 @@ class Event
     private $styles;
 
     /**
-     * @ORM\OneToOne(targetEntity="Image")
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      */
-    private $folder;
+    private $flyer;
 
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=50, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UnsubscribedBand", mappedBy="event", cascade={"persist"})
+     */
+    private $unsubscribedBands;
+
+    /**
+     * @ORM\OneToOne(targetEntity="UnsubscribedVenue", cascade={"persist"})
+     */
+    private $unsubscribedVenue;
+
+    public function __construct()
+    {
+        $this->styles = new ArrayCollection();
+        $this->bands = new ArrayCollection();
+        $this->unsubscribedBands = new ArrayCollection();
+
+    }
 
     /**
      * @return mixed
@@ -228,18 +248,19 @@ class Event
     /**
      * @return mixed
      */
-    public function getFolder()
+    public function getFlyer()
     {
-        return $this->folder;
+        return $this->flyer;
     }
 
     /**
-     * @param mixed $folder
+     * @param mixed $flyer
      */
-    public function setFolder($folder)
+    public function setFlyer($flyer)
     {
-        $this->folder = $folder;
+        $this->flyer = $flyer;
     }
+
 
     /**
      * @return mixed
@@ -256,6 +277,69 @@ class Event
     {
         $this->slug = $slug;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUnsubscribedBands()
+    {
+        return $this->unsubscribedBands;
+    }
+
+    /**
+     * @param mixed $unsubscribedBands
+     */
+    public function setUnsubscribedBands($unsubscribedBands)
+    {
+        $this->unsubscribedBands = $unsubscribedBands;
+    }
+
+    /**
+     * @param UnsubscribedBand $unsubscribedBand
+     * @return ArrayCollection
+     */
+    public function addUnsubscribedBand(UnsubscribedBand $unsubscribedBand)
+    {
+
+        if(! $this->unsubscribedBands->contains($unsubscribedBand)){
+            $unsubscribedBand->setEvent($this);
+            $this->unsubscribedBands->add($unsubscribedBand);
+        }
+
+        return $this->unsubscribedBands;
+
+    }
+
+    /**
+     * @param UnsubscribedBand $unsubscribedBand
+     * @return mixed
+     */
+    public function removeUnsubscribedBand(UnsubscribedBand $unsubscribedBand)
+    {
+        if($this->unsubscribedBands->contains($unsubscribedBand)){
+            $this->unsubscribedBands->removeElement($unsubscribedBand);
+        }
+        return $this->getName();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getUnsubscribedVenue()
+    {
+        return $this->unsubscribedVenue;
+    }
+
+    /**
+     * @param mixed $unsubscribedVenue
+     */
+    public function setUnsubscribedVenue($unsubscribedVenue)
+    {
+        $this->unsubscribedVenue = $unsubscribedVenue;
+    }
+
+
 
 
 

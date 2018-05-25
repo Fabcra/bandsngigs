@@ -45,7 +45,7 @@ class EventData extends Fixture implements DependentFixtureInterface
            $event->setVenue($this->getReference('venue'. $v));
            $event->setStyles($this->getReference('style'. $s));
            $x=$i+64;
-           $event->setFolder($this->getReference('image'. $x));
+           $event->setFlyer($this->getReference('image'. $x));
 
 
            $manager->persist($event);

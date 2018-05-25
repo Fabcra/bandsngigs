@@ -74,6 +74,7 @@ class MyGoogleAuthenticator extends SocialAuthenticator
             $user->setEmail($googleUser->getEmail());
             $user->setRegistrationDate(new \DateTime('now'));
             $user->setValid(true);
+            $user->setRoles(['ROLE_USER']);
 
 
             $avatar = new Image();

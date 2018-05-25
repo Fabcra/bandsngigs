@@ -36,7 +36,7 @@ class UserController extends Controller
     }
 
 
-    /**
+    /** MODIFIER UN PROFIL UTILISATEUR
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/profile", name="profile")

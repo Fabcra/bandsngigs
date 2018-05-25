@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class VenueController extends Controller
 {
 
-    /**
+    /** CREER UN NOUVEAU CAFE-CONCERT
      * @param Request $request
      * @param FileUploader $fileUploader
      * @return string
@@ -40,6 +40,7 @@ class VenueController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // upload de l'image
             $img = $venue->getPhoto();
             $file = $img->getFile();
             $fileName = $fileUploader->upload($file);
@@ -47,6 +48,8 @@ class VenueController extends Controller
             $img->setUrl('/uploads/img/'.$fileName);
 
             $em = $this->getDoctrine()->getManager();
+
+            // l'utilisateur est considéré comme gestionnaire du profil café-concert
             $venue->setUsers($user);
 
             $em->persist($venue);
@@ -62,7 +65,7 @@ class VenueController extends Controller
         ]);
     }
 
-    /**
+    /** LISER LES CAFES-CONCERT
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/venues", name="venues")
@@ -74,6 +77,7 @@ class VenueController extends Controller
 
         $venues = $doctrine->getRepository(Venue::class)->findAll();
 
+        //pagination
         $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
@@ -88,7 +92,8 @@ class VenueController extends Controller
 
     }
 
-    /**
+    /** AFFICHER LA PAGE DU CAFE-CONCERT
+     *
      * @Route("/venues/{slug}", name="venue"))
      */
     public function viewAction($slug)

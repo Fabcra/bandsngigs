@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchController extends Controller
 {
 
-    /**
+    /** RECHERCHE D'EVENEMENTS DANS LA PAGE D'ACCUEIL
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/search", name="search")
@@ -40,9 +40,11 @@ class SearchController extends Controller
 
         $repo = $doctrine->getRepository(Event::class);
 
+        //appel de la fonction search dans EventRepository
         $events = $repo->search($params);
 
 
+        //pagination du résultat
         $paginator = $this->get('knp_paginator');
 
         $result = $paginator->paginate(

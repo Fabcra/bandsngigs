@@ -1,3 +1,5 @@
+{# PAGE D'UN GROUPE #}
+
 {% extends "pages/default/layout.html.twig" %}
 
 {% block content %}
@@ -162,7 +164,7 @@
                                             {% for e in band.events %}
                                                 <li class="clearfix">
                                                     <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                       class="widget-posts-img"><img src="{{ e.folder.url }}"
+                                                       class="widget-posts-img"><img src="{{ e.flyer.url }}"
                                                                                      alt="{{ e.name }}"></a>
                                                     <div class="widget-posts-descr">
                                                         <a href="{{ path('event', {'slug':e.slug}) }}"

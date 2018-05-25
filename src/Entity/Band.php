@@ -389,10 +389,10 @@ class Band
         return $this->unscribedMembers;
     }
 
-
-
-
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
 
 }

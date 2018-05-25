@@ -32,6 +32,11 @@ class Style
     private $bands;
 
     /**
+     * @ORM\ManyToMany(targetEntity="UnsubscribedBand", mappedBy="styles")
+     */
+    private $unsubscribedBands;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Venue", mappedBy="styles")
      */
     private $venues;
@@ -134,4 +139,22 @@ class Style
     {
         return $this->getStyle();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUnsubscribedBands()
+    {
+        return $this->unsubscribedBands;
+    }
+
+    /**
+     * @param mixed $unsubscribedBands
+     */
+    public function setUnsubscribedBands($unsubscribedBands)
+    {
+        $this->unsubscribedBands = $unsubscribedBands;
+    }
+
+
 }

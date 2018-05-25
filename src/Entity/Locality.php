@@ -36,6 +36,12 @@ class Locality
      */
     private $venues;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="UnsubscribedVenue", mappedBy="locality")
+     */
+    private $unsubscribedVenues;
+
     /**
      * @return mixed
      */
@@ -109,6 +115,24 @@ class Locality
     {
         $this->venues = $venues;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUnsubscribedVenues()
+    {
+        return $this->unsubscribedVenues;
+    }
+
+    /**
+     * @param mixed $unsubscribedVenues
+     */
+    public function setUnsubscribedVenues($unsubscribedVenues)
+    {
+        $this->unsubscribedVenues = $unsubscribedVenues;
+    }
+
+
 
 
     public function __toString()

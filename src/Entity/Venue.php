@@ -394,7 +394,10 @@ class Venue
         $this->slug = $slug;
     }
 
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
 
 }
