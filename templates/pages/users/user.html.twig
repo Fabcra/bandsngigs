@@ -2,7 +2,6 @@
 
 
 {% block content %}
-    {% dump user.fullName %}
     <!-- wrapper -->
     <div id="wrapper">
         <!--Content -->
@@ -120,7 +119,7 @@
                                                         <li class="clearfix">
                                                             <a href="{{ path('event', {'slug':e.slug}) }}"
                                                                class="widget-posts-img"><img
-                                                                        src="{{ e.folder.url }}"
+                                                                        src="{{ e.flyer.url }}"
                                                                         alt="{{ e.name }}"></a>
                                                             <div class="widget-posts-descr">
                                                                 <a href="{{ path('event', {'slug':e.slug}) }}"

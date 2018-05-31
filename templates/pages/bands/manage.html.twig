@@ -1,0 +1,34 @@
+{% extends "pages/users/layout.html.twig" %}
+
+
+    {% block right %}
+        <div class="col-md-9">
+            <section class="gray-bg no-pading no-top-padding" id="sec1">
+                <div class="col-list-wrap  center-col-list-wrap left-list">
+
+                    <div class="container">
+
+                        <!-- list-main-wrap-->
+                        <div class="list-main-wrap fl-wrap card-listing">
+                            <div class="container">
+                                <div class="section-title">
+                                    <h2>Manage bands</h2>
+                                    <div class="section-subtitle">Manage bands</div>
+                                    <span class="section-separator"></span>
+                                    <p>Manage your bands</p>
+                                </div>
+                            </div>
+                            {% if bands is empty %}
+                            <p>You have no band</p>
+                                <a href="{{ path("band-new") }}" class="btn transparent-btn custom-scroll-link">Create yours <i class="fa fa-music"></i></a>
+
+                            {% endif %}
+                            {% include "pages/bands/list.html.twig" %}
+                        </div>
+                        <!-- list-main-wrap end-->
+                    </div>
+                </div>
+            </section>
+        </div>
+    {% endblock %}
+

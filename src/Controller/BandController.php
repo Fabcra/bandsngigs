@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\Band;
+use App\Entity\Image;
 use App\Form\BandType;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -26,27 +27,22 @@ class BandController extends Controller
      * @Route("bands/new", name="band-new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, FileUploader $fileUploader)
+    public function newBand(Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $band = new Band();
-
-
         $user = $this->getUser();
 
         $form = $this->createForm(BandType::class, $band, ['method' => 'POST']);
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $img = $band->getLogo();
-
             $file = $img->getFile();
-
             $fileName = $fileUploader->upload($file);
-
 
             $img->setUrl('/uploads/img/' . $fileName);
             $em = $this->getDoctrine()->getManager();
@@ -54,8 +50,6 @@ class BandController extends Controller
             $band->setUsers($user);
 
             $em->persist($band);
-
-
             $em->flush();
 
             $this->addFlash('success', 'Vous avez créé le groupe ' . $band->getName());
@@ -73,7 +67,7 @@ class BandController extends Controller
      *
      * @Route("/bands", name="bands")
      */
-    public function listAction(Request $request)
+    public function listBand(Request $request)
     {
 
         $doctrine = $this->getDoctrine();
@@ -95,13 +89,90 @@ class BandController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("bands/update/{id}", name="bands-update")
+     */
+    public function updateBand(Request $request, FileUploader $fileUploader, $id)
+    {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository(Band::class);
+        $band = $repo->findOneById($id);
+
+        $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($id);
+
+        $members = $band->getUsers();
+        $user = $this->getUser();
+        $id = $user->getId();
+
+
+        $form = $this->createForm(BandType::class, $band, ['method' => 'POST']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($band);
+            $em->flush();
+
+            $this->addFlash('success', 'Modification effectuée avec succès');
+
+            return $this->redirectToRoute('bands-manage');
+
+        }
+
+        foreach ($members as $member) {
+
+            $member_id = $member->getId();
+
+            if ($member_id === $id) {
+                return $this->render('pages/bands/update.html.twig', [
+                    'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
+                ]);
+            } else {
+                return $this->redirectToRoute('homepage');
+            }
+
+        }
+
+    }
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/bands/manage", name="bands-manage")
+     */
+    public function manageBands()
+    {
+
+
+        $user = $this->getUser();
+        $id = $user->getId();
+        $doctrine = $this->getDoctrine();
+        $bands = $doctrine->getRepository(Band::class)->findBandsByUser($id);
+
+        return $this->render('pages/bands/manage.html.twig', [
+            'bands' => $bands
+        ]);
+
+    }
+
     /** AFFICHE LA PAGE DU GROUPE
      *
      * @param $slug
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("bands/{slug}", name="band")
      */
-    public function showAction($slug)
+    public function showBand($slug)
     {
 
         $doctrine = $this->getDoctrine();
@@ -111,8 +182,6 @@ class BandController extends Controller
 
         return $this->render('pages/bands/band.html.twig', ['band' => $band]);
 
-
     }
-
 
 }

@@ -1,22 +1,7 @@
-{% extends "pages/default/layout.html.twig" %}
+{% extends "pages/users/layout.html.twig" %}
 
-{% block content %}
-        <!--content -->
-        <div class="content">
-            <!--section -->
-            <section>
-                <!-- container -->
-                <div class="container">
-                    <!-- profile-edit-wrap -->
-                    <div class="profile-edit-wrap">
-                        <div class="profile-edit-page-header">
-                            <h2>Edit profile</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        {% block left %}
-                            {% include 'pages/users/nav.html.twig' %}
-                        {% endblock %}
+
+
                         {% block right %}
                             <div class="col-md-7">
                                 <!-- profile-edit-container-->
@@ -77,19 +62,10 @@
                                     {% endif %}
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
-                                            <a href="{{ path('image') }}" class="colorwhite"><i class="fa fa-upload"></i> Upload Photo</a>
+                                            <a href="{{ path('image', {'type':'avatar', 'id':app.user.id}) }}" class="colorwhite"><i
+                                                        class="fa fa-upload"></i> Upload Photo</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         {% endblock %}
-                    </div>
-                </div>
-                <!--profile-edit-wrap end -->
-                <!--container end -->
-            </section>
-            <!-- section end -->
-            <div class="limit-box fl-wrap"></div>
-
-        </div>
-{% endblock %}

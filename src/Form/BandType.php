@@ -22,14 +22,16 @@ class BandType extends AbstractType
             ->add('description')
             ->add('locality')
             ->add('styles')
-            ->add('logo', ImageType::class)
+            ->add('logo', ImageType::class, array(
+                'label'=>false
+            ))
             ->add('users', EntityType::class, [
                 'multiple' => true,
                 'class' => User::class,
-                'label' => 'add subscribed members'
+                'label' => 'Subscribed members'
             ])
             ->add('unscribedMembers', CollectionType::class, array(
-                'label'=>false,
+                'label'=>'Unscribed Members',
                 'entry_type' => UnscribedMemberType::class,
                 'entry_options' => array('label' => false),
                 'allow_add' => true,

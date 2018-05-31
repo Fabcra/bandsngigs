@@ -1,0 +1,29 @@
+{% extends 'pages/users/layout.html.twig' %}
+
+{% block right %}
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>Galerie d'images</h4>
+            </div>
+
+            <div class="custom-form">
+                {{ form_start(galleryForm) }}
+                <div>
+                    {{ form_row(galleryForm.file) }}
+                </div>
+
+                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                            class="fa fa-angle-right"></i></button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    {{ form_end(galleryForm) }}
+
+
+{% endblock %}

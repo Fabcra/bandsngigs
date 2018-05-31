@@ -77,11 +77,13 @@ class Event
 
     /**
      * @ORM\OneToMany(targetEntity="UnsubscribedBand", mappedBy="event", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $unsubscribedBands;
 
     /**
      * @ORM\OneToOne(targetEntity="UnsubscribedVenue", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $unsubscribedVenue;
 

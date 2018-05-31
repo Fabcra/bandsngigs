@@ -19,19 +19,20 @@ class BandRepository extends ServiceEntityRepository
         parent::__construct($registry, Band::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function findBandsByUser($id)
     {
-        return $this->createQueryBuilder('b')
-            ->where('b.something = :value')->setParameter('value', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
+        $qb = $this->createQueryBuilder('band');
+
+        $qb->leftJoin('band.users', 'users')
+            ->andWhere('users.id like :id')
+            ->setParameter('id', $id);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+
+    }
 
 
 }

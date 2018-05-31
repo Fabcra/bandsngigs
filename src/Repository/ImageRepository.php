@@ -19,16 +19,16 @@ class ImageRepository extends ServiceEntityRepository
         parent::__construct($registry, Image::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function findImagesByBand($id)
     {
-        return $this->createQueryBuilder('i')
-            ->where('i.something = :value')->setParameter('value', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+
+        $qb = $this->createQueryBuilder('i');
+        $qb->leftJoin('i.band', 'b')
+            ->andWhere('b.id like :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()
+            ->getResult();
+
     }
-    */
 }

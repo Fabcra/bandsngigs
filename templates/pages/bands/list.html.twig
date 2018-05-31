@@ -1,63 +1,52 @@
-<!--  section  -->
-<section class="gray-bg no-pading no-top-padding" id="sec1">
-    <div class="col-list-wrap  center-col-list-wrap left-list">
+{% for b in bands %}
+    <!-- listing-item -->
+    <div class="listing-item">
 
-        <div class="container">
+        <article class="geodir-category-listing fl-wrap">
+            <a href="{{ path('band', {'slug':b.slug}) }}">
+                <div class="geodir-category-img">
 
-            <!-- list-main-wrap-->
-            <div class="list-main-wrap fl-wrap card-listing">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Subscribed bands</h2>
-                        <div class="section-subtitle">Subscribed Bands</div>
-                        <span class="section-separator"></span>
-                        <p>Browse the latest articles from our blog.</p>
-                    </div>
+                    <img src="{{ b.logo.url }}" alt="" width="200px">
+
+                    <div class="overlay"></div>
+                    <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
                 </div>
-                {% for b in bands %}
-                    <!-- listing-item -->
-                    <div class="listing-item">
+            </a>
+            <div class="geodir-category-content fl-wrap">
+                {% for s in b.styles %}
+                    <a class="listing-geodir-category" href="#">{{ s.style }}</a>
+                {% endfor %}
+                {% for u in b.users %}
+                    <div class="listing-avatar"><a href="{{ path('user', {'id':u.id}) }}"><img
 
-                        <article class="geodir-category-listing fl-wrap">
-                            <div class="geodir-category-img">
-                                <img src="{{ b.logo.url }}" alt="" width="200px">
-                                <div class="overlay"></div>
-                                <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
-                            </div>
-                            <div class="geodir-category-content fl-wrap">
-                                {% for s in b.styles %}
-                                    <a class="listing-geodir-category" href="#">{{ s.style }}</a>
-                                {% endfor %}
-                                {% for u in b.users %}
-                                <div class="listing-avatar"><a href="{{ path('user', {'id':u.id}) }}"><img
-
-                                                src="{{ u.avatar.url }}"
-                                                alt="{{ u.firstName }}"></a>
-                                    <span class="avatar-tooltip">With <strong>{{ u.firstName}}</strong></span>
-                                </div>
-                                {% endfor %}
-                                <h3><a href="{{ path('band',{'slug':b.slug}) }}">{{ b.name }}</a></h3>
-                                <p>{{ b.description }}</p>
-                                <div class="geodir-category-options fl-wrap">
-
-                                    <div class="geodir-category-location"><a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ b.locality.locality }}"><i class="fa fa-map-marker"
-                                                                                         aria-hidden="true"></i>
-                                            {{ b.locality.locality }}</a></div>
-                                </div>
-                            </div>
-                        </article>
-
+                                    src="{{ u.avatar.url }}"
+                                    alt="{{ u.firstName }}"></a>
+                        <span class="avatar-tooltip">With <strong>{{ u.firstName }}</strong></span>
                     </div>
                 {% endfor %}
-                <!-- listing-item end-->
+                <h3><a href="{{ path('band',{'slug':b.slug}) }}">{{ b.name }}</a></h3>
+                <p>{{ b.description }}</p>
+                <div class="geodir-category-options fl-wrap">
 
-                <!-- pagination-->
-                <div class="pagination">
-                    {{ knp_pagination_render(bands) }}
+                    <div class="geodir-category-location">
+                        <a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ b.locality.locality }}">
+                            <i class="fa fa-map-marker"
+                               aria-hidden="true"></i>
+                            {{ b.locality.locality }}</a>
+
+                    </div>
+
+                    {% for u in b.users %}
+
+                        {% if app.user.slug == u.slug %}
+                            <a href="{{ path('bands-update', {'id':b.id}) }}"><i class="fa fa-star"
+                                                                                 aria-hidden="true"></i> update</a>
+                        {% endif %}
+                    {% endfor %}
+
                 </div>
             </div>
-            <!-- list-main-wrap end-->
-        </div>
+        </article>
+
     </div>
-</section>
-<!--  section  end-->
+{% endfor %}

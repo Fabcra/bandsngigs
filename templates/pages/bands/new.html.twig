@@ -57,7 +57,8 @@
                             </div>
 
                             <!-- profile-edit-container end-->
-                            {{ form_end(bandForm) }}
+                            {{ form_widget(bandForm._token) }}
+                            {{ form_end(bandForm, {'render_rest':false}) }}
                         </div>
                     {% endblock %}
                 </div>
