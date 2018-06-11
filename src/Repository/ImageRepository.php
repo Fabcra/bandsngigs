@@ -31,4 +31,15 @@ class ImageRepository extends ServiceEntityRepository
             ->getResult();
 
     }
+
+    public function findImagesByVenue($id)
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->leftJoin('i.venue', 'v')
+            ->andWhere('v.id like :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()
+            ->getResult();
+    }
 }

@@ -7,21 +7,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VenueType extends AbstractType
+class ManagerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('streetName')
-            ->add('houseNb')
-            ->add('mail')
-            ->add('website')
-            ->add('phone')
-            ->add('locality')
-            ->add('styles')
-            ->add('photo', ImageType::class)
+            ->add('managers')
         ;
     }
 

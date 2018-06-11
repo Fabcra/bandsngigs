@@ -29,11 +29,12 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band1->setMail($faker->email);
         $band1->setPhone($faker->phoneNumber);
         $band1->setWebsite($faker->url);
+        $band1->setRegistrationDate($faker->dateTimeThisYear());
 
 
-        $band1->setUsers($this->getReference('user1'));
-        $band1->setUsers($this->getReference('user2'));
-        $band1->setUsers($this->getReference('user3'));
+        $band1->setMembers($this->getReference('user1'));
+        $band1->setMembers($this->getReference('user2'));
+        $band1->setMembers($this->getReference('user3'));
 
         $band1->setLogo($this->getReference('image49'));
         $band1->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -52,10 +53,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band2->setMail($faker->email);
         $band2->setPhone($faker->phoneNumber);
         $band2->setWebsite($faker->url);
+        $band2->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band2->setUsers($this->getReference('user4'));
-            $band2->setUsers($this->getReference('user5'));
-            $band2->setUsers($this->getReference('user6'));
+            $band2->setMembers($this->getReference('user4'));
+            $band2->setMembers($this->getReference('user5'));
+            $band2->setMembers($this->getReference('user6'));
 
         $band2->setLogo($this->getReference('image50'));
         $band2->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -69,15 +71,17 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band3 = new Band();
 
-        $band3->setName('Twelve Foot Ninja');
+        $band3->setName('Two Foot Ninja');
         $band3->setDescription($faker->realText());
         $band3->setMail($faker->email);
         $band3->setPhone($faker->phoneNumber);
         $band3->setWebsite($faker->url);
+        $band3->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band3->setUsers($this->getReference('user7'));
-            $band3->setUsers($this->getReference('user8'));
-            $band3->setUsers($this->getReference('user9'));
+
+            $band3->setMembers($this->getReference('user7'));
+            $band3->setMembers($this->getReference('user8'));
+            $band3->setMembers($this->getReference('user9'));
 
         $band3->setLogo($this->getReference('image51'));
         $band3->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -95,10 +99,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band4->setMail($faker->email);
         $band4->setPhone($faker->phoneNumber);
         $band4->setWebsite($faker->url);
+        $band4->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band4->setUsers($this->getReference('user10'));
-            $band4->setUsers($this->getReference('user11'));
-            $band4->setUsers($this->getReference('user12'));
+            $band4->setMembers($this->getReference('user10'));
+            $band4->setMembers($this->getReference('user11'));
+            $band4->setMembers($this->getReference('user12'));
 
         $band4->setLogo($this->getReference('image52'));
         $band4->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -117,10 +122,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band5->setMail($faker->email);
         $band5->setPhone($faker->phoneNumber);
         $band5->setWebsite($faker->url);
+        $band5->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band5->setUsers($this->getReference('user13'));
-            $band5->setUsers($this->getReference('user14'));
-            $band5->setUsers($this->getReference('user15'));
+            $band5->setMembers($this->getReference('user13'));
+            $band5->setMembers($this->getReference('user14'));
+            $band5->setMembers($this->getReference('user15'));
 
         $band5->setLogo($this->getReference('image53'));
         $band5->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -139,10 +145,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band6->setMail($faker->email);
         $band6->setPhone($faker->phoneNumber);
         $band6->setWebsite($faker->url);
+        $band6->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band6->setUsers($this->getReference('user16'));
-            $band6->setUsers($this->getReference('user17'));
-            $band6->setUsers($this->getReference('user18'));
+            $band6->setMembers($this->getReference('user16'));
+            $band6->setMembers($this->getReference('user17'));
+            $band6->setMembers($this->getReference('user18'));
 
         $band6->setLogo($this->getReference('image54'));
         $band6->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -161,10 +168,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band7->setMail($faker->email);
         $band7->setPhone($faker->phoneNumber);
         $band7->setWebsite($faker->url);
+        $band7->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band7->setUsers($this->getReference('user19'));
-            $band7->setUsers($this->getReference('user20'));
-            $band7->setUsers($this->getReference('user21'));
+            $band7->setMembers($this->getReference('user19'));
+            $band7->setMembers($this->getReference('user20'));
+            $band7->setMembers($this->getReference('user21'));
 
         $band7->setLogo($this->getReference('image55'));
         $band7->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -183,10 +191,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band8->setMail($faker->email);
         $band8->setPhone($faker->phoneNumber);
         $band8->setWebsite($faker->url);
+        $band8->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band8->setUsers($this->getReference('user22'));
-            $band8->setUsers($this->getReference('user23'));
-            $band8->setUsers($this->getReference('user24'));
+            $band8->setMembers($this->getReference('user22'));
+            $band8->setMembers($this->getReference('user23'));
+            $band8->setMembers($this->getReference('user24'));
 
         $band8->setLogo($this->getReference('image56'));
         $band8->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -205,10 +214,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band9->setMail($faker->email);
         $band9->setPhone($faker->phoneNumber);
         $band9->setWebsite($faker->url);
+        $band9->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band9->setUsers($this->getReference('user25'));
-            $band9->setUsers($this->getReference('user26'));
-            $band9->setUsers($this->getReference('user27'));
+            $band9->setMembers($this->getReference('user25'));
+            $band9->setMembers($this->getReference('user26'));
+            $band9->setMembers($this->getReference('user27'));
 
         $band9->setLogo($this->getReference('image57'));
         $band9->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -227,10 +237,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band10->setMail($faker->email);
         $band10->setPhone($faker->phoneNumber);
         $band10->setWebsite($faker->url);
+        $band10->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band10->setUsers($this->getReference('user28'));
-            $band10->setUsers($this->getReference('user29'));
-            $band10->setUsers($this->getReference('user30'));
+            $band10->setMembers($this->getReference('user28'));
+            $band10->setMembers($this->getReference('user29'));
+            $band10->setMembers($this->getReference('user30'));
 
         $band10->setLogo($this->getReference('image58'));
         $band10->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -249,10 +260,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band11->setMail($faker->email);
         $band11->setPhone($faker->phoneNumber);
         $band11->setWebsite($faker->url);
+        $band11->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band11->setUsers($this->getReference('user31'));
-            $band11->setUsers($this->getReference('user32'));
-            $band11->setUsers($this->getReference('user33'));
+            $band11->setMembers($this->getReference('user31'));
+            $band11->setMembers($this->getReference('user32'));
+            $band11->setMembers($this->getReference('user33'));
 
         $band11->setLogo($this->getReference('image59'));
         $band11->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -266,15 +278,16 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band12 = new Band();
 
-        $band12->setName('Gun\'s n Flowers');
+        $band12->setName('Beers n Flowers');
         $band12->setDescription($faker->realText());
         $band12->setMail($faker->email);
         $band12->setPhone($faker->phoneNumber);
         $band12->setWebsite($faker->url);
+        $band12->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band12->setUsers($this->getReference('user34'));
-            $band12->setUsers($this->getReference('user35'));
-            $band12->setUsers($this->getReference('user36'));
+            $band12->setMembers($this->getReference('user34'));
+            $band12->setMembers($this->getReference('user35'));
+            $band12->setMembers($this->getReference('user36'));
 
         $band12->setLogo($this->getReference('image60'));
         $band12->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -293,10 +306,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band13->setMail($faker->email);
         $band13->setPhone($faker->phoneNumber);
         $band13->setWebsite($faker->url);
+        $band13->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band13->setUsers($this->getReference('user37'));
-            $band13->setUsers($this->getReference('user38'));
-            $band13->setUsers($this->getReference('user39'));
+            $band13->setMembers($this->getReference('user37'));
+            $band13->setMembers($this->getReference('user38'));
+            $band13->setMembers($this->getReference('user39'));
 
         $band13->setLogo($this->getReference('image61'));
         $band13->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -315,10 +329,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band14->setMail($faker->email);
         $band14->setPhone($faker->phoneNumber);
         $band14->setWebsite($faker->url);
+        $band14->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band14->setUsers($this->getReference('user40'));
-            $band14->setUsers($this->getReference('user41'));
-            $band14->setUsers($this->getReference('user42'));
+            $band14->setMembers($this->getReference('user40'));
+            $band14->setMembers($this->getReference('user41'));
+            $band14->setMembers($this->getReference('user42'));
 
         $band14->setLogo($this->getReference('image62'));
         $band14->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -337,10 +352,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band15->setMail($faker->email);
         $band15->setPhone($faker->phoneNumber);
         $band15->setWebsite($faker->url);
+        $band15->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band15->setUsers($this->getReference('user43'));
-            $band15->setUsers($this->getReference('user44'));
-            $band15->setUsers($this->getReference('user45'));
+            $band15->setMembers($this->getReference('user43'));
+            $band15->setMembers($this->getReference('user44'));
+            $band15->setMembers($this->getReference('user45'));
 
         $band15->setLogo($this->getReference('image63'));
         $band15->setLocality($this->getReference('locality' . mt_rand(1, 50)));
@@ -359,10 +375,11 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band16->setMail($faker->email);
         $band16->setPhone($faker->phoneNumber);
         $band16->setWebsite($faker->url);
+        $band16->setRegistrationDate($faker->dateTimeThisYear());
 
-            $band16->setUsers($this->getReference('user46'));
-            $band16->setUsers($this->getReference('user47'));
-            $band16->setUsers($this->getReference('user48'));
+            $band16->setMembers($this->getReference('user46'));
+            $band16->setMembers($this->getReference('user47'));
+            $band16->setMembers($this->getReference('user48'));
 
         $band16->setLogo($this->getReference('image64'));
         $band16->setLocality($this->getReference('locality' . mt_rand(1, 50)));

@@ -29,7 +29,8 @@ class Image
     protected $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Band", inversedBy="gallery")
+     * @ORM\ManyToOne(targetEntity="Band", inversedBy="gallery", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $band;
 
@@ -111,6 +112,10 @@ class Image
         $this->file = $file;
     }
 
+    public function __toString()
+    {
+        return $this->url;
+    }
 
 
 }

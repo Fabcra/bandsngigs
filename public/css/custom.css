@@ -1,24 +1,32 @@
-.floatleft{
-    float : left;
+.floatleft {
+    float: left;
 }
 
-.fontsize14{
+.floatright {
+    float: right;
+}
+
+.fontsize14 {
     font-size: 14px;
 }
 
-.colorwhite{
-    color : #fff;
+.colorwhite {
+    color: #fff;
 }
 
-.margintop20{
+.margintop20 {
     margin-top: 20px;
 }
 
-.marginbottom20{
-    margin-bottom : 20px;
+.marginbottom20 {
+    margin-bottom: 20px;
 }
 
-.formbackground{
+.marginleft20 {
+    margin-left: 20px;
+}
+
+.formbackground {
     margin-top: 20px;
     background: #f9f9f9;
     border: 1px solid #eee;
@@ -67,10 +75,7 @@
     border-color: #ebccd1;
 }
 
-
 /* PROFILE */
-
-
 
 .check-user label:first-child {
     font-size: 14px;
@@ -89,15 +94,25 @@
     border: 1px solid #eee;
 }
 
-.input-age{
-    width : 50px;
+.input-age {
+    width: 50px;
 }
 
+.bigmarginright select {
+    margin-right: 800px;
+}
 
-.bigmarginright select{
-   margin-right : 800px;
+.logohome {
+
+    width: inherit !important;
+    max-height: 150px !important;
 
 }
+
+.fullwidth {
+    width: 100% !important;
+}
+
 
 
 

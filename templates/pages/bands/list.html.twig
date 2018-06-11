@@ -16,7 +16,7 @@
                 {% for s in b.styles %}
                     <a class="listing-geodir-category" href="#">{{ s.style }}</a>
                 {% endfor %}
-                {% for u in b.users %}
+                {% for u in b.members %}
                     <div class="listing-avatar"><a href="{{ path('user', {'id':u.id}) }}"><img
 
                                     src="{{ u.avatar.url }}"
@@ -36,14 +36,16 @@
 
                     </div>
 
-                    {% for u in b.users %}
+                    {% if app.user %}
+                        {% for u in b.members %}
 
-                        {% if app.user.slug == u.slug %}
-                            <a href="{{ path('bands-update', {'id':b.id}) }}"><i class="fa fa-star"
-                                                                                 aria-hidden="true"></i> update</a>
-                        {% endif %}
-                    {% endfor %}
+                            {% if app.user.slug == u.slug %}
+                                <a href="{{ path('bands-update', {'id':b.id}) }}"><i class="fa fa-star"
+                                                                                     aria-hidden="true"></i> update</a>
+                            {% endif %}
+                        {% endfor %}
 
+                    {% endif %}
                 </div>
             </div>
         </article>

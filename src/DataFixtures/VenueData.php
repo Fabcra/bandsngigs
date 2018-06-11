@@ -47,10 +47,11 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $venue->setLat($lat1 . '.' . $latlng2);
             $venue->setLng($lng1 . '.' . $latlng2);
             $venue->setWebsite('http://www.' . $faker->word . '.com');
+            $venue->setRegistrationDate($faker->dateTimeThisYear());
 
 
             for ($j = 1; $j < 3; $j++) {
-                $venue->setUsers($this->getReference('user' . $n[$j]));
+                $venue->setMembers($this->getReference('user' . $n[$j]));
             }
             $venue->setLocality($this->getReference('locality' . $l));
             $venue->setStyles($this->getReference('style' . $s));

@@ -1,55 +1,50 @@
-{% extends "pages/default/layout.html.twig" %}
+{% extends 'pages/bands/layout.html.twig' %}
+{% block right %}
+    {{ form_start(memberForm) }}
+    <div class="col-md-7">
 
-{% block content %}
-<!--content -->
-<div class="content">
-    <!--section -->
-    <section>
-        <!-- container -->
-        <div class="container">
-            <!-- profile-edit-wrap -->
-            <div class="profile-edit-wrap">
-                <div class="profile-edit-page-header">
-                    <h2>New band</h2>
-                </div>
+
+        <div class="custom-form">
+
+            <div class="check-user floatleft marginbottom20">
+                {{ form_row(memberForm.members, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
             </div>
-            <div class="row">
-                {% block left %}
-                    {% include 'pages/bands/nav.html.twig' %}
-                {% endblock %}
-                {% block right %}
-                <div class="col-md-7">
-                    <!-- profile-edit-container-->
-                    {{ form_start(bandForm, {attr:{novalidate:'novalidate'}}) }}
-                    <div class="profile-edit-container">
-                        <div class="profile-edit-header fl-wrap">
-                            <h4>My Account</h4>
-                        </div>
 
-                        <div class="custom-form">
+            <section class="check-user bigmarginright">
+                <p>You can add unscribed people in the website on your band page</p>
 
-                            <section class="check-user floatleft formbackground">
-                                <div class="col-md-6">
-                                    {{ form_row(bandForm.users) }}
-                                </div>
-                            </section>
+                <ul class="members"
+                    data-prototype="{{ form_row(memberForm.unscribedMembers.vars.prototype)|e }}">
+                    {% for m in memberForm.unscribedMembers %}
+                    <li>{{ form_row(m.nickName) }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
 
 
+            <button  class="btn  big-btn  color-bg flat-btn margintop20">Save Changes<i class="fa fa-angle-right"></i>
+            </button>
 
-                        </div>
+        </div>
+    </div>
+    {{ form_widget(memberForm._token) }}
+    {{ form_end(memberForm, {'render_rest':false}) }}
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/addmemberForm.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/deletemember.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/addmember.js') }}" type="text/javascript"></script>
 
 
-                        <!-- profile-edit-container end-->
-                        {{ form_end(bandForm) }}
-                    </div>
-                    {% endblock %}
-                </div>
-            </div>
-            <!--profile-edit-wrap end -->
-            <!--container end -->
-    </section>
-    <!-- section end -->
-    <div class="limit-box fl-wrap"></div>
 
-</div>
+
+
+
+
+
+
 {% endblock %}

@@ -17,6 +17,9 @@
                <!--second level -->
                 <ul>
                     <li><a href="{{ path('band-new') }}">New band</a></li>
+                    {% if app.user %}
+                    <li><a href="{{ path('bands-manage') }}">Manage Bands</a></li>
+                    {% endif %}
                 </ul>
 
             </li>

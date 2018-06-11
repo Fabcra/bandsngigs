@@ -4,7 +4,7 @@
 
             <ul class="client-carousel">
                 {% for b in bands %}
-                <li><a href="{{ path('band', {'slug':b.slug}) }}"><img src="{{ b.logo.url }}" alt=""></a></li>
+                        <li><a href="{{ path('band', {'slug':b.slug}) }}"><img src="{{ b.logo.url }}" alt="{{ b.name }}" class="logohome"></a></li>
                 {% endfor %}
             </ul>
 

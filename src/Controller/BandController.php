@@ -47,7 +47,7 @@ class BandController extends Controller
             $img->setUrl('/uploads/img/' . $fileName);
             $em = $this->getDoctrine()->getManager();
 
-            $band->setUsers($user);
+            $band->setMembers($user);
 
             $em->persist($band);
             $em->flush();
@@ -107,17 +107,19 @@ class BandController extends Controller
 
         $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($id);
 
-        $members = $band->getUsers();
+        $members = $band->getMembers();
         $user = $this->getUser();
         $id = $user->getId();
 
+        foreach ($members as $member) {
+            $member_id[] = $member->getId();
+        }
 
         $form = $this->createForm(BandType::class, $band, ['method' => 'POST']);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
 
             $em = $this->getDoctrine()->getManager();
 
@@ -126,22 +128,16 @@ class BandController extends Controller
 
             $this->addFlash('success', 'Modification effectuée avec succès');
 
-            return $this->redirectToRoute('bands-manage');
 
         }
 
-        foreach ($members as $member) {
-
-            $member_id = $member->getId();
-
-            if ($member_id === $id) {
-                return $this->render('pages/bands/update.html.twig', [
-                    'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
-                ]);
-            } else {
-                return $this->redirectToRoute('homepage');
-            }
-
+        if (in_array($id, $member_id)) {
+            return $this->render('pages/bands/update.html.twig', [
+                'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
+            ]);
+        } else {
+            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+            return $this->redirectToRoute('homepage');
         }
 
     }
@@ -153,8 +149,6 @@ class BandController extends Controller
      */
     public function manageBands()
     {
-
-
         $user = $this->getUser();
         $id = $user->getId();
         $doctrine = $this->getDoctrine();
@@ -183,5 +177,6 @@ class BandController extends Controller
         return $this->render('pages/bands/band.html.twig', ['band' => $band]);
 
     }
+
 
 }

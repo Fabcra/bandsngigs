@@ -111,7 +111,7 @@ class User implements UserInterface, \Serializable
     private $avatar;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Band", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="Band", mappedBy="members")
      */
     private $bands;
 
@@ -121,7 +121,7 @@ class User implements UserInterface, \Serializable
     private $events;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Venue", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="Venue", mappedBy="managers")
      */
     private $venues;
 

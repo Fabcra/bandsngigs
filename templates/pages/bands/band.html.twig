@@ -48,7 +48,7 @@
                                         <h3>Description</h3>
                                     </div>
                                     <p>{{ band.description }}</p>
-                                    {% for u in band.users %}
+                                    {% for u in band.members %}
                                         <div class="post-author"><a href="{{ path('user', {'id':u.id}) }}"><img
                                                         src="{{ u.avatar.url }}"
                                                         alt="{{ u.firstName }}"><span>{{ u.firstName }}</span></a>
@@ -102,7 +102,7 @@
                         <div class="box-widget-wrap">
 
                             <!--box-widget-item -->
-                            {% for u in band.users %}
+                            {% for u in band.members %}
                                 <div class="box-widget-item fl-wrap">
 
                                     <div class="box-widget list-author-widget">

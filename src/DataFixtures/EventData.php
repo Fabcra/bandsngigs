@@ -34,7 +34,7 @@ class EventData extends Fixture implements DependentFixtureInterface
 
            $event->setName($faker->word. "-LIVE SHOW");
            $event->setDescription($faker->text());
-           $event->setDate($faker->dateTimeThisYear());
+           $event->setDate($faker->dateTimeBetween('now', $endDate='+ 30 days'));
            $event->setTime($faker->dateTime());
            $event->setPrice('5');
 

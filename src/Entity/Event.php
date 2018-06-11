@@ -87,11 +87,17 @@ class Event
      */
     private $unsubscribedVenue;
 
+    /**
+     * @ORM\Column(name="registration_date", type="datetime")
+     */
+    private $registrationDate;
+
     public function __construct()
     {
         $this->styles = new ArrayCollection();
         $this->bands = new ArrayCollection();
         $this->unsubscribedBands = new ArrayCollection();
+        $this->registrationDate = new \DateTime();
 
     }
 
@@ -340,6 +346,23 @@ class Event
     {
         $this->unsubscribedVenue = $unsubscribedVenue;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+    }
+
 
 
 

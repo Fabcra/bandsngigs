@@ -4,7 +4,12 @@
             <!-- slideshow-item -->
             {% for b in bands %}
             <div class="slider-item fl-wrap">
-                <div class="bg" data-bg="{{ b.logo.url }}"></div>
+                {% if b.gallery is not empty %}
+                    <div class="bg" data-bg="{{ b.gallery[0].url }}"></div>
+                {% else %}
+                    <div class="bg" data-bg="{{ b.logo.url }}"></div>
+                {% endif %}
+
                 <div class="overlay"></div>
                 <div class="hero-section-wrap fl-wrap">
                     <div class="container">

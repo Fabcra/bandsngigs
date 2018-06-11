@@ -1,29 +1,22 @@
-{% extends 'pages/users/layout.html.twig' %}
+<div class="custom-form">
+    {{ form_start(galleryForm) }}
 
-{% block right %}
-    <div class="col-md-7">
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container">
-            <div class="profile-edit-header fl-wrap">
-                <h4>Galerie d'images</h4>
-            </div>
+    <div>
 
-            <div class="custom-form">
-                {{ form_start(galleryForm) }}
-                <div>
-                    {{ form_row(galleryForm.file) }}
-                </div>
-
-                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
-                            class="fa fa-angle-right"></i></button>
-            </div>
-
-
-        </div>
+        {{ form_row(galleryForm.file) }}
+        <button type="submit" class="btn  big-btn  color-bg flat-btn floatright">Load image<i
+                    class="fa fa-angle-right"></i></button>
 
     </div>
 
+
     {{ form_end(galleryForm) }}
+        <a href="{{ path('bands-update', {'id':id}) }}">
+            <button class="btn  big-btn  color-bg flat-btn marginleft20">Back</button>
+        </a>
+</div>
 
 
-{% endblock %}
+
+
+

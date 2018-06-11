@@ -57,7 +57,7 @@ class Venue
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="venues")
      */
-    private $users;
+    private $managers;
 
     /**
      * @ORM\ManyToOne(targetEntity="Locality", inversedBy="venues")
@@ -107,10 +107,16 @@ class Venue
      */
     private $slug;
 
+    /**
+     * @ORM\Column(name="registration_date", type="datetime")
+     */
+    private $registrationDate;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->managers = new ArrayCollection();
         $this->styles = new ArrayCollection();
+        $this->registrationDate = new \DateTime();
     }
 
     /**
@@ -205,18 +211,19 @@ class Venue
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getManagers()
     {
-        return $this->users;
+        return $this->managers;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $managers
      */
-    public function setUsers($users)
+    public function setManagers($managers)
     {
-        $this->users[] = $users;
+        $this->managers = $managers;
     }
+
 
     /**
      * @return mixed
@@ -398,6 +405,23 @@ class Venue
     {
         return $this->getName();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+    }
+
 
 
 }

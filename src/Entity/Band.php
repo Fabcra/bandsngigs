@@ -47,7 +47,7 @@ class Band
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="bands")
      */
-    private $users;
+    private $members;
 
 
     /**
@@ -75,6 +75,7 @@ class Band
 
     /**
      * @ORM\OneToMany(targetEntity="Image", mappedBy="band", cascade={"remove"})
+     *
      */
     private $gallery;
 
@@ -100,12 +101,19 @@ class Band
      */
     private $unscribedMembers;
 
+    /**
+     * @ORM\Column(name="registration_date", type="datetime")
+     */
+    private $registrationDate;
+
 
     public function __construct()
     {
         $this->styles = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->members = new ArrayCollection();
         $this->unscribedMembers = new ArrayCollection();
+        $this->gallery = new ArrayCollection();
+        $this->registrationDate = new \DateTime();
     }
 
 
@@ -185,18 +193,20 @@ class Band
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getMembers()
     {
-        return $this->users;
+        return $this->members;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $members
      */
-    public function setUsers($users)
+    public function setMembers($members)
     {
-        $this->users[] = $users;
+        $this->members[] = $members;
     }
+
+
 
     /**
      * @return mixed
@@ -388,6 +398,24 @@ class Band
         }
         return $this->unscribedMembers;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param mixed $registrationDate
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+    }
+
+
 
     public function __toString()
     {

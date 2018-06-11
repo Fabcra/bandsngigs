@@ -1,18 +1,4 @@
-<!--  section  -->
-<section class="gray-bg no-pading no-top-padding" id="sec1">
-    <div class="col-list-wrap  center-col-list-wrap left-list">
-        <div class="container">
 
-            <!-- list-main-wrap-->
-            <div class="list-main-wrap fl-wrap card-listing">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Subscribed Venues</h2>
-                        <div class="section-subtitle">Subscribed Venues</div>
-                        <span class="section-separator"></span>
-                        <p>Browse the latest articles from our blog.</p>
-                    </div>
-                </div>
                 <!-- listing-item -->
                 {% for v in venues %}
                     <div class="listing-item list-layout">
@@ -23,7 +9,7 @@
                                 <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
                             </div>
                             <div class="geodir-category-content fl-wrap">
-                                {% for u in v.users %}
+                                {% for u in v.managers %}
                                     <div class="listing-avatar"><a href="{{ path('user', {'id': u.id}) }}"><img src="{{ u.avatar.url }}"
                                                                                                   alt="{{ u.firstName }}"></a>
 
@@ -49,9 +35,4 @@
                 <div class="pagination">
                     {{ knp_pagination_render(venues) }}
                 </div>
-            </div>
-            <!-- list-main-wrap end-->
-        </div>
-    </div>
-</section>
-<!--  section  end-->
+

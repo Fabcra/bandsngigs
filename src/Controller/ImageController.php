@@ -83,14 +83,16 @@ class ImageController extends Controller
                 return $this->redirectToRoute('profile');
             } else {
 
-                return $this->redirectToRoute('bands-update', ['id' => $band_id]);
+                return $this->redirectToRoute('bands-update', ['id' => $band_id, 'band'=>$band]);
             }
 
         }
 
-        return $this->render('pages/images/new.html.twig', [
-            'imgForm' => $form->createView(), 'id' => $id
-        ]);
+        if ($type === "logo") {
+            return $this->render('pages/bands/logo.html.twig', [
+                'imgForm' => $form->createView(), 'id' => $band_id, 'band'=>$band
+            ]);
+        }
     }
 
     /**
@@ -105,8 +107,10 @@ class ImageController extends Controller
         $band_id = $request->get('id');
         $doctrine = $this->getDoctrine();
         $band = $doctrine->getRepository(Band::class)->findOneById($band_id);
-
         $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($band_id);
+
+        $user_id = $this->getUser()->getId();
+        $members = $band->getMembers();
 
 
         $image = new Image();
@@ -128,12 +132,34 @@ class ImageController extends Controller
             $em->flush();
             $this->addFlash('success', 'image ajoutée à la galerie');
 
+
+            foreach ($members as $member) {
+                $member_id[] = $member->getId();
+            }
+
+            if (in_array($user_id, $member_id)) {
+                return $this->redirectToRoute('bands-update', ['id' => $band_id, 'band'=>$band]);
+            } else {
+                $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                return $this->redirectToRoute('homepage');
+            }
+
+        }
+        foreach ($members as $member) {
+            $member_id[] = $member->getId();
+        }
+
+        if (in_array($user_id, $member_id)) {
+
+            return $this->render('pages/bands/gallery.html.twig', [
+                'galleryForm' => $form->createView(), 'id' => $band_id, 'gallery' => $gallery, 'band'=>$band
+            ]);
+
+        } else {
+            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('pages/images/gallery.html.twig',[
-           'galleryForm'=>$form->createView(), 'id'=>$band_id, 'gallery'=>$gallery
-        ]);
     }
 
     /**

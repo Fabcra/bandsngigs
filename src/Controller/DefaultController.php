@@ -28,9 +28,9 @@ class DefaultController extends Controller
     {
 
         $doctrine = $this->getDoctrine();
-        $bands = $doctrine->getRepository(Band::class)->findAll();
-        $venues = $doctrine->getRepository(Venue::class)->findAll();
-        $events = $doctrine->getRepository(Event::class)->findAll();
+        $bands = $doctrine->getRepository(Band::class)->findBandsWithLogo();
+        $venues = $doctrine->getRepository(Venue::class)->findVenuesWithPhoto();
+        $events = $doctrine->getRepository(Event::class)->findEventsWithFlyer();
         $styles = $doctrine->getRepository(Style::class)->findAll();
 
 

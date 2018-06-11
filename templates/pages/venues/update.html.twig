@@ -1,8 +1,8 @@
-{% extends "pages/bands/layout.html.twig" %}
+{% extends "pages/venues/layout.html.twig" %}
 
 
 {% block right %}
-    {{ form_start(bandForm) }}
+    {{ form_start(venueForm) }}
     <div class="col-md-7">
         <!-- profile-edit-container-->
         <div class="profile-edit-container add-list-container">
@@ -14,15 +14,19 @@
             </div>
 
             <div class="custom-form">
-                {{ form_row(bandForm.name) }}
+                {{ form_row(venueForm.name) }}
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(bandForm.locality, {'attr':{'class':'chosen-select'}}) }}
+                        {{ form_row(venueForm.streetName) }}
+                        {{ form_row(venueForm.houseNb) }}
+                        {{ form_row(venueForm.locality, {'attr':{'class':'chosen-select'}}) }}
                     </div>
                     <div class="col-md-6 check-user">
-                        {{ form_row(bandForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
+                        {{ form_row(venueForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
                     </div>
+
                 </div>
+
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -32,9 +36,9 @@
                 <h4>Location / Contacts</h4>
             </div>
             <div class="custom-form">
-                {{ form_row(bandForm.mail) }}
-                {{ form_row(bandForm.phone) }}
-                {{ form_row(bandForm.website) }}
+                {{ form_row(venueForm.mail) }}
+                {{ form_row(venueForm.phone) }}
+                {{ form_row(venueForm.website) }}
             </div>
         </div>
 
@@ -43,10 +47,11 @@
                 <h4>Detailed Information</h4>
             </div>
             <div class="custom-form">
-
-
-                {{ form_row(bandForm.description) }}
+                {{ form_row(venueForm.description) }}
             </div>
+
+
+
         </div>
         <button class="btn  big-btn  color-bg flat-btn margintop20">Save Changes<i class="fa fa-angle-right"></i>
         </button>
@@ -55,13 +60,13 @@
     <!-- profile-edit-container end-->
 
 
-    {{ form_widget(bandForm._token) }}
+    {{ form_widget(venueForm._token) }}
 
-    {{ form_end(bandForm, {'render_rest':false}) }}
+    {{ form_end(venueForm, {'render_rest':false}) }}
 
     <div class="col-md-2">
         <div class="edit-profile-photo fl-wrap">
-            <img src="{{ band.logo.url }}" class="respimg" alt="">
+            <img src="{{ venue.photo.url }}" class="respimg" alt="">
         </div>
 
     </div>

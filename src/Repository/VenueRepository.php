@@ -19,16 +19,27 @@ class VenueRepository extends ServiceEntityRepository
         parent::__construct($registry, Venue::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function findVenuesWithPhoto()
     {
-        return $this->createQueryBuilder('v')
-            ->where('v.something = :value')->setParameter('value', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('v')
+            ->leftJoin('v.photo', 'p')->addSelect('p')
+            ->orderBy('v.registrationDate', 'DESC')
+            ->setMaxResults(5);
+
+        return $qb->getQuery()
+            ->getResult();
     }
-    */
+
+    public function findVenuesByUser($id)
+    {
+         $qb = $this->createQueryBuilder('venue');
+
+         $qb->leftJoin('venue.members', 'members')
+             ->andWhere('members.id like :id')
+             ->setParameter('id', $id);
+
+         return $qb
+             ->getQuery()
+             ->getResult();
+    }
 }

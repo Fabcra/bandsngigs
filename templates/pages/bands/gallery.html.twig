@@ -1,0 +1,64 @@
+{% extends "pages/bands/layout.html.twig" %}
+
+{% block right %}
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>Galerie d'images</h4>
+            </div>
+            {% if gallery is not empty %}
+                <ul style="list-style-type: none">
+                    {% for i in gallery %}
+                        <li class="col-sm-4 js-gallery-item">
+                            <a href="#"
+                               class="js-remove-image-gallery"
+                               data-url="{{ path('gallery-image-delete',{
+                                   band_id: i.band.id, img_id: i.id
+                               }) }}"
+                            >
+                                <img src="{{ i.url }}" height="50px"/><br>
+                                <span class="fa fa-close"> remove</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <span>Il n'y a pas d'image dans la galerie</span>
+            {% endif %}
+
+
+
+            {% include "pages/images/gallery.html.twig" %}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+
+    <script>
+        jQuery(document).ready(function () {
+            $('.js-remove-image-gallery').on('click', function (e) {
+                e.preventDefault();
+
+                var $el = $(this).closest('.js-gallery-item');
+
+                $(this).find('.fa-close')
+                    .removeClass('fa-close')
+
+                $.ajax({
+                    url: $(this).data('url'),
+                    method: 'DELETE'
+                }).done(function () {
+                    $el.fadeOut();
+                })
+            });
+
+        });
+    </script>
+
+{% endblock %}

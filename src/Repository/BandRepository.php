@@ -24,14 +24,25 @@ class BandRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('band');
 
-        $qb->leftJoin('band.users', 'users')
-            ->andWhere('users.id like :id')
+        $qb->leftJoin('band.members', 'members')
+            ->andWhere('members.id like :id')
             ->setParameter('id', $id);
 
         return $qb
             ->getQuery()
             ->getResult();
 
+    }
+
+    public function findBandsWithLogo()
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->leftJoin('b.logo', 'l')->addSelect('l')
+            ->orderBy('b.registrationDate', 'DESC')
+            ->setMaxResults(10);
+
+        return $qb->getQuery()
+            ->getResult();
     }
 
 

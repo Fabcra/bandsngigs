@@ -19,7 +19,8 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    public function search($params){
+    public function search($params)
+    {
 
         $qb = $this->createQueryBuilder('e');
 
@@ -27,12 +28,11 @@ class EventRepository extends ServiceEntityRepository
             ->leftJoin('e.bands', 'b')->addSelect('b')
             ->leftJoin('e.venue', 'v')->addSelect('v')
             ->leftJoin('v.locality', 'l')->addSelect('l')
-            ->innerJoin('e.styles', 's')->addSelect('s')
-        ;
+            ->innerJoin('e.styles', 's')->addSelect('s');
 
-        if ($params['by_band'] != null){
+        if ($params['by_band'] != null) {
             $qb->andWhere('b.name LIKE :band')
-                ->setParameter('band', '%'. $params['by_band'].'%');
+                ->setParameter('band', '%' . $params['by_band'] . '%');
         }
 
         if ($params['by_location'] != null) {
@@ -51,4 +51,21 @@ class EventRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+
+
+    public function findEventsWithFlyer()
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->leftJoin('e.flyer', 'f')->addSelect('f')
+            ->andWhere('e.date >= CURRENT_DATE()');
+
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+
+
+
+
 }
