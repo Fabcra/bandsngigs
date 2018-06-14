@@ -14,9 +14,8 @@
                             <a href="#"
                                class="js-remove-image-gallery"
                                data-url="{{ path('gallery-image-delete',{
-                                   band_id: i.band.id, img_id: i.id
-                               }) }}"
-                            >
+                                  type:'band', id: i.band.id, img_id: i.id
+                               }) }}">
                                 <img src="{{ i.url }}" height="50px"/><br>
                                 <span class="fa fa-close"> remove</span>
                             </a>

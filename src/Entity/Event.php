@@ -5,12 +5,17 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @Assert\GroupSequenceProvider()
  */
-class Event
+class Event implements GroupSequenceProviderInterface
 {
+    const SUBSCRIBED = 1;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -49,13 +54,25 @@ class Event
     private $users;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="shows")
+     */
+    private $organiser;
+
+
+    /**
      * @ORM\ManyToMany(targetEntity="Band", inversedBy="events")
      */
     private $bands;
 
     /**
+     * @Assert\Choice({Event::SUBSCRIBED, UnsubscribedVenue::UNSUBSCRIBED})
+     */
+    protected $typeVenue;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Venue", inversedBy="events")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotBlank(groups={"subscribed"}, message="Cette valeur ne peut être vide")
      */
     private $venue;
 
@@ -83,12 +100,13 @@ class Event
 
     /**
      * @ORM\OneToOne(targetEntity="UnsubscribedVenue", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
+     *
      */
     private $unsubscribedVenue;
 
     /**
      * @ORM\Column(name="registration_date", type="datetime")
+     *
      */
     private $registrationDate;
 
@@ -208,6 +226,23 @@ class Event
     /**
      * @return mixed
      */
+    public function getOrganiser()
+    {
+        return $this->organiser;
+    }
+
+    /**
+     * @param mixed $organiser
+     */
+    public function setOrganiser($organiser)
+    {
+        $this->organiser = $organiser;
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function getBands()
     {
         return $this->bands;
@@ -309,7 +344,7 @@ class Event
     public function addUnsubscribedBand(UnsubscribedBand $unsubscribedBand)
     {
 
-        if(! $this->unsubscribedBands->contains($unsubscribedBand)){
+        if (!$this->unsubscribedBands->contains($unsubscribedBand)) {
             $unsubscribedBand->setEvent($this);
             $this->unsubscribedBands->add($unsubscribedBand);
         }
@@ -324,7 +359,7 @@ class Event
      */
     public function removeUnsubscribedBand(UnsubscribedBand $unsubscribedBand)
     {
-        if($this->unsubscribedBands->contains($unsubscribedBand)){
+        if ($this->unsubscribedBands->contains($unsubscribedBand)) {
             $this->unsubscribedBands->removeElement($unsubscribedBand);
         }
         return $this->getName();
@@ -363,10 +398,32 @@ class Event
         $this->registrationDate = $registrationDate;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTypeVenue()
+    {
+        return $this->typeVenue;
+    }
+
+    /**
+     * @param mixed $typeVenue
+     */
+    public function setTypeVenue($typeVenue)
+    {
+        $this->typeVenue = $typeVenue;
+    }
 
 
+    public function getGroupSequence()
+    {
 
+        return [
+            'Event',
+            $this->typeVenue === self::SUBSCRIBED ? 'subscribed' : 'unsubscribed',
 
+        ];
 
+    }
 
 }

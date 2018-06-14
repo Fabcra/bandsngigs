@@ -34,8 +34,8 @@ class VenueRepository extends ServiceEntityRepository
     {
          $qb = $this->createQueryBuilder('venue');
 
-         $qb->leftJoin('venue.members', 'members')
-             ->andWhere('members.id like :id')
+         $qb->leftJoin('venue.managers', 'managers')
+             ->andWhere('managers.id like :id')
              ->setParameter('id', $id);
 
          return $qb

@@ -48,7 +48,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band2 = new Band();
 
-        $band2->setName('Leshuggah');
+        $band2->setName('Meshuggrah');
         $band2->setDescription($faker->realText());
         $band2->setMail($faker->email);
         $band2->setPhone($faker->phoneNumber);
@@ -94,7 +94,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band4 = new Band();
 
-        $band4->setName('Avenged Sevenfield');
+        $band4->setName('Avengers Sevenfold');
         $band4->setDescription($faker->realText());
         $band4->setMail($faker->email);
         $band4->setPhone($faker->phoneNumber);
@@ -117,7 +117,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band5 = new Band();
 
-        $band5->setName('Panteraï');
+        $band5->setName('Cheetah');
         $band5->setDescription($faker->realText());
         $band5->setMail($faker->email);
         $band5->setPhone($faker->phoneNumber);
@@ -209,7 +209,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band9 = new Band();
 
-        $band9->setName('Godsmick');
+        $band9->setName('Godsmash');
         $band9->setDescription($faker->realText());
         $band9->setMail($faker->email);
         $band9->setPhone($faker->phoneNumber);
@@ -347,7 +347,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band15 = new Band();
 
-        $band15->setName('Disturb');
+        $band15->setName('Dismounted');
         $band15->setDescription($faker->realText());
         $band15->setMail($faker->email);
         $band15->setPhone($faker->phoneNumber);
@@ -370,7 +370,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band16 = new Band();
 
-        $band16->setName('System of a Dawn');
+        $band16->setName('System of a Dad');
         $band16->setDescription($faker->realText());
         $band16->setMail($faker->email);
         $band16->setPhone($faker->phoneNumber);

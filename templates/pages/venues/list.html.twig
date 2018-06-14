@@ -2,22 +2,38 @@
                 <!-- listing-item -->
                 {% for v in venues %}
                     <div class="listing-item list-layout">
+
                         <article class="geodir-category-listing fl-wrap">
+
                             <div class="geodir-category-img">
+
                                 <img src="{{ v.photo.url }}" alt="">
                                 <div class="overlay"></div>
                                 <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
+
                             </div>
                             <div class="geodir-category-content fl-wrap">
-                                {% for u in v.managers %}
-                                    <div class="listing-avatar"><a href="{{ path('user', {'id': u.id}) }}"><img src="{{ u.avatar.url }}"
-                                                                                                  alt="{{ u.firstName }}"></a>
 
-                                        <span class="avatar-tooltip">Managed By  <strong>{{ u.firstName }}</strong></span>
+
+
+                                    <div class="listing-avatar">
+                                    {% if app.user %}
+                                        {% for u in v.managers %}
+
+                                            {% if app.user.slug == u.slug %}
+                                                <a class="listing-geodir-category" href="{{ path('venues-update', {'id':v.id}) }}"><i class="fa fa-star" aria-hidden="true"></i> update</a>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    {% endif %}
                                     </div>
-                                {% endfor %}
+
+
+
                                 <h3><a href="{{ path('venue',{'slug': v.slug}) }}">{{ v.name }}</a></h3>
+
                                 <p>{{ v.description }}</p>
+
                                 <div class="geodir-category-options fl-wrap">
                                     <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
                                         <span>(7 reviews)</span>

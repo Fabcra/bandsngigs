@@ -3,39 +3,48 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UnsubscribedVenueRepository")
+ *
  */
 class UnsubscribedVenue
 {
+    const UNSUBSCRIBED = 2;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
      */
     private $name;
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
      */
     private $streetName;
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
      */
     private $houseNb;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Locality", inversedBy="unsubscribedVenues")
+     * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
      */
     private $locality;
 
@@ -60,7 +69,7 @@ class UnsubscribedVenue
         return $this->name;
     }
 
-    public function setName ($name)
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -146,7 +155,6 @@ class UnsubscribedVenue
     {
         $this->lng = $lng;
     }
-
 
 
 }

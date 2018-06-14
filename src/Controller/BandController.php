@@ -109,7 +109,7 @@ class BandController extends Controller
 
         $members = $band->getMembers();
         $user = $this->getUser();
-        $id = $user->getId();
+        $user_id = $user->getId();
 
         foreach ($members as $member) {
             $member_id[] = $member->getId();
@@ -131,13 +131,10 @@ class BandController extends Controller
 
         }
 
-        if (in_array($id, $member_id)) {
+        if (in_array($user_id, $member_id)) {
             return $this->render('pages/bands/update.html.twig', [
                 'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
             ]);
-        } else {
-            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
-            return $this->redirectToRoute('homepage');
         }
 
     }

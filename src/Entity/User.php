@@ -143,6 +143,11 @@ class User implements UserInterface, \Serializable
      */
     private $registrationDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="organiser")
+     */
+    private $shows;
+
 
     public function __construct()
     {
@@ -435,6 +440,23 @@ class User implements UserInterface, \Serializable
     {
         $this->events = $events;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getShows()
+    {
+        return $this->shows;
+    }
+
+    /**
+     * @param mixed $shows
+     */
+    public function setShows($shows)
+    {
+        $this->shows = $shows;
+    }
+
 
     /**
      * @return mixed

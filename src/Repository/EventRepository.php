@@ -64,6 +64,18 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findEventsByUser($id)
+    {
+        $qb = $this->createQueryBuilder('event')
+            ->leftJoin('event.organiser', 'organiser')
+            ->andWhere('organiser.id like :id')
+            ->setParameter('id', $id);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
 
 
 

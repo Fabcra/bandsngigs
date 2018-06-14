@@ -51,7 +51,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
 
 
             for ($j = 1; $j < 3; $j++) {
-                $venue->setMembers($this->getReference('user' . $n[$j]));
+                $venue->setManagers($this->getReference('user' . $n[$j]));
             }
             $venue->setLocality($this->getReference('locality' . $l));
             $venue->setStyles($this->getReference('style' . $s));

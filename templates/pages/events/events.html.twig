@@ -1,7 +1,23 @@
 {% extends 'pages/default/layout.html.twig' %}
 
 {% block content %}
+    <!--section -->
+    <section>
+        <div class="container">
+            <div class="row home-posts">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Next events</h2>
+                        <div class="section-subtitle">Next events</div>
+                        <span class="section-separator"></span>
+                        <p>Browse the latest articles from our blog.</p>
+                    </div>
+                </div>
+                {% include 'pages/events/list.html.twig' %}
+            </div>
+        </div>
 
-{% include 'pages/events/list.html.twig' %}
+    </section>
+    <!-- section end -->
 
 {% endblock %}

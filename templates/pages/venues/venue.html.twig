@@ -2,221 +2,237 @@
 
 {% block content %}
 
-        <!--  content  -->
-        <div class="content">
-            <!--  section  -->
-            <section class="parallax-section single-par list-single-section" data-scrollax-parent="true" id="sec1">
-                <div class="bg par-elem" data-bg="{{ venue.photo.url }}"
-                     data-scrollax="properties: { translateY: '30%' }"></div>
-                <div class="overlay"></div>
-                <div class="list-single-header absolute-header fl-wrap">
-                    <div class="container">
-                        <div class="list-single-header-item">
+    <!--  content  -->
+    <div class="content">
+        <!--  section  -->
+        <section class="parallax-section single-par list-single-section" data-scrollax-parent="true" id="sec1">
+            <div class="bg par-elem" data-bg="{{ venue.photo.url }}"
+                 data-scrollax="properties: { translateY: '30%' }"></div>
+            <div class="overlay"></div>
+            <div class="list-single-header absolute-header fl-wrap">
+                <div class="container">
+                    <div class="list-single-header-item">
 
-                            <h2>{{ venue.name }}</h2>
-                            <span class="section-separator"></span>
-                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
-                                <span>(11 reviews)</span>
-                            </div>
-                            <div class="list-post-counter single-list-post-counter"><span>4</span><i
-                                        class="fa fa-heart"></i></div>
-                            <div class="clearfix"></div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="list-single-header-contacts fl-wrap">
-                                        <ul>
-                                            <li><i class="fa fa-phone"></i><a href="tel:{{ venue.phone }}">{{ venue.phone }}</a></li>
-                                            <li><i class="fa fa-map-marker"></i><a target="blank" href="http://maps.google.fr/maps?f=q&hl=fr&q={{ venue.streetName }},{{ venue.houseNb }} {{ venue.locality.locality }}">{{ venue.streetName }}
-                                                    ,{{ venue.houseNb }}
-                                                    - {{ venue.locality.postCode.postCode }} {{ venue.locality.locality }}</a>
-                                            </li>
-                                            <li><i class="fa fa-envelope-o"></i><a href="mailto:{{ venue.mail }}">{{ venue.mail }}</a></li>
-                                        </ul>
-                                    </div>
+                        <h2>{{ venue.name }}</h2>
+                        <span class="section-separator"></span>
+                        <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
+                            <span>(11 reviews)</span>
+                        </div>
+                        <div class="list-post-counter single-list-post-counter"><span>4</span><i
+                                    class="fa fa-heart"></i></div>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="list-single-header-contacts fl-wrap">
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i><a
+                                                    href="tel:{{ venue.phone }}">{{ venue.phone }}</a></li>
+                                        <li><i class="fa fa-map-marker"></i><a target="blank"
+                                                                               href="http://maps.google.fr/maps?f=q&hl=fr&q={{ venue.streetName }},{{ venue.houseNb }} {{ venue.locality.locality }}">{{ venue.streetName }}
+                                                ,{{ venue.houseNb }}
+                                                - {{ venue.locality.postCode.postCode }} {{ venue.locality.locality }}</a>
+                                        </li>
+                                        <li><i class="fa fa-envelope-o"></i><a
+                                                    href="mailto:{{ venue.mail }}">{{ venue.mail }}</a></li>
+                                    </ul>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="fl-wrap list-single-header-column">
-                                        <div class="share-holder hid-share">
-                                            <div class="showshare"><span>Share </span><i class="fa fa-share"></i></div>
-                                            <div class="share-container  isShare"></div>
-                                        </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="fl-wrap list-single-header-column">
+                                    <div class="share-holder hid-share">
+                                        <div class="showshare"><span>Share </span><i class="fa fa-share"></i></div>
+                                        <div class="share-container  isShare"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!--  section end -->
-            <div class="scroll-nav-wrapper fl-wrap">
-                <div class="container">
-                    <nav class="scroll-nav scroll-init">
-                        <ul>
-                            <li><a class="act-scrlink" href="#sec1">Top</a></li>
-                            <li><a href="#sec2">Details</a></li>
-                            <li><a href="#sec3">Gallery</a></li>
-                        </ul>
-                    </nav>
-                    <a href="#" class="save-btn"> <i class="fa fa-heart"></i> Save </a>
-                </div>
             </div>
-            <!--  section  -->
-            <section class="gray-section no-top-padding">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="list-single-main-wrapper fl-wrap" id="sec2">
-                                <div class="list-single-main-media fl-wrap">
-                                    <img src="{{ venue.photo.url }}" class="respimg" alt="{{ venue.name }}">
-                                    {% for v in venue.videos %}
-                                        <a href="{{ v.url }}" class="promo-link gradient-bg image-popup"><i
-                                                    class="fa fa-play"></i><span>Promo Video</span></a>
+        </section>
+        <!--  section end -->
+        <div class="scroll-nav-wrapper fl-wrap">
+            <div class="container">
+                <nav class="scroll-nav scroll-init">
+                    <ul>
+                        <li><a class="act-scrlink" href="#sec1">Top</a></li>
+                        <li><a href="#sec2">Details</a></li>
+                        <li><a href="#sec3">Gallery</a></li>
+                    </ul>
+                </nav>
+                <a href="#" class="save-btn"> <i class="fa fa-heart"></i> Save </a>
+            </div>
+        </div>
+        <!--  section  -->
+        <section class="gray-section no-top-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="list-single-main-wrapper fl-wrap" id="sec2">
+                            <div class="list-single-main-media fl-wrap">
+                                <img src="{{ venue.photo.url }}" class="respimg" alt="{{ venue.name }}">
+                                {% for v in venue.videos %}
+                                    <a href="{{ v.url }}" class="promo-link gradient-bg image-popup"><i
+                                                class="fa fa-play"></i><span>Promo Video</span></a>
+                                {% endfor %}
+                            </div>
+                            <div class="list-single-main-item fl-wrap">
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>About {{ venue.name }} </h3>
+                                </div>
+                                <p>{{ venue.description }}</p>
+                                <span class="fw-separator"></span>
+
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>Tags</h3>
+                                </div>
+
+                                <div class="list-single-tags tags-stylwrap">
+                                    {% for s in venue.styles %}
+                                        <a href="#">{{ s.style }}</a>
                                     {% endfor %}
                                 </div>
-                                <div class="list-single-main-item fl-wrap">
-                                    <div class="list-single-main-item-title fl-wrap">
-                                        <h3>About {{ venue.name }} </h3>
-                                    </div>
-                                    <p>{{ venue.description }}</p>
-                                    <span class="fw-separator"></span>
 
-                                    <div class="list-single-main-item-title fl-wrap">
-                                        <h3>Tags</h3>
-                                    </div>
+                            </div>
 
-                                    <div class="list-single-tags tags-stylwrap">
-                                        {% for s in venue.styles %}
-                                            <a href="#">{{ s.style }}</a>
-                                        {% endfor %}
-                                    </div>
 
+                            <div class="list-single-main-item fl-wrap" id="sec3">
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>Gallery - Photos</h3>
                                 </div>
+                                <!-- gallery-items   -->
+                                <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
+                                    <!-- 1 -->
+                                    <div class="gallery-item">
+                                        <div class="grid-item-holder">
+                                            <div class="box-item">
+                                                {% if venue.gallery is not empty %}
 
-
-                                <div class="list-single-main-item fl-wrap" id="sec3">
-                                    <div class="list-single-main-item-title fl-wrap">
-                                        <h3>Gallery - Photos</h3>
-                                    </div>
-                                    <!-- gallery-items   -->
-                                    <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
-                                        <!-- 1 -->
-                                        <div class="gallery-item">
-                                            <div class="grid-item-holder">
-                                                <div class="box-item">
+                                                    {% for i in venue.gallery %}
+                                                        <img src="{{ i.url }}" alt="{{ i.venue.name }}">
+                                                        <a href="{{ i.url }}" class="gal-link popup-image"><i
+                                                                    class="fa fa-search"></i></a>
+                                                    {% endfor %}
+                                                {% else %}
                                                     <img src="{{ venue.photo.url }}" alt="{{ venue.name }}">
                                                     <a href="{{ venue.photo.url }}" class="gal-link popup-image"><i
                                                                 class="fa fa-search"></i></a>
-                                                </div>
+                                                {% endif %}
                                             </div>
                                         </div>
-                                        <!-- 1 end -->
-
                                     </div>
-                                    <!-- end gallery items -->
+                                    <!-- 1 end -->
+
                                 </div>
-                                <!-- list-single-main-item end -->
+                                <!-- end gallery items -->
                             </div>
+                            <!-- list-single-main-item end -->
                         </div>
-                        <!--box-widget-wrap -->
-                        <div class="col-md-4">
-                            <div class="box-widget-wrap">
-                                <!--box-widget-item -->
-                                <div class="box-widget-item fl-wrap">
-                                    <div class="box-widget-item-header">
-                                        <h3>Location / Contacts : </h3>
-                                    </div>
-                                    <div class="box-widget">
-                                        <div class="map-container">
-                                            <div id="singleMap" data-latitude="{{ venue.lat }}"
-                                                 data-longitude="{{ venue.lng }}" data-mapTitle="Out Location"></div>
-                                        </div>
-                                        <div class="box-widget-content">
-                                            <div class="list-author-widget-contacts list-item-widget-contacts">
-                                                <ul>
-                                                    <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a target="_blank"
-                                                                href="http://maps.google.fr/maps?f=q&hl=fr&q={{ venue.streetName }},{{ venue.houseNb }} {{ venue.locality.locality }}">{{ venue.streetName }},{{ venue.houseNb }}
-                                                            - {{ venue.locality.locality }}</a></li>
-                                                    <li><span><i class="fa fa-phone"></i> Phone :</span> <a
-                                                                href="tel:{{ venue.phone }}">{{ venue.phone }}</a>
-                                                    </li>
-                                                    <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
-                                                                href="mailto:{{ venue.mail }}">{{ venue.mail }}</a></li>
-                                                    <li><span><i class="fa fa-globe"></i> Website :</span> <a
-                                                                href="{{ venue.website }}">{{ venue.website }}</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                    </div>
+                    <!--box-widget-wrap -->
+                    <div class="col-md-4">
+                        <div class="box-widget-wrap">
+                            <!--box-widget-item -->
+                            <div class="box-widget-item fl-wrap">
+                                <div class="box-widget-item-header">
+                                    <h3>Location / Contacts : </h3>
                                 </div>
-                                <!--box-widget-item end -->
-                                <!--box-widget-item -->
-                                <div class="box-widget-item fl-wrap">
-                                    <div class="box-widget-item-header">
-                                        <h3>Hosted by : </h3>
+                                <div class="box-widget">
+                                    <div class="map-container">
+                                        <div id="singleMap" data-latitude="{{ venue.lat }}"
+                                             data-longitude="{{ venue.lng }}" data-mapTitle="Out Location"></div>
                                     </div>
-                                    {% for u in venue.managers %}
-                                        <div class="box-widget list-author-widget">
-                                            <div class="list-author-widget-header shapes-bg-small  color-bg fl-wrap">
-                                                <span class="list-author-widget-link"><a
-                                                            href="{{ path('user', {'id':u.id}) }}">{{ u.firstName }} {{ u.lastName }}</a></span>
-                                                <img src="{{ u.avatar.url }}" alt="u.firstName">
-                                            </div>
-                                            <div class="box-widget-content">
-                                                <div class="list-author-widget-text">
-                                                    <div class="list-author-widget-contacts">
-                                                        <ul>
-                                                            <li><span><i class="fa fa-phone"></i> Phone :</span> <a
-                                                                        href="tel:{{ u.phone }}">{{ u.phone }}</a></li>
-                                                            <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
-                                                                        href="mailto:{{ u.email }}">{{ u.email }}</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="{{ path('user', {'id':u.id}) }}" class="btn transparent-btn">View
-                                                        Profile <i
-                                                                class="fa fa-eye"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <!--box-widget-item end -->
-                                <!--box-widget-item -->
-                                <div class="box-widget-item fl-wrap">
-                                    <div class="box-widget-item-header">
-                                        <h3>More events from this venue : </h3>
-                                    </div>
-                                    <div class="box-widget widget-posts">
-                                        <div class="box-widget-content">
+                                    <div class="box-widget-content">
+                                        <div class="list-author-widget-contacts list-item-widget-contacts">
                                             <ul>
-                                                {% for e in venue.events %}
-                                                    <li class="clearfix">
-                                                        <a href="{{ path('event', {'slug':e.slug}) }}" class="widget-posts-img"><img
-                                                                    src="{{ e.flyer.url }}"
-                                                                    alt="{{ e.name }}"></a>
-                                                        <div class="widget-posts-descr">
-                                                            <a href="{{ path('event', {'slug':e.slug}) }}" title="">{{ e.name }}</a>
-                                                            <span class="widget-posts-date"><i
-                                                                        class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
-                                                        </div>
-                                                    </li>
-                                                {% endfor %}
-
+                                                <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a
+                                                            target="_blank"
+                                                            href="http://maps.google.fr/maps?f=q&hl=fr&q={{ venue.streetName }},{{ venue.houseNb }} {{ venue.locality.locality }}">{{ venue.streetName }}
+                                                        ,{{ venue.houseNb }}
+                                                        - {{ venue.locality.locality }}</a></li>
+                                                <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                            href="tel:{{ venue.phone }}">{{ venue.phone }}</a>
+                                                </li>
+                                                <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
+                                                            href="mailto:{{ venue.mail }}">{{ venue.mail }}</a></li>
+                                                <li><span><i class="fa fa-globe"></i> Website :</span> <a
+                                                            href="{{ venue.website }}">{{ venue.website }}</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <!--box-widget-item end -->
                             </div>
-                        </div>
-                        <!--box-widget-wrap end -->
-                    </div>
-                </div>
-            </section>
-            <!--  section end -->
-            <div class="limit-box fl-wrap"></div>
+                            <!--box-widget-item end -->
+                            <!--box-widget-item -->
+                            <div class="box-widget-item fl-wrap">
+                                <div class="box-widget-item-header">
+                                    <h3>Hosted by : </h3>
+                                </div>
+                                {% for u in venue.managers %}
+                                    <div class="box-widget list-author-widget">
+                                        <div class="list-author-widget-header shapes-bg-small  color-bg fl-wrap">
+                                                <span class="list-author-widget-link"><a
+                                                            href="{{ path('user', {'id':u.id}) }}">{{ u.firstName }} {{ u.lastName }}</a></span>
+                                            <img src="{{ u.avatar.url }}" alt="u.firstName">
+                                        </div>
+                                        <div class="box-widget-content">
+                                            <div class="list-author-widget-text">
+                                                <div class="list-author-widget-contacts">
+                                                    <ul>
+                                                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                                    href="tel:{{ u.phone }}">{{ u.phone }}</a></li>
+                                                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
+                                                                    href="mailto:{{ u.email }}">{{ u.email }}</a></li>
+                                                    </ul>
+                                                </div>
+                                                <a href="{{ path('user', {'id':u.id}) }}" class="btn transparent-btn">View
+                                                    Profile <i
+                                                            class="fa fa-eye"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!--box-widget-item end -->
+                            <!--box-widget-item -->
+                            <div class="box-widget-item fl-wrap">
+                                <div class="box-widget-item-header">
+                                    <h3>More events from this venue : </h3>
+                                </div>
+                                <div class="box-widget widget-posts">
+                                    <div class="box-widget-content">
+                                        <ul>
+                                            {% for e in venue.events %}
+                                                <li class="clearfix">
+                                                    <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                       class="widget-posts-img"><img
+                                                                src="{{ e.flyer.url }}"
+                                                                alt="{{ e.name }}"></a>
+                                                    <div class="widget-posts-descr">
+                                                        <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                           title="">{{ e.name }}</a>
+                                                        <span class="widget-posts-date"><i
+                                                                    class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
 
-        </div>
-        <!--  content end  -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--box-widget-item end -->
+                        </div>
+                    </div>
+                    <!--box-widget-wrap end -->
+                </div>
+            </div>
+        </section>
+        <!--  section end -->
+        <div class="limit-box fl-wrap"></div>
+
+    </div>
+    <!--  content end  -->
 
 {% endblock %}

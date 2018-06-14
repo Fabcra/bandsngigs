@@ -221,7 +221,7 @@ class Venue
      */
     public function setManagers($managers)
     {
-        $this->managers = $managers;
+        $this->managers[] = $managers;
     }
 
 

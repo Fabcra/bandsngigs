@@ -10,7 +10,10 @@ namespace App\Controller;
 
 
 use App\Entity\Band;
+use App\Entity\Event;
 use App\Entity\Image;
+use App\Entity\User;
+use App\Entity\Venue;
 use App\Form\ImageType;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,23 +34,38 @@ class ImageController extends Controller
      */
     public function insertImage(Request $request, FileUploader $fileUploader)
     {
-
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $image = new Image();
 
-        $user = $this->getUser();
-        $id = $user->getId();
+        $type = $request->get('type'); // Quel est le type de l'image ? logo, avatar ou photo
+        $doctrine = $this->getDoctrine();
 
-        $type = $request->get('type'); // Quel est le type de l'image ? logo ou avatar
 
-        $band_id = $request->get('id');
+        switch ($type) {
 
-        // si le type est logo, récupérer le groupe avec l'id envoyé
-        if ($type === 'logo') {
-            $doctrine = $this->getDoctrine();
-            $repo = $doctrine->getRepository(Band::class);
-            $band = $repo->findOneById($band_id);
+            // si le type est avatar, récupérer l'utilisateur
+            case "avatar":
+                $user = $this->getUser();
+                $user_id = $user->getId();
+                break;
+
+            // si le type est logo, récupérer le groupe avec l'id envoyé
+            case "logo":
+                $band_id = $request->get('id');
+                $band = $doctrine->getRepository(Band::class)->findOneById($band_id);
+                break;
+
+            //si le type est photo, récupérer le café-concert avec l'id envoyé
+            case "photo":
+                $venue_id = $request->get('id');
+                $venue = $doctrine->getRepository(Venue::class)->findOneById($venue_id);
+                break;
+
+            case "flyer":
+                $event_id = $request->get('id');
+                $event = $doctrine->getRepository(Event::class)->findOneById($event_id);
+                break;
         }
 
         $form = $this->createForm(ImageType::class, $image);
@@ -64,34 +82,79 @@ class ImageController extends Controller
             $em->persist($image);
 
 
-            if ($type === 'avatar') {
-                $user->setAvatar($image);
+            switch ($type) {
 
-                $em->persist($user);
-            } else if
-            ($type === 'logo') {
+                case 'avatar':
+                    $user->setAvatar($image);
+                    $em->persist($user);
+                    break;
 
-                $band->setLogo($image);
-                $em->persist($band);
+                case 'logo':
+                    $band->setLogo($image);
+                    $em->persist($band);
+                    break;
+
+                case 'photo':
+                    $venue->setPhoto($image);
+                    $em->persist($venue);
+                    break;
+
+                case "flyer":
+                    $event->setFlyer($image);
+                    $em->persist($event);
+                    break;
             }
 
-            $em->flush();
 
+            $em->flush();
             $this->addFlash('success', 'Image insérée avec succès');
 
-            if ($type === 'avatar') {
-                return $this->redirectToRoute('profile');
-            } else {
+            switch ($type) {
 
-                return $this->redirectToRoute('bands-update', ['id' => $band_id, 'band'=>$band]);
+                case "avatar":
+                    return $this->redirectToRoute('profile');
+                    break;
+
+                case "logo":
+                    return $this->redirectToRoute('bands-update', ['id' => $band_id, 'band' => $band]);
+                    break;
+
+
+                case "photo":
+                    return $this->redirectToRoute('venues-update', ['id' => $venue_id, 'venue' => $venue]);
+                    break;
+
+                case "flyer":
+                    return $this->redirectToRoute('events-update', ['id' => $event_id, 'event' => $event]);
+                    break;
             }
 
         }
 
-        if ($type === "logo") {
-            return $this->render('pages/bands/logo.html.twig', [
-                'imgForm' => $form->createView(), 'id' => $band_id, 'band'=>$band
-            ]);
+        switch ($type) {
+            case "avatar":
+                return $this->render('pages/users/avatar.html.twig', [
+                    'imgForm' => $form->createView(), 'id' => $user_id
+                ]);
+                break;
+
+            case "logo":
+                return $this->render('pages/bands/logo.html.twig', [
+                    'imgForm' => $form->createView(), 'id' => $band_id, 'band' => $band
+                ]);
+                break;
+
+            case "photo":
+                return $this->render('pages/venues/photo.html.twig', [
+                    'imgForm' => $form->createView(), 'id' => $venue_id, 'venue' => $venue
+                ]);
+                break;
+
+            case "flyer":
+                return $this->render('pages/events/flyer.html.twig', [
+                    'imgForm' => $form->createView(), 'id' => $event_id, 'event' => $event
+                ]);
+                break;
         }
     }
 
@@ -99,18 +162,29 @@ class ImageController extends Controller
      * @param Request $request
      * @param FileUploader $fileUploader
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/bands/gallery/new/{id}", name="gallery-image-new")
+     * @Route("/gallery/{type}/{id}", name="gallery-image-new")
      * @Method({"GET","POST"})
      */
     public function addImageGallery(Request $request, FileUploader $fileUploader)
     {
-        $band_id = $request->get('id');
         $doctrine = $this->getDoctrine();
-        $band = $doctrine->getRepository(Band::class)->findOneById($band_id);
-        $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($band_id);
+        $type = $request->get('type'); // venue ou band ?
+
+        if ($type === 'band') {
+            $band_id = $request->get('id');
+            $band = $doctrine->getRepository(Band::class)->findOneById($band_id);
+            $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($band_id);
+            $members = $band->getMembers();
+        }
+
+        if ($type === 'venue') {
+            $venue_id = $request->get('id');
+            $venue = $doctrine->getRepository(Venue::class)->findOneById($venue_id);
+            $gallery = $doctrine->getRepository(Image::class)->findImagesByVenue($venue_id);
+            $managers = $venue->getManagers();
+        }
 
         $user_id = $this->getUser()->getId();
-        $members = $band->getMembers();
 
 
         $image = new Image();
@@ -124,8 +198,16 @@ class ImageController extends Controller
             $file = $image->getFile();
             $filename = $fileUploader->upload($file);
 
-            $image->setBand($band);
-            $image->setUrl('/uploads/img/' . $filename);
+            if ($type === 'band') {
+                $image->setBand($band);
+                $image->setUrl('/uploads/img/' . $filename);
+            }
+
+            if ($type === 'venue') {
+                $image->setVenue($venue);
+                $image->setUrl('/uploads/img/' . $filename);
+            }
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);
@@ -133,32 +215,61 @@ class ImageController extends Controller
             $this->addFlash('success', 'image ajoutée à la galerie');
 
 
+            if ($type === 'band') {
+                foreach ($members as $member) {
+                    $member_id[] = $member->getId();
+                }
+                if (in_array($user_id, $member_id)) {
+                    return $this->redirectToRoute('bands-update', ['id' => $band_id, 'band' => $band]);
+                } else {
+                    $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                    return $this->redirectToRoute('homepage');
+                }
+            }
+
+            if ($type === 'venue') {
+                foreach ($managers as $manager) {
+                    $manager_id[] = $manager->getId();
+                }
+                if (in_array($user_id, $manager_id)) {
+                    return $this->redirectToRoute('venues-update', ['id' => $venue_id, 'venue' => $venue]);
+                } else {
+                    $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                    return $this->redirectToRoute('homepage');
+                }
+            }
+
+
+        }
+
+        if ($type === 'band') {
             foreach ($members as $member) {
                 $member_id[] = $member->getId();
             }
-
             if (in_array($user_id, $member_id)) {
-                return $this->redirectToRoute('bands-update', ['id' => $band_id, 'band'=>$band]);
+                return $this->render('pages/bands/gallery.html.twig', [
+                    'galleryForm' => $form->createView(), 'id' => $band_id, 'gallery' => $gallery, 'band' => $band
+                ]);
             } else {
                 $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
                 return $this->redirectToRoute('homepage');
             }
-
-        }
-        foreach ($members as $member) {
-            $member_id[] = $member->getId();
         }
 
-        if (in_array($user_id, $member_id)) {
-
-            return $this->render('pages/bands/gallery.html.twig', [
-                'galleryForm' => $form->createView(), 'id' => $band_id, 'gallery' => $gallery, 'band'=>$band
-            ]);
-
-        } else {
-            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
-            return $this->redirectToRoute('homepage');
+        if ($type === 'venue') {
+            foreach ($managers as $manager) {
+                $manager_id[] = $manager->getId();
+            }
+            if (in_array($user_id, $manager_id)) {
+                return $this->render('pages/venues/gallery.html.twig', [
+                    'galleryForm' => $form->createView(), 'id' => $venue_id, 'gallery' => $gallery, 'venue' => $venue
+                ]);
+            } else {
+                $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                return $this->redirectToRoute('homepage');
+            }
         }
+
 
     }
 
@@ -166,20 +277,34 @@ class ImageController extends Controller
      * @param Request $request
      * @param $img_id
      * @return Response
-     * @Route("/bands/gallery/delete/{band_id}/{img_id}", name="gallery-image-delete")
+     * @Route("/bands/gallery/delete/{type}/{id}/{img_id}", name="gallery-image-delete")
      */
     public function removeImageGallery(Request $request, $img_id)
     {
+        $type = $request->get('type');
         $em = $this->getDoctrine()->getManager();
 
         $image = $em->getRepository(Image::class)->find($img_id);
 
-        $band_id = $request->get('band_id');
+        if ($type === 'band') {
+            $band_id = $request->get('id');
+            $band = $em->getRepository(Band::class)->findOneById($band_id);
+        }
 
-        $band = $em->getRepository(Band::class)->findOneById($band_id);
+        if ($type === 'venue') {
+            $venue_id = $request->get('id');
+            $venue = $em->getRepository(Venue::class)->findOneById($venue_id);
+        }
+
         $em->remove($image);
 
-        $em->persist($band);
+        if ($type === 'band') {
+            $em->persist($band);
+        }
+        if ($type === 'venue') {
+            $em->persist($venue);
+        }
+
         $em->flush();
 
         return new Response(null, 204);

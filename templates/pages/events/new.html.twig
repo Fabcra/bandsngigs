@@ -19,17 +19,17 @@
                     {% block left %}
                         <div class="col-md-7">
                             <!-- profile-edit-container-->
-                            {{ form_start(eventForm) }}
+                            {{ form_start(eventForm, {'attr':{novalidate:'novalidate'}}) }}
                             <div class="profile-edit-container">
                                 <div class="custom-form">
                                     {{ form_row(eventForm.name) }}
                                     <section>
                                         <h3>Date and Time</h3>
-                                    {{ form_row(eventForm.date, {'attr':{'class': 'floatleft', 'label':'Date'}}) }}
-                                    {{ form_row(eventForm.time, {'attr':{'class': 'floatleft', 'label':'Time'}}) }}
+                                        {{ form_row(eventForm.date, {'attr':{'class': 'floatleft', 'label':'Date'}}) }}
+                                        {{ form_row(eventForm.time, {'attr':{'class': 'floatleft', 'label':'Time'}}) }}
                                     </section>
                                     <div class="check-user floatleft marginbottom20">
-                                        {{ form_row(eventForm.bands) }}
+                                        {{ form_row(eventForm.bands, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
                                     </div>
 
 
@@ -40,10 +40,13 @@
                                         </ul>
                                     </section>
                                     <div class="check-user floatleft marginbottom20">
+                                        {{ form_row(eventForm.typeVenue) }}
+                                    </div>
+                                    <div class="check-user floatleft marginbottom20 js-sub-venue">
                                         {{ form_row(eventForm.venue) }}
                                     </div>
 
-                                    <div class="check-user floatleft marginbottom20">
+                                    <div class="check-user floatleft marginbottom20 js-unsub-venue">
                                         {{ form_row(eventForm.unsubscribedVenue) }}
                                     </div>
 
@@ -52,7 +55,7 @@
 
                                     <section class="check-user floatleft formbackground">
                                         <div class="col-md-6">
-                                            {{ form_row(eventForm.styles) }}
+                                            {{ form_row(eventForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
                                         </div>
                                     </section>
 
@@ -86,9 +89,42 @@
 {% block javascripts %}
 
     {{ parent() }}
+    <script>
+        $("document").ready(function () {
+            $(".js-unsub-venue").hide()
+
+            $(".js-venuetype").change(function () {
+
+                if ($(this).val() == '1') {
+                    $(".js-sub-venue").show()
+                    $(".js-unsub-venue").hide()
+                } else {
+                    $(".js-unsub-venue").show()
+                    $(".js-sub-venue").hide()
+                }
+
+            })
+        })
+    </script>
+
+   {# <script>
+        $("document").ready(function () {
+
+            $(".js-venue").change(function () {
+
+                if ($(this).val() == '') {
+                    $(".js-unsub-venue").show()
+                } else {
+                    $(".js-unsub-venue").hide()
+                }
+
+            })
+        })
+    </script>#}
 
     <script src="{{ asset('js/addmember.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/addmemberForm.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/deletemember.js') }}" type="text/javascript"></script>
+
 
 {% endblock %}

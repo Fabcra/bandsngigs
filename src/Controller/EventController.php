@@ -46,7 +46,7 @@ class EventController extends Controller
             $file = $img->getFile();
             $fileName = $fileUploader->upload($file);
 
-            $img->setUrl('/uploads/img/' .$fileName);
+            $img->setUrl('/uploads/img/' . $fileName);
 
             $em = $this->getDoctrine()->getManager();
 
@@ -56,7 +56,7 @@ class EventController extends Controller
 
             $em->flush();
 
-            $this->addFlash('success', "Vous avez créé l'évènement ". $event->getName());
+            $this->addFlash('success', "Vous avez créé l'évènement " . $event->getName());
 
             return $this->redirectToRoute('homepage');
         }
@@ -89,8 +89,75 @@ class EventController extends Controller
         return $this->render('pages/events/events.html.twig', [
             'events' => $pagination
         ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("events/update/{id}", name="events-update")
+     */
+    public function updateEvent(Request $request, FileUploader $fileUploader, $id)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $doctrine = $this->getDoctrine();
+        $event = $doctrine->getRepository(Event::class)->findOneById($id);
+
+        $organiser_id = $event->getOrganiser()->getId();
+        $user_id = $this->getUser()->getId();
+
+        $form = $this->createForm(EventType::class, $event, ['method' => 'POST']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($event);
+            $em->flush();
+
+            $this->addFlash('success', 'Modification effectuée avec succès');
+        }
+
+        if ($user_id === $organiser_id) {
+            return $this->render('pages/events/update.html.twig', [
+                'eventForm' => $form->createView(), 'id' => $id, 'event' => $event
+            ]);
+        } else {
+            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+            return $this->redirectToRoute('homepage');
+        }
 
     }
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/events/manage", name="events-manager")
+     */
+    public function manageEvents(Request $request)
+    {
+        $user = $this->getUser();
+        $id = $user->getId();
+        $doctrine = $this->getDoctrine();
+        $events = $doctrine->getRepository(Event::class)->findEventsByUser($id);
+
+        //pagination
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $events,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+        );
+
+
+        return $this->render('pages/events/manage.html.twig', [
+            'events' => $pagination
+        ]);
+    }
+
 
     /** AFFICHER LA PAGE D'UN EVENEMENT
      *

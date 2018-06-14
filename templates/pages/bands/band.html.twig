@@ -34,8 +34,17 @@
                                 <div class="list-single-main-media fl-wrap">
                                     <div class="single-slider-wrapper fl-wrap">
                                         <div class="single-slider fl-wrap">
-                                            <div class="slick-slide-item"><img src="{{ band.logo.url }}"
-                                                                               alt="{{ band.name }}"></div>
+
+                                            {% if band.gallery is not empty %}
+                                                {% for i in band.gallery %}
+                                                    <div class="slick-slide-item">
+                                                        <img src="{{ i.url }}" alt="{{ i.band.name }}">
+                                                    </div>
+                                                {% endfor %}
+                                            {% else %}
+                                                <img src="{{ band.logo.url }}" alt="{{ band.name }}">
+                                            {% endif %}
+
                                         </div>
                                         <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i>
                                         </div>

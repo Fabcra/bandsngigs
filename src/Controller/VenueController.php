@@ -143,7 +143,7 @@ class VenueController extends Controller
 
         $managers = $venue->getManagers();
         $user = $this->getUser();
-        $id = $user->getId();
+        $user_id = $user->getId();
 
 
         foreach ($managers as $manager) {
@@ -164,7 +164,7 @@ class VenueController extends Controller
             $this->addFlash('success', 'Modification effectuée avec succès');
         }
 
-        if (in_array($id, $manager_id)) {
+        if (in_array($user_id, $manager_id)) {
             return $this->render('pages/venues/update.html.twig', [
                 'venueForm' => $form->createView(), 'id' => $id, 'venue' => $venue, 'gallery' => $gallery
             ]);
