@@ -15,6 +15,7 @@ use Symfony\Component\Validator\GroupSequenceProviderInterface;
 class Event implements GroupSequenceProviderInterface
 {
     const SUBSCRIBED = 1;
+    const UNSUBSCRIBED = 2;
 
     /**
      * @ORM\Id
@@ -100,7 +101,7 @@ class Event implements GroupSequenceProviderInterface
 
     /**
      * @ORM\OneToOne(targetEntity="UnsubscribedVenue", cascade={"persist"})
-     *
+     * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
      */
     private $unsubscribedVenue;
 
