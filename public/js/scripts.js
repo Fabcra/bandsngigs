@@ -42,6 +42,37 @@ function initCitybook() {
             return a;
         }
     });
+    $('.quantity-item').each(function () {
+        var spinner = jQuery(this),
+            input = spinner.find('input[type="text"]'),
+            btnUp = spinner.find('.plus'),
+            btnDown = spinner.find('.minus'),
+            min = input.attr('min'),
+            max = input.attr('max');
+
+        btnUp.click(function () {
+            var oldValue = parseFloat(input.val());
+            if (oldValue >= max) {
+                var newVal = oldValue;
+            } else {
+                var newVal = oldValue + 1;
+
+            }
+            spinner.find("input.qty").val(newVal);
+            spinner.find("input.qty").trigger("change");
+        });
+
+        btnDown.click(function () {
+            var oldValue = parseFloat(input.val());
+            if (oldValue <= min) {
+                var newVal = oldValue;
+            } else {
+                var newVal = oldValue - 1;
+            }
+            spinner.find("input.qty").val(newVal);
+            spinner.find("input.qty").trigger("change");
+        });
+    });
     //   Isotope------------------
     function initIsotope() {
         if ($(".gallery-items").length) {

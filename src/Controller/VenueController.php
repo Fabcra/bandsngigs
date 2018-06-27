@@ -14,6 +14,7 @@ use App\Entity\Venue;
 use App\Form\BandType;
 use App\Form\VenueType;
 use App\Service\FileUploader;
+use App\Service\YoutubeAPI;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -57,7 +58,7 @@ class VenueController extends Controller
             $em->persist($venue);
             $em->flush();
 
-            $this->addFlash('success', 'Vous avez créé la salle de spectacle' . $venue->getName());
+            $this->addFlash('success', 'Vous avez créé la salle de spectacle ' . $venue->getName());
 
             return $this->redirectToRoute('homepage');
 
@@ -179,14 +180,26 @@ class VenueController extends Controller
      *
      * @Route("/venues/{slug}", name="venue"))
      */
-    public function viewAction($slug)
+    public function viewAction(YoutubeAPI $youtubeAPI, $slug)
     {
         $doctrine = $this->getDoctrine();
 
         $venue = $doctrine->getRepository(Venue::class)->findOneBy(['slug' => $slug]);
 
+        $playlist = $venue->getVideoPlaylist();
+
+        if($playlist) {
+            $regex = '/list=(.+)/';
+            preg_match($regex, $playlist, $matches);
+            $src = $matches[1];
+
+
+            $videos = $youtubeAPI->getVideosFromPlaylist($src, 10);
+        }else{
+            $videos = null;
+        }
         return $this->render('pages/venues/venue.html.twig', [
-            'venue' => $venue
+            'venue' => $venue, 'videos'=>$videos
         ]);
     }
 

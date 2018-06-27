@@ -84,11 +84,16 @@ class Band
      */
     private $styles;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     */
+    private $videoPlaylist;
 
     /**
-     * @ORM\OneToMany(targetEntity="Video", mappedBy="band")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $videos;
+    private $audioPlaylist;
 
     /**
      * @Gedmo\Slug(fields={"name"})
@@ -206,6 +211,37 @@ class Band
         $this->members[] = $members;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getVideoPlaylist()
+    {
+        return $this->videoPlaylist;
+    }
+
+    /**
+     * @param mixed $videoPlaylist
+     */
+    public function setVideoPlaylist($videoPlaylist)
+    {
+        $this->videoPlaylist = $videoPlaylist;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAudioPlaylist()
+    {
+        return $this->audioPlaylist;
+    }
+
+    /**
+     * @param mixed $audioPlaylist
+     */
+    public function setAudioPlaylist($audioPlaylist)
+    {
+        $this->audioPlaylist = $audioPlaylist;
+    }
 
 
     /**
@@ -336,21 +372,7 @@ class Band
         $this->slug = $slug;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getVideos()
-    {
-        return $this->videos;
-    }
 
-    /**
-     * @param mixed $videos
-     */
-    public function setVideos($videos)
-    {
-        $this->videos = $videos;
-    }
 
     /**
      * @return mixed

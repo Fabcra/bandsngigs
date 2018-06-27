@@ -1,0 +1,209 @@
+{% extends "pages/default/layout.html.twig" %}
+
+{% block content %}
+
+
+    <!--content-->
+    <div class="content">
+
+        <!--section -->
+        <section id="sec1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="list-single-main-item fl-wrap">
+                            <div class="list-single-main-item-title fl-wrap">
+                                <h3>{{ event.name }}</h3>
+                            </div>
+                            <div class="list-single-main-media fl-wrap">
+                                <img src="{{ event.flyer.url }}" class="respimg" alt="">
+                            </div>
+                            <p>{{ event.description }}</p>
+                            <!-- list-single-main-item -->
+                            <p>
+                                WITH :
+                            </p>
+                            <div class="team-holder fl-wrap">
+                                {% for b in event.bands %}
+                                    <!-- team-item -->
+                                    <div class="team-box">
+                                        <div class="team-photo">
+                                            <img src="{{ b.logo.url }}" alt="{{ b.name }}" class="respimg">
+                                        </div>
+                                        <div class="team-info">
+                                            <h3><a href="{{ path('band', {'slug':b.slug}) }}">{{ b.name }}</a></h3>
+                                            {% for s in b.styles %}
+                                                <h4>{{ s.style }}</h4>
+                                            {% endfor %}
+                                            <p>{{ b.description }}</p>
+
+                                        </div>
+                                    </div>
+                                    <!-- team-item  end-->
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="list-single-main-item fl-wrap">
+                            <div class="list-single-main-item-title fl-wrap">
+                                <h3>Order your spot</h3>
+                            </div>
+                            <script src="https://js.stripe.com/v3/"></script>
+                            <form method="post" id="payment-form" name="payment">
+                                {{ form_start(ticketForm) }}
+                                <div class="form-row custom-form">
+                                    <fieldset>
+                                        <label><i class="fa fa-user-o"></i></label>
+                                        <input type="text" name="name" id="name" placeholder="{{ app.user.fullName }}"
+                                               disabled="disabled"/>
+                                        <div class="clearfix"></div>
+                                        <label><i class="fa fa-envelope-o"></i> </label>
+                                        <input type="text" name="email" id="email" placeholder="{{ app.user.email }}"
+                                               disabled="disabled"
+                                               value=""/>
+
+                                        <div class="quantity fl-wrap">
+                                            <span><i class="fa fa-user-plus"></i>Persons : </span>
+                                            {{ form_row(ticketForm.purchasedTicketsNb, {'attr':{'value':quantity, 'class':'qty qty2', 'style':'color:#000 background:#fff border-top:none border-bottom:none'}}) }}
+                                        </div>
+                                    </fieldset>
+
+
+                                    <label for="card-element" class="marginbottom20">
+                                        <b>Credit or debit card</b>
+                                    </label>
+                                    <div id="card-element">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                    </div>
+
+                                    <!-- Used to display form errors. -->
+                                    <div id="card-errors" role="alert"></div>
+                                </div>
+                                    <button class="btn  big-btn  color-bg flat-btn margintop20">Submit payment<i
+                                                class="fa fa-angle-right"></i></button>
+                                {{ form_end(ticketForm) }}
+                            </form>
+                        </div>
+
+                        <div class="list-single-main-item fl-wrap">
+                            <div class="list-single-main-item-title fl-wrap">
+                                <h3>{{ event.venue.name }}</h3>
+                            </div>
+                            <div class="team-holder fl-wrap">
+                                <img src="{{ event.venue.photo.url }}" alt="{{ event.venue.name }}"
+                                     class="respimg">
+                                <div class="team-info">
+                                    <p>{{ event.venue.description }}</p>
+                                </div>
+                                <div class="list-author-widget-contacts">
+                                    <ul>
+                                        <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a
+                                                    href="#">{{ event.venue.streetName }} {{ event.venue.houseNb }}</a>
+                                        </li>
+                                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                    href="#">{{ event.venue.phone }}</a></li>
+                                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
+                                                    href="#">{{ event.venue.mail }}</a>
+                                        </li>
+                                        <li><span><i class="fa fa-globe"></i> Website :</span> <a
+                                                    href="#">{{ event.venue.website }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- contentend -->
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        var stripe = Stripe('pk_test_vq5bWlqvV7XJG5EPeMacpqmM');
+
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+        var style = {
+            base: {
+                color: '#32325d',
+                lineHeight: '18px',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+
+
+        // Create an instance of the card Element.
+        var card = elements.create('card', {style: style, hidePostalCode:true});
+
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission.
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    // Inform the user if there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server.
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+
+            // Submit the form
+            form.submit();
+        }
+
+    </script>
+
+
+{% endblock %}

@@ -48,6 +48,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $venue->setLng($lng1 . '.' . $latlng2);
             $venue->setWebsite('http://www.' . $faker->word . '.com');
             $venue->setRegistrationDate($faker->dateTimeThisYear());
+            $venue->setVideoPlaylist('https://www.youtube.com/playlist?list=PLxNfMdbS3RWwxyVsiueHx_q6Jc9j0WRla');
 
 
             for ($j = 1; $j < 3; $j++) {

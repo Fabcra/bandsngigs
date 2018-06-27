@@ -37,3 +37,10 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDir: '%files_directory%'
+
+
+    App\Service\YoutubeAPI:
+        arguments:
+            $apiKey: 'AIzaSyDEZ2gPFEaN33ZYABQaKBamoewDwhsgDXI'
+
+

@@ -101,7 +101,7 @@ class Event implements GroupSequenceProviderInterface
 
     /**
      * @ORM\OneToOne(targetEntity="UnsubscribedVenue", cascade={"persist"})
-     * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
+     * @Assert\Valid(groups={"unsubscribed"})
      */
     private $unsubscribedVenue;
 
@@ -422,7 +422,6 @@ class Event implements GroupSequenceProviderInterface
         return [
             'Event',
             $this->typeVenue === self::SUBSCRIBED ? 'subscribed' : 'unsubscribed',
-
         ];
 
     }

@@ -1,6 +1,7 @@
 
             {% for e in events %}
             <div class="col-md-4">
+
                 <article class="card-post">
                     <div class="card-post-img fl-wrap">
                         <a href="{{ path('event',{'slug':e.slug}) }}"><img src="{{ e.flyer.url }}"   alt=""></a>
@@ -8,9 +9,16 @@
                     <div class="card-post-content fl-wrap">
                         <h3><a href="{{ path('event',{'slug':e.slug}) }}">{{ e.name }}</a></h3>
                         <p>{{ e.description }}</p>
+                            {% if app.user %}
+                                {% if app.user.slug == e.organiser.slug %}
+                                    <a class="listing-geodir-category" href="{{ path('events-update', {'id':e.id}) }}">update</a>
+                                {% endif %}
+                            {% endif %}
+
                         {% for b in e.bands %}
                         <div class="post-author"><a href="{{ path('band', {'slug':b.slug}) }}"><img src="{{ b.logo.url }}" alt=""><span>{{ b.name }}</span></a></div>
                        {% endfor %}
+
                         <div class="post-opt">
                             <ul>
                                 <li><i class="fa fa-calendar-check-o"></i><span>{{ e.date|date("d/m/Y") }}</span></li>

@@ -51,9 +51,9 @@ class EventController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $event->setUsers($user);
+            $event->setOrganiser($user);
 
             $em->persist($event);
-
             $em->flush();
 
             $this->addFlash('success', "Vous avez créé l'évènement " . $event->getName());
@@ -94,12 +94,12 @@ class EventController extends Controller
 
     /**
      * @param Request $request
-     * @param FileUploader $fileUploader
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("events/update/{id}", name="events-update")
+     * @Method({"GET","POST"})
      */
-    public function updateEvent(Request $request, FileUploader $fileUploader, $id)
+    public function updateEvent(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -113,6 +113,7 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($event);
@@ -129,13 +130,12 @@ class EventController extends Controller
             $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
             return $this->redirectToRoute('homepage');
         }
-
     }
 
 
-    /**
+    /** LISTER LES EVENEMENTS ORGANISES PAR L'UTILISATEUR CONNECTE
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/events/manage", name="events-manager")
+     * @Route("/events/manage", name="events-manage")
      */
     public function manageEvents(Request $request)
     {

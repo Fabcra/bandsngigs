@@ -90,20 +90,31 @@
 
                         </div>
                         <!-- list-single-main-item-->
+                        {% if videos %}
                         <div class="list-single-main-item fl-wrap" id="sec3">
                             <div class="list-single-main-item-title fl-wrap">
-                                <h3>Promo Video</h3>
+                                <h3>Video playlist</h3>
                             </div>
-                            <div class="iframe-holder fl-wrap">
-                                {% for v in band.videos %}
-                                    <div class="resp-video">
-                                        <iframe width="640" height="480" src="https://www.youtube.com/embed/{{ v.url }}"
-                                                frameborder="0" allow="autoplay; encrypted-media"
-                                                allowfullscreen></iframe>
+                            <div class="list-single-main-media fl-wrap">
+                                <div class="single-slider-wrapper fl-wrap">
+                                    <div class="single-slider fl-wrap">
+                                        {% for v in videos %}
+                                            <div class="slick-slide-item">
+                                                <iframe width="640" height="480"
+                                                        src="https://www.youtube.com/embed/{{ v.snippet.resourceId.videoId }}"
+                                                        frameborder="0"
+                                                        allowfullscreen></iframe>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
+                                    <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i>
+                                    </div>
+                                    <div class="swiper-button-next sw-btn"><i
+                                                class="fa fa-long-arrow-right"></i></div>
+                                </div>
                             </div>
                         </div>
+                        {% endif %}
                         <!-- list-single-main-item end -->
                     </div>
                     <!--box-widget-wrap -->
@@ -163,6 +174,7 @@
                             {% endfor %}
                             <!--box-widget-item end -->
                             <!--box-widget-item -->
+                            {% if band.events is not empty %}
                             <div class="box-widget-item fl-wrap">
                                 <div class="box-widget-item-header">
                                     <h3>Events : </h3>
@@ -188,6 +200,21 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
+                            <!--box-widget-item end -->
+                            <!--box-widget-item -->
+                            {% if audio %}
+                            <div class="box-widget-item fl-wrap">
+                                <div class="box-widget-item-header">
+                                    <h3>Spotify : </h3>
+                                </div>
+                                <div class="box-widget widget-posts blog-widgets">
+                                    <div class="box-widget-content">
+                                        <iframe src="https://open.spotify.com/embed?uri=spotify:{{ audio }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                             <!--box-widget-item end -->
                         </div>
                     </div>

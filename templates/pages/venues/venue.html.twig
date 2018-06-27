@@ -71,10 +71,7 @@
                         <div class="list-single-main-wrapper fl-wrap" id="sec2">
                             <div class="list-single-main-media fl-wrap">
                                 <img src="{{ venue.photo.url }}" class="respimg" alt="{{ venue.name }}">
-                                {% for v in venue.videos %}
-                                    <a href="{{ v.url }}" class="promo-link gradient-bg image-popup"><i
-                                                class="fa fa-play"></i><span>Promo Video</span></a>
-                                {% endfor %}
+
                             </div>
                             <div class="list-single-main-item fl-wrap">
                                 <div class="list-single-main-item-title fl-wrap">
@@ -125,6 +122,32 @@
 
                                 </div>
                                 <!-- end gallery items -->
+                            </div>
+                            <!-- list-single-main-item end -->
+
+                            <!-- list-single-main-item-->
+                            <div class="list-single-main-item fl-wrap" id="sec3">
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>Video playlist</h3>
+                                </div>
+                                <div class="list-single-main-media fl-wrap">
+                                    <div class="single-slider-wrapper fl-wrap">
+                                        <div class="single-slider fl-wrap">
+                                            {% for v in videos %}
+                                                <div class="slick-slide-item">
+                                                    <iframe width="640" height="480"
+                                                            src="https://www.youtube.com/embed/{{ v.snippet.resourceId.videoId }}"
+                                                            frameborder="0"
+                                                            allowfullscreen></iframe>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i>
+                                        </div>
+                                        <div class="swiper-button-next sw-btn"><i
+                                                    class="fa fa-long-arrow-right"></i></div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- list-single-main-item end -->
                         </div>

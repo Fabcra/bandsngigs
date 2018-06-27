@@ -21,7 +21,7 @@
                                         {% for u in v.managers %}
 
                                             {% if app.user.slug == u.slug %}
-                                                <a class="listing-geodir-category" href="{{ path('venues-update', {'id':v.id}) }}"><i class="fa fa-star" aria-hidden="true"></i> update</a>
+                                                <a class="listing-geodir-category" href="{{ path('venues-update', {'id':v.id}) }}">update</a>
                                             {% endif %}
                                         {% endfor %}
 

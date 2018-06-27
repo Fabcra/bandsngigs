@@ -12,7 +12,9 @@ namespace App\Controller;
 use App\Entity\Band;
 use App\Entity\Image;
 use App\Form\BandType;
+use App\Form\MediaBandType;
 use App\Service\FileUploader;
+use App\Service\YoutubeAPI;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -60,7 +62,6 @@ class BandController extends Controller
         return $this->render("pages/bands/new.html.twig", [
             'bandForm' => $form->createView()
         ]);
-
     }
 
     /** LISTE LES GROUPES INSCRITS
@@ -157,23 +158,74 @@ class BandController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/bands/medias/{id}", name="bands-medias")
+     */
+    public function manageMedias($id, Request $request)
+    {
+        $doctrine = $this->getDoctrine();
+        $band = $doctrine->getRepository(Band::class)->findOneBy(['id'=>$id]);
+
+        $form = $this->createForm(MediaBandType::class, $band, ['method' => 'POST']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($band);
+            $em->flush();
+
+            $this->addFlash('success', 'Modification effectuée avec succès');
+
+        }
+
+        return $this->render('pages/bands/medias.html.twig', [
+            'mediaForm' => $form->createView(), 'band' => $band, 'id'=>$id
+        ]);
+
+    }
+
     /** AFFICHE LA PAGE DU GROUPE
      *
      * @param $slug
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("bands/{slug}", name="band")
      */
-    public function showBand($slug)
+    public function showBand(YoutubeAPI $youtubeAPI, $slug)
     {
 
         $doctrine = $this->getDoctrine();
-
         $band = $doctrine->getRepository(Band::class)->findOneBy(['slug' => $slug]);
+        $videoplaylist = $band->getVideoPlaylist();
+        $audioplaylist = $band->getAudioPlaylist();
 
+     if($videoplaylist) {
+         $regex = '/list=(.+)/';
+         preg_match($regex, $videoplaylist, $matches);
+         $src = $matches[1];
+         $videos = $youtubeAPI->getVideosFromPlaylist($src, 10);
+     }else {
+         $videos = null;
+     }
 
-        return $this->render('pages/bands/band.html.twig', ['band' => $band]);
+     if($audioplaylist){
+         $regex2 = '/open\.spotify\.com\/(.+)/';
+         preg_match($regex2, $audioplaylist, $matches);
+         $audio = str_replace("/", ":", $matches[1]);
+
+     } else {
+         $audio = null;
+     }
+
+        return $this->render('pages/bands/band.html.twig', ['band' => $band, 'videos' => $videos, 'audio'=>$audio]);
 
     }
+
+
 
 
 }

@@ -444,7 +444,7 @@ class ImageData extends Fixture
 
         $image49 = new Image();
 
-        $image49->setUrl('http://api.hdwallpapers5k.com/resource/fileuploads/photos/albums/1430/7c8f3bd7-1266-4e42-9d05-4b46cdc57027.jpg?quality=100&w=640&h=480&mode=crop');
+        $image49->setUrl('https://images4.alphacoders.com/105/10546.jpg');
 
         $manager->persist($image49);
 

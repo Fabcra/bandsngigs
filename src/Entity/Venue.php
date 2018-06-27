@@ -75,9 +75,9 @@ class Venue
     private $gallery;
 
     /**
-     * @ORM\OneToMany(targetEntity="Video", mappedBy="venue")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $videos;
+    private $videoPlaylist;
 
     /**
      * @ORM\OneToMany(targetEntity="Event", mappedBy="venue")
@@ -273,21 +273,8 @@ class Venue
         $this->gallery = $gallery;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getVideos()
-    {
-        return $this->videos;
-    }
 
-    /**
-     * @param mixed $videos
-     */
-    public function setVideos($videos)
-    {
-        $this->videos = $videos;
-    }
+
 
     /**
      * @return mixed
@@ -421,6 +408,23 @@ class Venue
     {
         $this->registrationDate = $registrationDate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getVideoPlaylist()
+    {
+        return $this->videoPlaylist;
+    }
+
+    /**
+     * @param mixed $videoPlaylist
+     */
+    public function setVideoPlaylist($videoPlaylist)
+    {
+        $this->videoPlaylist = $videoPlaylist;
+    }
+
 
 
 

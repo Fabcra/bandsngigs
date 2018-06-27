@@ -15,52 +15,38 @@
                     </div>
                 </div>
                 <div class="row">
-
-                    {% block left %}
                         <div class="col-md-7">
                             <!-- profile-edit-container-->
                             {{ form_start(bandForm) }}
                             <div class="profile-edit-container">
+                                <div class="profile-edit-header fl-wrap">
+                                    <h4>Nom et contacts</h4>
+                                </div>
                                 <div class="custom-form">
+
+                                    <!-- Nom et contacts-->
                                     {{ form_row(bandForm.name) }}
-
-                                   {# <div class="check-user floatleft marginbottom20">
-                                        {{ form_row(bandForm.members) }}
-                                    </div>
-
-                                    <section class="check-user bigmarginright">
-                                        <p>You can add unscribed people in the website on your band page</p>
-                                        <ul class="members"
-                                            data-prototype="{{ form_row(bandForm.unscribedMembers.vars.prototype)|e }}">
-                                        </ul>
-                                    </section>#}
-
-
-                                    {{ form_row(bandForm.logo, {'attr':{'class': 'floatleft', 'label':'Logo'}}) }}
+                                    {{ form_row(bandForm.website) }}
+                                    {{ form_row(bandForm.locality, {'attr':{'class':'chosen-select floatleft fontsize14 marginbottom20'}}) }}
                                     {{ form_row(bandForm.mail) }}
                                     {{ form_row(bandForm.phone) }}
-                                    {{ form_row(bandForm.website) }}
-                                    {{ form_row(bandForm.locality, {'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
-
-
-                                    <section class="check-user floatleft formbackground">
-                                        <div class="col-md-6">
-                                            {{ form_row(bandForm.styles) }}
-                                        </div>
-
-                                    </section>
-
-                                    {{ form_row(bandForm.description) }}
+                                </div>
+                                <div class="profile-edit-header fl-wrap">
+                                    <h4>Nom et contacts</h4>
+                                </div>
+                                <div class="custom-form margintop20">
+                                    <!-- Détails descriptifs -->
+                                        {{ form_row(bandForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
+                                        {{ form_row(bandForm.description) }}
+                                        {{ form_row(bandForm.logo) }}
                                     <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
                                                 class="fa fa-angle-right"></i></button>
                                 </div>
                             </div>
-
                             <!-- profile-edit-container end-->
                             {{ form_widget(bandForm._token) }}
                             {{ form_end(bandForm, {'render_rest':false}) }}
                         </div>
-                    {% endblock %}
                 </div>
             </div>
             <!--profile-edit-wrap end -->

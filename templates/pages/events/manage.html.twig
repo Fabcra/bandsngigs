@@ -18,8 +18,8 @@
                                 </div>
                             </div>
                             {% if events is empty %}
-                            <p>You have no band</p>
-                                <a href="#" class="btn transparent-btn custom-scroll-link">Create yours <i class="fa fa-music"></i></a>
+                            <p>You have no event</p>
+                                <a href="{{ path('event-new') }}" class="btn transparent-btn custom-scroll-link">Create yours <i class="fa fa-music"></i></a>
 
                             {% endif %}
                             {% include "pages/events/list.html.twig" %}

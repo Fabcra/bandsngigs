@@ -6,6 +6,7 @@ use App\Entity\Band;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -21,24 +22,13 @@ class BandType extends AbstractType
             ->add('website')
             ->add('description')
             ->add('locality')
-            ->add('styles')
-            ->add('logo', ImageType::class, array(
-                'label'=>false
-            ))
-           /* ->add('members', EntityType::class, [
-                'multiple' => true,
-                'class' => User::class,
-                'label' => 'Subscribed members'
+            ->add('styles', null,[
+                'attr'=>[
+                    'class'=>'js-example-basic-single']
             ])
-            ->add('unscribedMembers', CollectionType::class, array(
-                'label'=>'Unscribed Members',
-                'entry_type' => UnscribedMemberType::class,
-                'entry_options' => array('label' => false),
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-            ))*/
-           ;
+            ->add('logo', ImageType::class, array(
+                'label' => 'logo'
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

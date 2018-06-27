@@ -1,0 +1,28 @@
+<meta charset="UTF-8">
+<div>
+    <div>
+        <h1>{{ ticket.event.name }}</h1>
+        {{ ticket.event.description }}
+        <h2>N° {{ ticket.verificationNb }}</h2>
+        <hr>
+
+        <h2>IN {{ ticket.event.venue.name }}</h2>
+            <p>{{ ticket.event.venue.streetName }}, {{ ticket.event.venue.houseNb }}<br>
+           {{ ticket.event.venue.locality.postCode.postCode }} {{ ticket.event.venue.locality.locality }}</p>
+
+        WITH <br>
+        {% for b in ticket.event.bands %}
+        <b><h2>{{ b.name }}</h2></b>
+        {% endfor %}
+    </div>
+
+
+    <div>
+        <h3>{{ ticket.event.price }} EUR</h3>
+        <div>
+            {{ ticket.spectator.fullName }}
+            <p>Ce billet est valable pour {{ ticket.purchasedTicketsNb }} place(s)</p>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,68 @@
+.bord{
+    width : 600px;
+    height: 800px;
+    margin: 0 auto;
+    padding : 20px;
+    border: 2px solid #000;
+    overflow: auto;
+    position: relative;
+
+}
+
+.title img{
+    width : 500px;
+   margin-left : 30px;
+}
+
+.title p{
+    margin-left : 500px;
+    margin-top : 0px;
+}
+
+h1{
+    margin-bottom: 0px;
+}
+
+h2{
+    margin-bottom : 0px;
+    margin-top : 0px;
+}
+
+li{
+    list-style-type: none;
+}
+
+ul{
+    margin-top : 0px;
+    padding-left : 0px;
+}
+
+.band{
+    font-size: 40px;
+}
+
+.leftside{
+    width : 300px;
+    float: left;
+}
+.rightside{
+    width : 300px;
+    float:right;
+}
+
+.price{
+    text-align: center;
+    margin-top : 30px;
+    font-size : 60px;
+    border : 1px solid #000;
+}
+
+.spectator{
+    margin-top : 30px;
+}
+
+.highest{
+    position: absolute;
+    bottom : 20px;
+    right:10px;
+}

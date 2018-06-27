@@ -21,38 +21,35 @@
                             <!-- profile-edit-container-->
                             {{ form_start(venueForm) }}
                             <div class="profile-edit-container">
+                                <div class="profile-edit-header fl-wrap">
+                                    <h4>Nom et contacts</h4>
+                                </div>
                                 <div class="custom-form">
+                                    <!-- Nom et contacts -->
                                     {{ form_row(venueForm.name) }}
-
-                                   {# <div class="check-user floatleft marginbottom20">
-                                        {{ form_row(venueForm.manager) }}
-                                    </div>#}
-
-
-                                    {{ form_row(venueForm.photo, {'attr':{'class': 'floatleft', 'label':'Photo'}}) }}
+                                    {{ form_row(venueForm.streetName) }}
+                                    {{ form_row(venueForm.houseNb) }}
+                                    {{ form_row(venueForm.locality, {'attr':{'class':'chosen-select floatleft fontsize14 marginbottom20'}}) }}
                                     {{ form_row(venueForm.mail) }}
                                     {{ form_row(venueForm.phone) }}
                                     {{ form_row(venueForm.website) }}
-                                    {{ form_row(venueForm.streetName) }}
-                                    {{ form_row(venueForm.houseNb) }}
-                                    {{ form_row(venueForm.locality, {'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
+                                </div>
+                                <div class="profile-edit-header fl-wrap">
+                                    <h4>Détails descriptifs</h4>
+                                </div>
 
-
-                                    <section class="check-user floatleft formbackground">
-                                        <div class="col-md-6">
-                                            {{ form_row(venueForm.styles) }}
-                                        </div>
-
-                                    </section>
-
+                                <div class="custom-form margintop20">
+                                    {{ form_row(venueForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
                                     {{ form_row(venueForm.description) }}
+                                    {{ form_row(venueForm.photo) }}
                                     <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
                                                 class="fa fa-angle-right"></i></button>
                                 </div>
                             </div>
+                            {{ form_widget(venueForm._token) }}
 
                             <!-- profile-edit-container end-->
-                            {{ form_end(venueForm) }}
+                            {{ form_end(venueForm, {'render_rest':false}) }}
                         </div>
 
                     {% endblock %}

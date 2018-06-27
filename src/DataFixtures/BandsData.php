@@ -38,6 +38,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band1->setLogo($this->getReference('image49'));
         $band1->setLocality($this->getReference('locality' . mt_rand(1, 50)));
+        $band1->setVideoPlaylist("https://www.youtube.com/watch?v=s5VQtT1t7n8&list=PLCfCU1Ok5NVvoxxSRGBXrB_FueSk4Wzdw");
+        $band1->setAudioPlaylist("https://open.spotify.com/artist/6mdiAmATAx73kdxrNrnlao");
 
         $band1->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
@@ -61,6 +63,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band2->setLogo($this->getReference('image50'));
         $band2->setLocality($this->getReference('locality' . mt_rand(1, 50)));
+        $band2->setVideoPlaylist("https://www.youtube.com/watch?v=uq2HNLTxaZc&list=PL6961E6FC457FB9E6");
+        $band2->setAudioPlaylist("https://open.spotify.com/artist/3ggwAqZD3lyT2sbovlmfQY");
 
         $band2->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
@@ -86,6 +90,9 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band3->setLogo($this->getReference('image51'));
         $band3->setLocality($this->getReference('locality' . mt_rand(1, 50)));
 
+        $band3->setVideoPlaylist("https://www.youtube.com/watch?v=cHQ121jygSo&list=PLM70_3BvKVmcTNXvzf4wIWCsSUyLvNjf4");
+        $band3->setAudioPlaylist("https://open.spotify.com/artist/3swwiYEQQzPNGvMdEhqReR");
+
         $band3->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
         $manager->persist($band3);
@@ -107,6 +114,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band4->setLogo($this->getReference('image52'));
         $band4->setLocality($this->getReference('locality' . mt_rand(1, 50)));
+        $band4->setVideoPlaylist("https://www.youtube.com/watch?v=fBYVlFXsEME&list=PLpSW6gVRk77HTMSQX7Q9hsAn2IV-3s4kz");
+        $band4->setAudioPlaylist("https://open.spotify.com/artist/0nmQIMXWTXfhgOBdNzhGOs");
 
         $band4->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
@@ -130,6 +139,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band5->setLogo($this->getReference('image53'));
         $band5->setLocality($this->getReference('locality' . mt_rand(1, 50)));
+        $band5->setVideoPlaylist("https://www.youtube.com/watch?v=yeVJguP_T40&list=PLxYReOMcJaFfGz1daUgyTUh9SerOLl3Vz");
+        $band5->setAudioPlaylist("https://open.spotify.com/artist/14pVkFUHDL207LzLHtSA18");
 
         $band5->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
@@ -153,6 +164,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band6->setLogo($this->getReference('image54'));
         $band6->setLocality($this->getReference('locality' . mt_rand(1, 50)));
+        $band6->setVideoPlaylist("https://www.youtube.com/watch?v=JnLdx2FyNqg&list=PLToa5JuFMsXTNkrLJbRlB--76IAOjRM9b");
+        $band6->setAudioPlaylist("https://open.spotify.com/artist/2aaLAng2L2aWD2FClzwiep");
 
         $band6->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
@@ -163,7 +176,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band7 = new Band();
 
-        $band7->setName('Symfony 4');
+        $band7->setName('Symfony X');
         $band7->setDescription($faker->realText());
         $band7->setMail($faker->email);
         $band7->setPhone($faker->phoneNumber);
@@ -176,6 +189,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band7->setLogo($this->getReference('image55'));
         $band7->setLocality($this->getReference('locality' . mt_rand(1, 50)));
+        $band7->setVideoPlaylist("https://www.youtube.com/watch?v=sxZQ4UEdM9c&list=PLDA921F8DC808918B");
+        $band7->setAudioPlaylist("https://open.spotify.com/artist/4MnZkh4dpNmTMPxkl4Ev5L");
 
         $band7->setStyles($this->getReference('style' . mt_rand(1, 6)));
 
@@ -192,6 +207,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band8->setPhone($faker->phoneNumber);
         $band8->setWebsite($faker->url);
         $band8->setRegistrationDate($faker->dateTimeThisYear());
+        $band8->setVideoPlaylist("https://www.youtube.com/watch?v=h2JgqF384cU&list=PLphGROqmao1IO8VDsvYeC6eM48e-MSgSx");
+        $band8->setAudioPlaylist("https://open.spotify.com/artist/6olE6TJLqED3rqDCT0FyPh");
 
             $band8->setMembers($this->getReference('user22'));
             $band8->setMembers($this->getReference('user23'));
@@ -215,6 +232,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band9->setPhone($faker->phoneNumber);
         $band9->setWebsite($faker->url);
         $band9->setRegistrationDate($faker->dateTimeThisYear());
+        $band9->setVideoPlaylist("https://www.youtube.com/watch?v=pVohVy8d0s0&list=PL99O_K7Ai5RzxWcdLGWZZ4m8ulyF6wczQ");
+        $band9->setAudioPlaylist("https://open.spotify.com/artist/6gZq1Q6bdOxsUPUG1TaFbF");
 
             $band9->setMembers($this->getReference('user25'));
             $band9->setMembers($this->getReference('user26'));
@@ -238,6 +257,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band10->setPhone($faker->phoneNumber);
         $band10->setWebsite($faker->url);
         $band10->setRegistrationDate($faker->dateTimeThisYear());
+        $band10->setVideoPlaylist("https://www.youtube.com/watch?v=cl2D7J_FL_U&list=PLImEsAJ7sjmBySHJjeA_8iLabmlEK8z4W");
+        $band10->setAudioPlaylist("https://open.spotify.com/artist/3RNrq3jvMZxD9ZyoOZbQOD");
 
             $band10->setMembers($this->getReference('user28'));
             $band10->setMembers($this->getReference('user29'));
@@ -261,6 +282,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band11->setPhone($faker->phoneNumber);
         $band11->setWebsite($faker->url);
         $band11->setRegistrationDate($faker->dateTimeThisYear());
+        $band11->setVideoPlaylist("https://www.youtube.com/watch?v=iLFwTqdsuxw&list=PLlAIujS66Q6CdVGg7lwFZuc0VG2VVMDJz");
+        $band11->setAudioPlaylist("https://open.spotify.com/artist/0k17h0D3J5VfsdmQ1iZtE9");
 
             $band11->setMembers($this->getReference('user31'));
             $band11->setMembers($this->getReference('user32'));
@@ -278,12 +301,14 @@ class BandsData extends Fixture implements DependentFixtureInterface
 
         $band12 = new Band();
 
-        $band12->setName('Beers n Flowers');
+        $band12->setName('Guns n\' Prosit');
         $band12->setDescription($faker->realText());
         $band12->setMail($faker->email);
         $band12->setPhone($faker->phoneNumber);
         $band12->setWebsite($faker->url);
         $band12->setRegistrationDate($faker->dateTimeThisYear());
+        $band12->setVideoPlaylist("https://www.youtube.com/watch?v=8SbUC-UaAxE&list=PL2wCCiky2eR3Roemc3ZjWsVCUZM47Gp3_");
+        $band12->setAudioPlaylist("https://open.spotify.com/artist/3qm84nBOXUEQ2vnTfUTTFC");
 
             $band12->setMembers($this->getReference('user34'));
             $band12->setMembers($this->getReference('user35'));
@@ -307,6 +332,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band13->setPhone($faker->phoneNumber);
         $band13->setWebsite($faker->url);
         $band13->setRegistrationDate($faker->dateTimeThisYear());
+        $band13->setVideoPlaylist("https://www.youtube.com/watch?v=jQBLGxabQ2Q&list=PLx1MDbsLNfVQfLBqmbxjsYJG3j_B3TkCp");
+        $band13->setAudioPlaylist("https://open.spotify.com/artist/711MCceyCBcFnzjGY4Q7Un");
 
             $band13->setMembers($this->getReference('user37'));
             $band13->setMembers($this->getReference('user38'));
@@ -330,6 +357,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band14->setPhone($faker->phoneNumber);
         $band14->setWebsite($faker->url);
         $band14->setRegistrationDate($faker->dateTimeThisYear());
+        $band14->setVideoPlaylist("https://www.youtube.com/watch?v=uhBHL3v4d3I&list=PLJvQXRgtxlumAHceNRk3cx3P7MZVUCdBl");
+        $band14->setAudioPlaylist("https://open.spotify.com/artist/2ye2Wgw4gimLv2eAKyk1NB");
 
             $band14->setMembers($this->getReference('user40'));
             $band14->setMembers($this->getReference('user41'));
@@ -353,6 +382,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band15->setPhone($faker->phoneNumber);
         $band15->setWebsite($faker->url);
         $band15->setRegistrationDate($faker->dateTimeThisYear());
+        $band15->setVideoPlaylist("https://www.youtube.com/watch?v=ayV1MQUIHPY&list=PLif2iIyBTjSJmUOLMZj2tqOtGMwHWqUL6");
+        $band15->setAudioPlaylist("https://open.spotify.com/artist/3TOqt5oJwL9BE2NG9MEwDa");
 
             $band15->setMembers($this->getReference('user43'));
             $band15->setMembers($this->getReference('user44'));
@@ -376,6 +407,8 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band16->setPhone($faker->phoneNumber);
         $band16->setWebsite($faker->url);
         $band16->setRegistrationDate($faker->dateTimeThisYear());
+        $band16->setVideoPlaylist("https://www.youtube.com/watch?v=zUzd9KyIDrM&list=PLcRCYbVrSCinAvcPOXDFVY4ovGVXs82AL");
+        $band16->setAudioPlaylist("https://open.spotify.com/artist/5eAWCfyUhZtHHtBdNk56l1");
 
             $band16->setMembers($this->getReference('user46'));
             $band16->setMembers($this->getReference('user47'));

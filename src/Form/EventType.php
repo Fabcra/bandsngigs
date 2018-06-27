@@ -10,8 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventType extends AbstractType
@@ -24,13 +25,19 @@ class EventType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker']
             ])
-            ->add('time')
-            ->add('price')
+            ->add('time', TimeType::class,[
+                'widget'=>'single_text',
+                'attr'=>['class'=>'js-datepicker']
+            ])
+            ->add('price', MoneyType::class)
             ->add('description')
             ->add('bands', EntityType::class, [
                 'multiple' => true,
                 'class' => Band::class,
-                'label' => 'add subscribed bands'
+                'label' => 'add subscribed bands',
+                'attr'=>array(
+                    'class'=>'js-example-basic-multiple fullwidth'
+                )
             ])
             ->add('unsubscribedBands', CollectionType::class, array(
                 'label' => false,
@@ -42,7 +49,7 @@ class EventType extends AbstractType
             ))
             ->add('typeVenue', ChoiceType::class,[
                 'attr' => [
-                    'class' => 'js-venuetype'
+                    'class' => 'js-venuetype js-example-basic-single'
                 ],
                 'choices'=>[
                     'subscribed'=> 1,
@@ -51,7 +58,7 @@ class EventType extends AbstractType
             ])
             ->add('venue', EntityType::class, [
                 'attr' => [
-                    'class' => 'js-venue'
+                    'class' => 'js-venue js-example-basic-single'
                 ],
                 'multiple' => false,
                 'class' => Venue::class,
@@ -59,7 +66,9 @@ class EventType extends AbstractType
                 'placeholder' => '--choose or fill the next form--',
                 'required' => false
             ])
-            ->add('unsubscribedVenue', UnsubscribedVenueType::class)
+            ->add('unsubscribedVenue', UnsubscribedVenueType::class,[
+                'required'=>false
+            ])
             ->add('styles')
             ->add('flyer', ImageType::class);
     }
