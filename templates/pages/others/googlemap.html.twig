@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    function initMap() {
+        var belgium = {lat: 50.503887, lng: 4.469936};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8,
+            center: belgium,
+            styles: [
+                {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+                {
+                    featureType: 'administrative.locality',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#d59563'}]
+                },
+                {
+                    featureType: 'poi',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#d59563'}]
+                },
+                {
+                    featureType: 'poi.park',
+                    elementType: 'geometry',
+                    stylers: [{color: '#263c3f'}]
+                },
+                {
+                    featureType: 'poi.park',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#6b9a76'}]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'geometry',
+                    stylers: [{color: '#38414e'}]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'geometry.stroke',
+                    stylers: [{color: '#212a37'}]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#9ca5b3'}]
+                },
+                {
+                    featureType: 'road.highway',
+                    elementType: 'geometry',
+                    stylers: [{color: '#746855'}]
+                },
+                {
+                    featureType: 'road.highway',
+                    elementType: 'geometry.stroke',
+                    stylers: [{color: '#1f2835'}]
+                },
+                {
+                    featureType: 'road.highway',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#f3d19c'}]
+                },
+                {
+                    featureType: 'transit',
+                    elementType: 'geometry',
+                    stylers: [{color: '#2f3948'}]
+                },
+                {
+                    featureType: 'transit.station',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#d59563'}]
+                },
+                {
+                    featureType: 'water',
+                    elementType: 'geometry',
+                    stylers: [{color: '#17263c'}]
+                },
+                {
+                    featureType: 'water',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#515c6d'}]
+                },
+                {
+                    featureType: 'water',
+                    elementType: 'labels.text.stroke',
+                    stylers: [{color: '#17263c'}]
+                }
+            ]
+        });
+
+
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
+
+        function addInfoWindowToMarker(map, marker, contentString) {
+
+            marker.addListener('click', function () {
+                infowindow.close();
+                infowindow.setContent(contentString);
+                infowindow.open(map, this);
+            });
+        }
+
+        // venues
+        {% if venues %}
+        {% for v in venues %}
+        var venuecontentString =
+            '<div id="content" class="mymapstyle">' +
+            '<div ' +
+            'id="siteNotice">' +
+            '</div>' +
+            '<b><h3 id="firstHeading">{{ v.name }}</h3></b>' +
+            '<div id="bodyContent">' +
+            '<a href="{{ path('venue', {'slug':v.slug}) }}"><img src="{{ v.photo.url }}" alt="{{ v.name }}" width="300px"/></a>' +
+            '<p>{{ v.description }}</p>' +
+
+            '<div class="address">' +
+            '<p><i class="fa fa-address-book"> {{ v.streetName }}, {{ v.houseNb }}, {{ v.locality.locality }}</i></p>' +
+            '<p><i class="fa fa-phone"> {{ v.phone }}</i></p>' +
+            '<p><i class="fa fa-desktop"><a href="{{ v.website }}"> {{ v.website }}</a></i></p>' +
+
+            '</div>' +
+            '</div>' +
+            '</div>';
+
+        var venue = {lat:{{ v.lat - 0.001 }}, lng: {{ v.lng }} };
+
+
+        var markervenue = new google.maps.Marker({
+            position: venue,
+            icon: 'http://www.fabrice-crahay.be/images/venue.png',
+            map: map
+        });
+
+        addInfoWindowToMarker(map, markervenue, venuecontentString);
+        {% endfor %}
+        {% endif %}
+
+        //events
+
+        {% for e in events %}
+        var contentString =
+            '<div id="content" class="mymapstyle">' +
+            '<div ' +
+            'id="siteNotice">' +
+            '</div>' +
+            '<b><h3 id="firstHeading">{{ e.name }}</h3></b>' +
+            '<div id="bodyContent">' +
+            '<a href="{{ path('event', {'slug':e.slug}) }}"><img src="{{ e.flyer.url }}" alt="{{ e.name }}" width="300px"/></a>' +
+            '<p>{{ e.description }}</p>' +
+
+            '<div class="address">' +
+                {% if e.venue %}
+            '<p><i class="fa fa-address-book"> {{ e.venue.streetName }}, {{ e.venue.houseNb }}, {{ e.venue.locality.locality }}</i></p>' +
+            '<p><i class="fa fa-phone"> {{ e.venue.phone }}</i></p>' +
+            '<p><i class="fa fa-desktop"><a href="{{ e.venue.website }}"> {{ e.venue.website }}</a></i></p>' +
+                {% elseif e.unsubscribedVenue %}
+            '<p><i class="fa fa-address-book"> {{ e.unsubscribedVenue.streetName }}, {{ e.unsubscribedVenue.houseNb }}, {{ e.unsubscribedVenue.locality.locality }}</i></p>' +
+                {% endif %}
+            '</div>' +
+            '</div>' +
+            '</div>';
+        {% if e.unsubscribedvenue %}
+        var unsubscribedvenue = {lat:{{ e.unsubscribedvenue.lat - 0.001 }}, lng: {{ e.unsubscribedvenue.lng }} };
+
+
+        var newmarker = new google.maps.Marker({
+            position: unsubscribedvenue,
+            icon: 'http://www.fabrice-crahay.be/images/event.png',
+            map: map
+        });
+
+        addInfoWindowToMarker(map, newmarker, contentString);
+
+        {% endif %}
+
+        {% if e.venue %}
+
+
+
+        var event = {lat:{{ e.venue.lat}}, lng: {{ e.venue.lng }} };
+
+        var marker = new google.maps.Marker({
+            position: event,
+            icon: 'http://www.fabrice-crahay.be/images/event.png',
+            map: map
+        });
+
+        addInfoWindowToMarker(map, marker, contentString);
+        {% endif %}
+        {% endfor %}
+
+
+
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-nXEJ0eim6B9-G3B9GQLUnLsNxrs9A7g&callback=initMap">
+</script>
+</body>
+</html>

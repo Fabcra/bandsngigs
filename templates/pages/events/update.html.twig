@@ -9,20 +9,20 @@
         <div class="profile-edit-container">
             <div class="custom-form">
                 {{ form_row(eventForm.name) }}
-                <section>
+                <div class="col-md-6">
                     {{ form_row(eventForm.date, {'attr':{'class': 'floatleft', 'label':'Date'}}) }}
                     {{ form_row(eventForm.time, {'attr':{'class': 'floatleft', 'label':'Time'}}) }}
-                </section>
+                </div>
 
                 <div class="check-user floatleft marginbottom20">
                     {{ form_row(eventForm.bands, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
                 </div>
-                <section class="check-user bigmarginright">
+                <div class="check-user bigmarginright">
                     <p>You can add unsubscribed bands in the website on in this event</p>
                     <ul class="members"
                         data-prototype="{{ form_row(eventForm.unsubscribedBands.vars.prototype)|e }}">
                     </ul>
-                </section>
+                </div>
                 <div class="check-user floatleft marginbottom20">
                     {{ form_row(eventForm.typeVenue) }}
                 </div>
@@ -45,6 +45,10 @@
                 <section>
                     {{ form_row(eventForm.price, {'attr':{'class': 'floatleft', 'label':'Price'}}) }}
                 </section>
+
+                <div class="custom-form">
+                    {{ form_row(eventForm.active, {'attr':{'class':'js-example-basic-single fullwidth'}}) }}
+                </div>
 
                 <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
                             class="fa fa-angle-right"></i></button>

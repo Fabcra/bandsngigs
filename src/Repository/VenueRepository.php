@@ -19,9 +19,19 @@ class VenueRepository extends ServiceEntityRepository
         parent::__construct($registry, Venue::class);
     }
 
+    public function findActiveVenues()
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.active = true');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
     public function findVenuesWithPhoto()
     {
         $qb = $this->createQueryBuilder('v')
+            ->andWhere('v.active = true')
             ->leftJoin('v.photo', 'p')->addSelect('p')
             ->orderBy('v.registrationDate', 'DESC')
             ->setMaxResults(5);
@@ -32,14 +42,29 @@ class VenueRepository extends ServiceEntityRepository
 
     public function findVenuesByUser($id)
     {
-         $qb = $this->createQueryBuilder('venue');
+        $qb = $this->createQueryBuilder('venue');
 
-         $qb->leftJoin('venue.managers', 'managers')
-             ->andWhere('managers.id like :id')
-             ->setParameter('id', $id);
+        $qb->leftJoin('venue.managers', 'managers')
+            ->andWhere('managers.id like :id')
+            ->setParameter('id', $id);
 
-         return $qb
-             ->getQuery()
-             ->getResult();
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findFavoritesVenuesByUser($id)
+    {
+
+        $qb = $this->createQueryBuilder('venue')
+            ->leftJoin('venue.favUsers', 'favusers')
+            ->andWhere('favusers.id like :id')
+            ->andWhere('venue.active = true')
+            ->setParameter('id', $id);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
     }
 }

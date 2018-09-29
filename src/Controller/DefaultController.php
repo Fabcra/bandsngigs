@@ -12,10 +12,9 @@ use App\Entity\Band;
 use App\Entity\Event;
 use App\Entity\Style;
 use App\Entity\Venue;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
@@ -26,21 +25,33 @@ class DefaultController extends Controller
      */
     public function index()
     {
-
         $doctrine = $this->getDoctrine();
         $bands = $doctrine->getRepository(Band::class)->findBandsWithLogo();
-        $venues = $doctrine->getRepository(Venue::class)->findVenuesWithPhoto();
+        $lastvenues = $doctrine->getRepository(Venue::class)->findVenuesWithPhoto();
         $events = $doctrine->getRepository(Event::class)->findEventsWithFlyer();
         $styles = $doctrine->getRepository(Style::class)->findAll();
+        $venues=$doctrine->getRepository(Venue::class)->findActiveVenues();
+
+        $user = $this->getUser();
+
+        if ($user) {
+            $confidentiality = $user->getConfidentiality();
+
+            if ($confidentiality == 0) {
+                return $this->redirectToRoute('confidential');
+            }
+        }
 
 
         return $this->render('pages/homepage/home.html.twig', [
             'bands' => $bands,
-            'venues' => $venues,
+            'lastvenues' => $lastvenues,
             'events' => $events,
-            'styles' => $styles
+            'styles' => $styles,
+            'venues' => $venues
 
         ]);
+
     }
 
 }

@@ -40,6 +40,7 @@ class UserData extends Fixture implements DependentFixtureInterface
             $user1->setAvatar($this->getReference('image'. $i));
             $user1->setRegistrationDate($faker->dateTimeThisYear());
             $user1->setRoles(['ROLE_USER']);
+            $user1->setConfidentiality('true');
 
 
             $user1->setPassword('$2y$10$xAHGwNsB6Pd3mM2fsIuJCeYWXMnUZU6YROLCZwtvij2XhnG/ymrYO');
@@ -67,6 +68,7 @@ class UserData extends Fixture implements DependentFixtureInterface
         $user2->setAvatar($this->getReference('image'. $i));
         $user2->setRegistrationDate($faker->dateTimeThisYear());
         $user2->setRoles(['ROLE_USER']);
+        $user2->setConfidentiality('true');
 
         $user2->setPassword('$2y$10$xAHGwNsB6Pd3mM2fsIuJCeYWXMnUZU6YROLCZwtvij2XhnG/ymrYO');
         $user2->setValid(true);

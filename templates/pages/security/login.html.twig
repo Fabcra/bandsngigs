@@ -7,7 +7,7 @@
         <div class="main-register-holder">
             <div class="main-register fl-wrap">
                 <h3>Sign In <span>Bands N'<strong> Gigs</strong></span></h3>
-                <p>Don't have an account ? <a href="{{ path('registration') }}">click here for register</a></p>
+                <p>Don't have an account ? <span class="fontsize14"><a href="{{ path('registration') }}">click here for register</a></span></p>
                 <div class="soc-log fl-wrap">
                     <p>For faster login use your social account.</p>
                     <a href="{{ path('connect_google') }}" class="google-log"><i class="fa fa-google-plus-official"></i>Login
@@ -25,17 +25,6 @@
                                     </div>
                                     {% endif %}
 
-                              {# <div>
-
-                                    {{ form_start(form) }}
-                                    {{ form_row(form._username) }}
-                                    {{ form_row(form._password) }}
-                                    <button type="submit" class="btn btn-success">Login <span class="fa fa-lock"></span>
-                                    </button>
-
-                                    {{ form_end(form) }}
-
-                                </div>#}
                                 <form method="post" action="{{ path('login') }}">
                                      <label>Username or Email Address * </label>
                                      <input type="email" name="_username" id="username" value="{{ last_username }}">

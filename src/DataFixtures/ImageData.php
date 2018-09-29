@@ -453,7 +453,7 @@ class ImageData extends Fixture
 
         $image50 = new Image();
 
-        $image50->setUrl('https://media.livenationinternational.com/lincsmedia/Media/j/x/l/afdb3171-f7ad-05cf-94d2-b21a87dd260b.jpg');
+        $image50->setUrl('https://img3.goodfon.com/wallpaper/big/e/e8/meshuggah-metal-extreme-metal.jpg');
 
         $manager->persist($image50);
 
@@ -577,6 +577,7 @@ class ImageData extends Fixture
 
             $image = new Image();
             $image->setUrl($faker->imageUrl(640,480,'nightlife'));
+           // $image->setUrl('https://media.timeout.com/images/100017737/image.jpg');
             $manager->persist($image);
             $this->addReference('image' . $i, $image);
 

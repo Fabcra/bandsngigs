@@ -17,7 +17,8 @@ class TempUserType extends AbstractType
         $builder
             ->add('mail', EmailType::class)
             ->add('password', RepeatedType::class,[
-                'type'=> PasswordType::class
+                'type'=> PasswordType::class,
+                'invalid_message'=> 'Les mots de passe ne correspondent pas'
             ])
 
         ;

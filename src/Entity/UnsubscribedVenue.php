@@ -24,6 +24,8 @@ class UnsubscribedVenue
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(groups={"unsubscribed"}, message="Cette valeur ne peut être vide")
+     * @Assert\Regex(pattern="/^[a-z\-]+$/i", message="Cette valeur est incorrecte")
+     *
      */
     private $name;
 

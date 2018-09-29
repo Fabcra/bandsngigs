@@ -5,6 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use function Symfony\Component\VarDumper\Tests\Caster\reflectionParameterFixture;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VenueRepository")
@@ -20,36 +23,44 @@ class Venue
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Type("string")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
      */
     private $description;
 
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Type("string")
      */
     private $streetName;
 
     /**
+     * @Assert\Type("alnum")
      * @ORM\Column(type="string", length=5)
      */
     private $houseNb;
 
     /**
+     *
+     * @Assert\Email(message="Adresse e-mail non valide")
      * @ORM\Column(type="string", length=50)
      */
     private $mail;
 
     /**
+     * @Assert\Url(message="Adresse Url invalide")
      * @ORM\Column(type="string", length=50)
      */
     private $website;
 
     /**
+     * @Assert\Type("numeric", message="Veuillez n'utiliser que des chiffres")
      * @ORM\Column(type="string", length=20)
      */
     private $phone;
@@ -76,6 +87,8 @@ class Venue
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex("/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+\&list=.+/", message="il ne s'agit pas d'une playlist YouTube")
+     *
      */
     private $videoPlaylist;
 
@@ -112,11 +125,23 @@ class Venue
      */
     private $registrationDate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="favVenues"))
+     */
+    private $favUsers;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->managers = new ArrayCollection();
         $this->styles = new ArrayCollection();
         $this->registrationDate = new \DateTime();
+        $this->favUsers = new ArrayCollection();
+        $this->setActive(true);
     }
 
     /**
@@ -273,9 +298,6 @@ class Venue
         $this->gallery = $gallery;
     }
 
-
-
-
     /**
      * @return mixed
      */
@@ -425,7 +447,37 @@ class Venue
         $this->videoPlaylist = $videoPlaylist;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFavUsers()
+    {
+        return $this->favUsers;
+    }
 
+    /**
+     * @param mixed $favUsers
+     */
+    public function setFavUsers($favUsers)
+    {
+        $this->favUsers[] = $favUsers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
 
 
 }

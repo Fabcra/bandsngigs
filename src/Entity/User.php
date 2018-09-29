@@ -6,14 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="Vous avez déjà un compte avec cette adresse")
+ * @UniqueEntity("email", message="Un compte existe déjà avec cette adresse")
+ *
  */
 class User implements UserInterface, \Serializable
 {
@@ -36,11 +35,13 @@ class User implements UserInterface, \Serializable
 
 
     /**
+     * @Assert\Type("string")
      * @ORM\Column(type="string", length=50)
      */
     private $firstName;
 
     /**
+     * @Assert\Type("string")
      * @ORM\Column(type="string", length=50)
      */
     private $lastName;
@@ -48,8 +49,13 @@ class User implements UserInterface, \Serializable
 
     private $fullName;
 
+
+
+
     /**
-     * @ORM\Column(type="string", nullable=true, length=3)
+     *
+     * @ORM\Column(type="integer", nullable=true, length=3)
+     * @Assert\Range(min=10, max="100", minMessage="Veuillez indiquer un âge supérieur à 10 ans", maxMessage="Impressionnant, mais je vous vois plus jeune")
      *
      */
     private $age;
@@ -60,19 +66,25 @@ class User implements UserInterface, \Serializable
     private $gender;
 
     /**
-     * @ORM\Column(type="string", unique=true, length=100)
+     * @ORM\Column(type="string", unique=true, length=150)
+     * @Assert\Email(message="E-mail non valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", nullable=true, length=15)
-     * @Assert\Regex(pattern="/^[0-9]*$/", message="number_only")
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="indiquez uniquement des nombres (sans espace, ni tiret, ni parenthèse)")
      *
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/",
+     *     message="Le mot de passe doit obligatoirement se composer au minimum d'une minuscule,
+     *              d'une majuscule, d'un chiffre et d'un caractère spécial (oui c'est pénible mais c'est comme ça)")
+     * @Assert\Length(min=8, minMessage="Le mot de passe doit avoir minimum 8 caractères")
+     *
+     * @ORM\Column(type="string", length=240, nullable=true)
      */
     private $password;
 
@@ -149,10 +161,34 @@ class User implements UserInterface, \Serializable
     private $shows;
 
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Assert\IsTrue()
+     */
+    private $confidentiality;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Band", inversedBy="favUsers")
+     */
+    private $favBands;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Venue", inversedBy="favUsers")
+     */
+    private $favVenues;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Event", inversedBy="favUsers")
+     */
+    private $favEvents;
+
     public function __construct()
     {
         $this->instruments = new ArrayCollection();
         $this->styles = new ArrayCollection();
+        $this->favBands= new ArrayCollection();
+        $this->favVenues = new ArrayCollection();
+        $this->favEvents = new ArrayCollection();
     }
 
     public function getRoles()
@@ -583,7 +619,97 @@ class User implements UserInterface, \Serializable
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function getConfidentiality()
+    {
+        return $this->confidentiality;
+    }
 
+    /**
+     * @param mixed $confidentiality
+     */
+    public function setConfidentiality($confidentiality)
+    {
+        $this->confidentiality = $confidentiality;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getFavBands()
+    {
+        return $this->favBands;
+    }
+
+    /**
+     * @param mixed $favBands
+     */
+    public function setFavBands($favBands)
+    {
+        $this->favBands[] = $favBands;
+    }
+
+    public function addFavBand(Band $band){
+        $this->favBands[]=$band;
+    }
+
+    public function removeFavBand(Band $band){
+
+        $this->favBands->removeElement($band);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFavVenues()
+    {
+        return $this->favVenues;
+    }
+
+    /**
+     * @param mixed $favVenues
+     */
+    public function setFavVenues($favVenues)
+    {
+        $this->favVenues = $favVenues;
+    }
+
+    public function addFavVenue(Venue $venue){
+        $this->favVenues[]=$venue;
+    }
+
+    public function removeFavVenue(Venue $venue){
+
+        $this->favVenues->removeElement($venue);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFavEvents()
+    {
+        return $this->favEvents;
+    }
+
+    /**
+     * @param mixed $favEvents
+     */
+    public function setFavEvents($favEvents)
+    {
+        $this->favEvents = $favEvents;
+    }
+
+    public function addFavEvent(Event $event){
+
+        $this->favEvents[]= $event;
+    }
+
+    public function removeFavEvent(Event $event){
+
+        $this->favEvents->removeElement($event);
+
+    }
 
 }

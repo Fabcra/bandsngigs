@@ -58,7 +58,7 @@ class SearchController extends Controller
             [
                 'bands' => $bands,
                 'styles' => $styles,
-                'events'=>$result,
+                'events' => $result,
                 'params' => $params
             ]);
 

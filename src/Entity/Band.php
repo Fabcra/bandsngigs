@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Band
 {
     /**
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
@@ -20,26 +22,31 @@ class Band
     private $id;
 
     /**
-     * @ORM\Column(length=50, type="string", unique=true)
+     * @Assert\Type("string")
+     * @ORM\Column(length=150, type="string", unique=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @Assert\Email(message="E-mail non valide")
+     * @ORM\Column(type="string", length=150)
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Le numéro de téléphone ne doit contenir que des chiffres (pas d'espace ni de tirets ni de parenthèse)")
      */
     private $phone;
 
     /**
+     * @Assert\Url(message="Cette url n'est pas correcte")
      * @ORM\Column(type="string", length=150)
      */
     private $website;
 
     /**
+     * @Assert\Type("string")
      * @ORM\Column(type="text", length=255)
      */
     private $description;
@@ -86,12 +93,14 @@ class Band
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex("/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+\&list=.+/", message="il ne s'agit pas d'une playlist YouTube")
      *
      */
     private $videoPlaylist;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex("/^http(s):\/\/open\.spotify\.com.+/", message="il ne s'agit pas d'une playlist Spotify")
      */
     private $audioPlaylist;
 
@@ -111,6 +120,16 @@ class Band
      */
     private $registrationDate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="favBands")
+     */
+    private $favUsers;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default":true}))
+     */
+    private $active;
+
 
     public function __construct()
     {
@@ -119,6 +138,8 @@ class Band
         $this->unscribedMembers = new ArrayCollection();
         $this->gallery = new ArrayCollection();
         $this->registrationDate = new \DateTime();
+        $this->favUsers= new ArrayCollection();
+        $this->setActive(true);
     }
 
 
@@ -443,6 +464,41 @@ class Band
     {
         return $this->getName();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFavUsers()
+    {
+        return $this->favUsers;
+    }
+
+    /**
+     * @param mixed $favUsers
+     */
+    public function setFavUsers($favUsers)
+    {
+        $this->favUsers[] = $favUsers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+
+
 
 
 }

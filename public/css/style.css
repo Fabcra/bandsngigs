@@ -2353,7 +2353,6 @@ section.list-single-section .bg {
 	top:2px;
 }
 .list-post-counter.single-list-post-counter i {
-	padding-left:10px;
 	color:#F4454C;
 }
 .list-single-header-inside .list-post-counter.single-list-post-counter {
@@ -3081,7 +3080,7 @@ article .list-single-main-item {
 .custom-form .selectbox .trigger .arrow {
 	border-top: 5px solid #fff;
 }
-.custom-form  textarea , .custom-form input[type="text"] , .custom-form  input[type=email] , .custom-form  input[type=password] , .custom-form  input[type=button]{
+.custom-form  textarea , .custom-form input[type="text"] , .custom-form  input[type=email] , .custom-form  input[type=url] ,.custom-form  input[type=password] , .custom-form  input[type=button]{
     float: left;
     border: 1px solid #eee;
     background: #f9f9f9;

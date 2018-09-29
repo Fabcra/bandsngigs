@@ -1,4 +1,8 @@
+<!DOCTYPE html>
+<head>
 <meta charset="UTF-8">
+<base href="http://localhost:8000">
+</head>
 <div>
     <div>
         <h1>{{ ticket.event.name }}</h1>
@@ -24,5 +28,8 @@
             <p>Ce billet est valable pour {{ ticket.purchasedTicketsNb }} place(s)</p>
         </div>
     </div>
+
+
+    <img src='uploads/qrcode/{{ticket.verificationNb}}.png'/>
 
 </div>

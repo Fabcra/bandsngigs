@@ -14,11 +14,15 @@
     color: #fff;
 }
 
+.margin20 {
+    margin: 20px;
+}
+
 .margintop20 {
     margin-top: 20px;
 }
 
-.margintop20 label{
+.margintop20 label {
     margin-top: 20px;
 }
 
@@ -26,11 +30,11 @@
     margin-bottom: 20px;
 }
 
-.qty2{
-    color:#000 !important;
+.qty2 {
+    color: #000 !important;
     background-color: #f1f1f1 !important;
-    font-size : 15px;
-    border : none !important;
+    font-size: 15px;
+    border: none !important;
 }
 
 .marginleft20 {
@@ -125,12 +129,25 @@
 }
 
 .align-center {
-    
+
     margin: 0 auto;
 
 }
 
+.rules {
+    height: 400px;
+    width: 400px;
+    overflow-y: scroll;
+}
 
+.rules input{
+    float: left;
+    margin-top : 3px;
+}
+
+.rules label{
+    margin-right : 150px;
+}
 
 
 

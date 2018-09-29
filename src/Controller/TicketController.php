@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use PDFShift\PDFShift;
 
 class TicketController extends Controller
 {
@@ -64,12 +65,12 @@ class TicketController extends Controller
             $verificationNB = sha1(uniqid(mt_rand(), true));
 
             //code QR
-            $qrCode = new QrCode($verificationNB);
+            $qrCode = new QrCode('https://www.fabrice-crahay.be/tickets/check/' . $verificationNB);
             $qrCode->setSize(300);
 
-            $qrCode->writeFile(__DIR__.'/../../public/uploads/qrcode/'.$verificationNB.'.png');
+            $qrCode->writeFile(__DIR__ . '/../../public/uploads/qrcode/' . $verificationNB . '.png');
 
-            $pdf =  $verificationNB.'.pdf';
+            $pdf = $verificationNB . '.pdf';
             $ticket->setVerificationNb($verificationNB);
             $ticket->setTicketPdf('public/uploads/pdf/' . $pdf);
 
@@ -89,21 +90,19 @@ class TicketController extends Controller
 
             $ticketid = $ticket->getId();
 
-           // $this->get('knp_snappy.pdf')->generate('http://localhost:8000/tickets/'.$ticketid, "uploads/pdf/$pdf" );
+
+            PDFShift::setApiKey('e6fe654bc5f64d9c9cd9afdf8c350959');
+
+            $data = file_get_contents('http://www.fabrice-crahay.be/tickets/' . $ticketid);
+            PDFShift::convertTo($data, null, 'uploads/pdf/' . $pdf);
 
 
-            $this->get('knp_snappy.pdf')->generateFromHtml(
-                $this->renderView(
-                    'pages/tickets/ticket.html.twig', ['ticket' => $ticket]
-                ), "uploads/pdf/$pdf"
-            );
 
             //mail du ticket
             $mail = $user->getEmail();
             $subject = $event->getName();
             $body = "test";
-            $filepathURL = '../public/uploads/pdf/'.$pdf;
-
+            $filepathURL = '../public/uploads/pdf/' . $pdf;
 
 
             $message = (new \Swift_Message($subject))
@@ -112,8 +111,7 @@ class TicketController extends Controller
                 ->setTo($mail)
                 ->setBody($body)
                 ->setContentType("text/html")
-                ->attach(\Swift_Attachment::fromPath($filepathURL))
-            ;
+                ->attach(\Swift_Attachment::fromPath($filepathURL));
 
             $this->get('mailer')->send($message);
 

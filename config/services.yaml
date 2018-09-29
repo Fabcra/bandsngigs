@@ -5,6 +5,7 @@ parameters:
     files_directory: '%kernel.root_dir%/../public/uploads/img'
 
 
+
 services:
     # default configuration for services in *this* file
     _defaults:

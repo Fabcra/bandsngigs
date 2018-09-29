@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UnscribedMemberRepository")
@@ -17,6 +18,8 @@ class UnscribedMember
     private $id;
 
     /**
+     * @Assert\Regex(pattern="/^[a-z\-]+$/i", message="Cette valeur est incorrecte")
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      * @ORM\Column(type="string", length=50)
      */
     private $nickName;
@@ -25,6 +28,7 @@ class UnscribedMember
 
     /**
      * @ORM\ManyToMany(targetEntity="Instrument")
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     private $instruments;
 

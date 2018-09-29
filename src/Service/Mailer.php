@@ -25,7 +25,7 @@ class Mailer
     {
 
         $message =(new \Swift_Message($subject))
-            ->setFrom("administration@bien_etre.com")
+            ->setFrom("administration@bandsngigs.com")
             ->setTo($mail)
             ->setBody($body)
             ->setContentType("text/html")

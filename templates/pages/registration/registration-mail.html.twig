@@ -1,5 +1,5 @@
 {# mail de confirmation d'inscription #}
 <h1>Confirmation d'inscription</h1>
-<p>Bonjour {{ tempuser.mail }}!<br>Bienvenue Bands n' Gigs, Veuillez confirmer et complèter votre inscription en cliquant sur le lien suivant : </p>
+<p>Bonjour !<br>Bienvenue sur Bands n' Gigs, Veuillez confirmer et complèter votre inscription en cliquant sur le lien suivant : </p>
 <a href="http://localhost:8000{{ path('confirmation',{'id':tempuser.id, 'token':tempuser.token}) }}">Cliquez ici ! </a>
 

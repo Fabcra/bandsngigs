@@ -3,11 +3,11 @@ security:
     encoders:
         App\Entity\User:
                     algorithm: bcrypt
-                    cost:      10
+                    cost:      12
 
         App\Entity\TempUser:
                     algorithm: bcrypt
-                    cost:      10
+                    cost:      12
 
 
     providers:

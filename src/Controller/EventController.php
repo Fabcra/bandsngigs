@@ -9,13 +9,21 @@
 namespace App\Controller;
 
 
+use App\Entity\Band;
 use App\Entity\Event;
+use App\Entity\Locality;
+use App\Entity\Venue;
 use App\Form\EventType;
 use App\Service\FileUploader;
+use App\Service\MapLocation;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use JMS\Serializer\Annotation as Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
@@ -29,7 +37,7 @@ class EventController extends Controller
      * @Route("events/new", name="event-new")
      * @Method({"GET","POST"})
      */
-    public function newAction(Request $request, FileUploader $fileUploader)
+    public function newAction(Request $request, FileUploader $fileUploader, MapLocation $mapLocation)
     {
         $event = new Event();
 
@@ -40,6 +48,7 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
 
             // upload d'un flyers
             $img = $event->getFlyer();
@@ -53,8 +62,37 @@ class EventController extends Controller
             $event->setUsers($user);
             $event->setOrganiser($user);
 
+
+            $venue = $event->getUnsubscribedVenue();
+
+
+            // si encodage d'un lieu de concert non-inscrit
+            if ($venue != null) {
+
+                $myaddress = $request->request->get('event');
+
+                $streetname = $myaddress['unsubscribedVenue']['streetName'];
+                $housenb = $myaddress['unsubscribedVenue']['houseNb'];
+                $locality = $myaddress['unsubscribedVenue']['locality'];
+
+
+                $localityname = $this->getDoctrine()->getRepository(Locality::class)->findOneById($locality);
+
+                $fulladdress = $streetname . "+" . $housenb . "+" . $localityname;
+                $address = str_replace(" ", "+", $fulladdress);
+
+                $res = $mapLocation->getPosition($address);
+
+                $lat = $res->geometry->location->lat;
+                $lng = $res->geometry->location->lng;
+
+                $venue->setLat($lat);
+                $venue->setLng($lng);
+            }
+
             $em->persist($event);
             $em->flush();
+
 
             $this->addFlash('success', "Vous avez créé l'évènement " . $event->getName());
 
@@ -76,7 +114,7 @@ class EventController extends Controller
 
         $doctrine = $this->getDoctrine();
 
-        $events = $doctrine->getRepository(Event::class)->findAll();
+        $events = $doctrine->getRepository(Event::class)->findActiveEvents();
 
         //pagination
         $paginator = $this->get('knp_paginator');
@@ -89,6 +127,51 @@ class EventController extends Controller
         return $this->render('pages/events/events.html.twig', [
             'events' => $pagination
         ]);
+    }
+
+
+    /**
+     *
+     * @Rest\Get(
+     *     path="/api/events/{id}",
+     *     name="list-events",
+     *     )
+     *
+     * @Rest\View()
+     */
+    public function getevents($id)
+    {
+
+        $band = $this->getDoctrine()->getRepository(Band::class)->findOneById($id);
+
+        $band_id = $band->getId();
+
+        $events = $this->getDoctrine()->getRepository(Event::class)->findEventsByBand($band_id);
+
+        $eventbyband = [];
+
+        foreach ($events as $event){
+
+            $venue = $event->getVenue();
+
+
+
+            $eventbyband[] = [
+                'name'=>$event->getName(),
+                'date'=>$event->getDate(),
+                'time'=>$event->getTime(),
+                'description'=>$event->getDescription(),
+                'price'=>$event->getPrice(),
+                'venue' => $venue->getName(),
+                'streetname' => $venue->getStreetName(),
+                'housenb'=>$venue->getHouseNb(),
+                'locality'=>$venue->getLocality()->getLocality()
+
+            ];
+        }
+
+        return $eventbyband;
+
     }
 
 
@@ -158,6 +241,34 @@ class EventController extends Controller
         ]);
     }
 
+    /** affiche la liste des évènements favoris
+     * @return Response
+     * @Route("/events/favorites", name="favorites-events")
+     */
+    public function favoritesEvents(Request $request)
+    {
+        $doctrine = $this->getDoctrine();
+        $user = $this->getUser();
+
+        if ($user) {
+            $user_id = $user->getId();
+            $events = $doctrine->getRepository(Event::class)->findFavEvents($user_id);
+
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $events,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 3)
+            );
+        }
+
+        return $this->render('pages/events/favorites.html.twig', [
+            'events' => $pagination, 'favorites' => $events, 'venues' => null
+
+        ]);
+
+    }
+
 
     /** AFFICHER LA PAGE D'UN EVENEMENT
      *
@@ -167,13 +278,37 @@ class EventController extends Controller
      */
     public function showAction($slug)
     {
+        $user = $this->getUser();
+
 
         $doctrine = $this->getDoctrine();
 
         $event = $doctrine->getRepository(Event::class)->findOneBy(['slug' => $slug]);
 
+        $event_id = $event->getId();
+
+        $favorite = 'unliked';
+
+        if ($user) {
+
+            $favevents = $user->getFavEvents();
+
+            foreach ($favevents as $favevent) {
+                $favevent_id[] = $favevent->getId();
+
+                if (in_array($event_id, $favevent_id)) {
+
+                    $favorite = 'liked';
+                } else {
+                    $favorite = 'unliked';
+                }
+            }
+        }
+
         return $this->render('pages/events/event.html.twig', [
-            'event' => $event
+            'event' => $event, 'favorite' => $favorite
         ]);
     }
+
+
 }

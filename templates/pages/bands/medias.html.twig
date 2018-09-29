@@ -10,7 +10,10 @@
             </div>
             {{ form_start(mediaForm) }}
             <div class="custom-form">
+                <span class="js-play">
                 {{ form_row(mediaForm.videoPlaylist) }}
+                    </span>
+
                 {{ form_row(mediaForm.audioPlaylist) }}
 
                 <button class="btn big-btn color-bg flat-btn">Save Changes<i
@@ -20,9 +23,7 @@
 
             {{ form_end(mediaForm, {'render_rest':false}) }}
 
-
         </div>
     </div>
-
 {% endblock %}
 

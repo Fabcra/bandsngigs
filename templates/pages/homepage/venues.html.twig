@@ -10,7 +10,7 @@
 
         <div class="gallery-items fl-wrap mr-bot spad">
             <!-- gallery-item-->
-            {% for v in venues|slice(0,5) %}
+            {% for v in lastvenues|slice(0,5) %}
                 {% if loop.index0 ==1 %}
                     {% set gallery='gallery-item-second' %}
                 {% else %}

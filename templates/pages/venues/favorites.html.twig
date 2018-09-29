@@ -1,0 +1,36 @@
+{% extends 'pages/default/layout.html.twig' %}
+
+{% block content %}
+    <!--  section  -->
+    <section class="gray-bg no-pading no-top-padding" id="sec1">
+        <div class="col-list-wrap  center-col-list-wrap left-list">
+            <div class="container">
+
+                <!-- list-main-wrap-->
+                <div class="list-main-wrap fl-wrap card-listing">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Favorites Venues</h2>
+                            <div class="section-subtitle">Favorites Venues</div>
+                            <span class="section-separator"></span>
+                            <p>See your favorites venues</p>
+                        </div>
+                    </div>
+
+                    <div class="marginbottom20">
+                        {% if venues %}
+                        {% include 'pages/others/googlemap.html.twig' %}
+                    </div>
+                    {% include 'pages/venues/list.html.twig' %}
+                    {% else %}
+                        <p> you don't have any favorites see all <a href="{{ path("venues") }}">HERE</a></p>
+                    {% endif %}
+
+                </div>
+                <!-- list-main-wrap end-->
+            </div>
+        </div>
+    </section>
+    <!--  section  end-->
+
+{% endblock %}

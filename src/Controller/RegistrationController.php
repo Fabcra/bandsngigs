@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\TempUser;
+use App\Form\RulesType;
 use App\Form\TempUserType;
 use App\Service\Mailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,12 +34,12 @@ class RegistrationController extends Controller
         //créer un utilisateur temporaire
         $tempuser = new TempUser();
 
-        $form = $this->createForm(TempUserType::class, $tempuser, ['method'=>'POST']);
+        $form = $this->createForm(TempUserType::class, $tempuser, ['method' => 'POST']);
 
         $form->handleRequest($request);
 
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             //hashage du password
             $plainPassword = $tempuser->getPassword();
@@ -49,7 +50,7 @@ class RegistrationController extends Controller
             $mail = $tempuser->getMail();
 
             //création d'un token unique
-            $token = sha1($registrationdate.$mail);
+            $token = sha1($registrationdate . $mail);
 
             $tempuser->setToken($token);
             $tempuser->setPassword($encoded);
@@ -58,11 +59,11 @@ class RegistrationController extends Controller
             $em->persist($tempuser);
             $em->flush();
 
-            $this->addFlash('success', 'Veuillez confirmer votre inscription via le mail envoyé');
+            $this->addFlash('success', 'Veuillez confirmer votre inscription via le mail envoyé (pensez à vérifier dans les indésirables)');
 
             //envoi du mail avec le service Mailer
             $subject = 'Nouvelle inscription';
-            $body = $this->renderView('pages/registration/registration-mail.html.twig', array('tempuser'=>$tempuser));
+            $body = $this->renderView('pages/registration/registration-mail.html.twig', array('tempuser' => $tempuser));
 
             $mailer->sendMail($mail, $subject, $body);
 
@@ -70,7 +71,41 @@ class RegistrationController extends Controller
         }
 
         return $this->render('pages/registration/registration.html.twig', [
-            'form'=>$form->createView(),
+            'form' => $form->createView(),
+        ]);
+
+    }
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/confidential", name="confidential")
+     * @Method({"GET", "POST"})
+     */
+    public function confidentiality(Request $request)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getUser();
+
+        $id = $user->getId();
+
+        $form = $this->createForm(RulesType::class, $user, ['method' => 'POST']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+
+
+        return $this->render('pages/registration/conf-rules.html.twig', [
+            'rulesForm' => $form->createView(), 'id' => $id
         ]);
 
     }

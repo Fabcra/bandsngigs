@@ -19,7 +19,7 @@
                     <div class="col-md-6">
                         {{ form_row(venueForm.streetName) }}
                         {{ form_row(venueForm.houseNb) }}
-                        {{ form_row(venueForm.locality, {'attr':{'class':'chosen-select'}}) }}
+                        {{ form_row(venueForm.locality, {'attr':{'class':'js-example-basic-single'}}) }}
                     </div>
                     <div class="col-md-6 check-user">
                         {{ form_row(venueForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
@@ -49,6 +49,7 @@
             <div class="custom-form">
                 {{ form_row(venueForm.description) }}
                 {{ form_row(venueForm.videoPlaylist) }}
+                {{ form_row(venueForm.active, {'attr':{'class':'js-example-basic-single fullwidth'}}) }}
             </div>
 
 

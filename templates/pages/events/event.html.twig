@@ -1,26 +1,62 @@
 {% extends "pages/default/layout.html.twig" %}
 
 {% block content %}
-<!-- wrapper -->
+    <!-- wrapper -->
 
     <div class="content">
         <!--  section  -->
         <section class="parallax-section single-par list-single-section" data-scrollax-parent="true" id="sec1">
-            <div class="bg par-elem "  data-bg="{{ event.flyer.url }}" data-scrollax="properties: { translateY: '30%' }"></div>
+            <div class="bg par-elem " data-bg="{{ event.flyer.url }}"
+                 data-scrollax="properties: { translateY: '30%' }"></div>
             <div class="overlay"></div>
             <div class="bubble-bg"></div>
             <div class="list-single-header absolute-header fl-wrap">
                 <div class="container">
                     <div class="list-single-header-item">
-                        <h2>{{ event.name }} <span> - in </span><a href="{{ path('venue', {'slug':event.venue.slug}) }}">{{ event.venue.name }}</a> </h2>
+                        <h2>{{ event.name }} <span> - in </span>
+                            {% if event.venue %}
+                            <a href="{{ path('venue', {'slug':event.venue.slug}) }}">{{ event.venue.name }}</a>
+                            {% else %}
+                                <span>{{ event.unsubscribedVenue.name }}</span>
+                            {% endif %}
+                        </h2>
                         <span class="section-separator"></span>
+                        {% if app.user %}
+                            <div class="list-post-counter single-list-post-counter js-fav-item">
+                                <a href="#"
+                                   class="js-fav"
+                                   data-url="{{ path('favorites',{type:'event', id:event.id}) }}">
+                                    {% if favorite == 'unliked' %}
+                                        <i class="fa fa-heart-o"></i>
+                                    {% endif %}
+                                    {% if favorite == 'liked' %}
+                                        <i class="fa fa-heart"></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        {% endif %}
                         <div class="clearfix"></div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="list-single-header-contacts fl-wrap">
                                     <ul>
-                                        <li><i class="fa fa-phone"></i><a  href="tel:{{ event.venue.phone }}">{{ event.venue.phone }}</a></li>
-                                        <li><i class="fa fa-map-marker"></i><a  href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.venue.streetName }}, {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}" target="_blank">{{ event.venue.streetName }}, {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}</a></li>
+                                        {% if event.venue %}
+                                        <li><i class="fa fa-phone"></i>
+                                            <a href="tel:{{ event.venue.phone }}">{{ event.venue.phone }}</a></li>
+
+                                        <li><i class="fa fa-map-marker"></i><a
+                                                    href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.venue.streetName }}, {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}"
+                                                    target="_blank">{{ event.venue.streetName }}
+                                                , {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}</a>
+                                        </li>
+                                            {% else %}
+                                                <li><i class="fa fa-map-marker"></i><a
+                                                            href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.unsubscribedVenue.streetName }}, {{ event.unsubscribedVenue.houseNb }} - {{ event.unsubscribedVenue.locality.locality }}"
+                                                            target="_blank">{{ event.unsubscribedVenue.streetName }}
+                                                        , {{ event.unsubscribedVenue.houseNb }} - {{ event.unsubscribedVenue.locality.locality }}</a>
+                                                </li>
+                                        {% endif %}
+
                                     </ul>
                                 </div>
                             </div>
@@ -45,11 +81,9 @@
                     <ul>
                         <li><a class="act-scrlink" href="#sec1">Top</a></li>
                         <li><a href="#sec2">Details</a></li>
-                        <li><a href="#sec3">Speakers</a></li>
-                        <li><a href="#sec4">Reviews</a></li>
+                        <li><a href="#sec3">Bands</a></li>
                     </ul>
                 </nav>
-                <a href="#" class="save-btn"> <i class="fa fa-heart"></i> Save </a>
             </div>
         </div>
         <!-- section-->
@@ -63,7 +97,7 @@
                                     <h3>About Event</h3>
                                 </div>
                                 <p>{{ event.description }}</p>
-                                <a href="#" class="btn transparent-btn float-btn">Download Flyers<i class="fa fa-file-pdf-o"></i></a>
+
                                 <span class="fw-separator"></span>
 
                                 <div class="list-single-main-item-title fl-wrap">
@@ -72,7 +106,7 @@
 
                                 <div class="list-single-tags tags-stylwrap">
                                     {% for s in event.styles %}
-                                    <a href="#">{{ s.style }}</a>
+                                        <a href="#">{{ s.style }}</a>
                                     {% endfor %}
                                 </div>
 
@@ -80,26 +114,26 @@
                             <!-- list-single-main-item -->
                             <div class="list-single-main-item fl-wrap" id="sec3">
                                 <div class="list-single-main-item-title fl-wrap">
-                                    <h3>Bands  </h3>
+                                    <h3>Bands </h3>
                                 </div>
                                 <div class="team-holder fl-wrap">
                                     {% for b in event.bands %}
-                                    <!-- team-item -->
-                                    <div class="team-box">
-                                        <div class="team-photo">
-                                            <img src="{{ b.logo.url }}" alt="{{ b.name }}" class="respimg">
-                                        </div>
-                                        <div class="team-info">
-                                            <h3><a href="{{ path('band', {'slug':b.slug}) }}">{{ b.name }}</a></h3>
-                                             {% for s in b.styles %}
-                                            <h4>{{ s.style }}</h4>
-                                                 {% endfor %}
-                                            <p>{{ b.description }}</p>
+                                        <!-- team-item -->
+                                        <div class="team-box">
+                                            <div class="team-photo">
+                                                <img src="{{ b.logo.url }}" alt="{{ b.name }}" class="respimg">
+                                            </div>
+                                            <div class="team-info">
+                                                <h3><a href="{{ path('band', {'slug':b.slug}) }}">{{ b.name }}</a></h3>
+                                                {% for s in b.styles %}
+                                                    <h4>{{ s.style }}</h4>
+                                                {% endfor %}
+                                                <p>{{ b.description }}</p>
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- team-item  end-->
-                                   {% endfor %}
+                                        <!-- team-item  end-->
+                                    {% endfor %}
                                 </div>
                             </div>
                             <!-- list-single-main-item end -->
@@ -110,67 +144,46 @@
                     <div class="col-md-4">
                         <div class="box-widget-wrap">
                             <!--box-widget-item -->
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>Register Now : </h3>
-                                </div>
-                                <div class="box-widget opening-hours">
-                                    <div class="box-widget-content">
-                                        <form action="{{ path('ticket-new', {'event_id':event.id}) }}" class="add-comment custom-form">
-                                            <fieldset>
-                                                <label><i class="fa fa-user-o"></i></label>
-                                                <input type="text" placeholder="{{ app.user.fullName }}" value=""/>
-                                                <div class="clearfix"></div>
-                                                <label><i class="fa fa-envelope-o"></i>  </label>
-                                                <input type="text" placeholder="{{ app.user.email }}" value=""/>
-                                                <div class="quantity fl-wrap">
-                                                    <span><i class="fa fa-user-plus"></i>Persons : </span>
-                                                    <div class="quantity-item">
-                                                        <input type="button" value="-" class="minus">
-                                                        <input type="text"  name="quantity"   title="Qty" class="qty" step="1" value="1">
-                                                        <input type="button" value="+" class="plus">
+                            {% if app.user %}
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>Register Now : </h3>
+                                    </div>
+                                    <div class="box-widget opening-hours">
+
+                                        <div class="box-widget-content">
+                                            <form action="{{ path('ticket-new', {'event_id':event.id}) }}"
+                                                  class="add-comment custom-form">
+
+                                                <fieldset>
+                                                    <label><i class="fa fa-user-o"></i></label>
+                                                    <input type="text" placeholder="{{ app.user.fullName }}" value=""/>
+                                                    <div class="clearfix"></div>
+                                                    <label><i class="fa fa-envelope-o"></i> </label>
+                                                    <input type="text" placeholder="{{ app.user.email }}" value=""/>
+                                                    <div class="quantity fl-wrap">
+                                                        <span><i class="fa fa-user-plus"></i>Persons : </span>
+                                                        <div class="quantity-item">
+                                                            <input type="button" value="-" class="minus">
+                                                            <input type="text" name="quantity" title="Qty" class="qty"
+                                                                   step="1" value="1">
+                                                            <input type="button" value="+" class="plus">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </fieldset>
 
-                                            </fieldset>
-                                            <button class="btn  big-btn  color-bg flat-btn">Book Now<i class="fa fa-angle-right"></i></button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--box-widget-item end -->
-                            <!--box-widget-item -->
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>Location / Contacts : </h3>
-                                </div>
-                                <div class="box-widget">
-                                    <div class="map-container">
-                                        <div id="singleMap" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
-                                    </div>
-                                    <div class="box-widget-content">
-                                        <div class="list-author-widget-contacts list-item-widget-contacts">
-                                            <ul>
-                                                <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">USA 27TH Brooklyn NY</a></li>
-                                                <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">+7(123)987654</a></li>
-                                                <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="#">AlisaNoory@domain.com</a></li>
-                                                <li><span><i class="fa fa-globe"></i> Website :</span> <a href="#">themeforest.net</a></li>
-                                            </ul>
+                                                <button class="btn  big-btn  color-bg flat-btn">Book Now<i
+                                                            class="fa fa-angle-right"></i></button>
+                                            </form>
                                         </div>
-                                        <div class="list-widget-social">
-                                            <ul>
-                                                <li><a href="#" target="_blank" ><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#" target="_blank" ><i class="fa fa-vk"></i></a></li>
-                                                <li><a href="#" target="_blank" ><i class="fa fa-whatsapp"></i></a></li>
-                                            </ul>
-                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                             <!--box-widget-item end -->
 
                             <!--box-widget-item -->
+                            {% if event.venue %}
                             <div class="box-widget-item fl-wrap">
                                 <div class="box-widget-item-header">
                                     <h3>More events from this venue : </h3>
@@ -179,18 +192,22 @@
                                     <div class="box-widget-content">
                                         <ul>
                                             {% for e in event.venue.events %}
-                                            <li class="clearfix">
-                                                <a href="{{ path('event', {'slug':e.slug}) }}"  class="widget-posts-img"><img src="{{ e.flyer.url }}"  alt=""></a>
-                                                <div class="widget-posts-descr">
-                                                    <a href="{{ path('event', {'slug':e.slug}) }}" title="">{{ e.name }}</a>
-                                                    <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i>{{ e.date|date("d/m/Y") }} </span>
-                                                </div>
-                                            </li>
-                                                {% endfor %}
+                                                <li class="clearfix">
+                                                    <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                       class="widget-posts-img"><img src="{{ e.flyer.url }}" alt=""></a>
+                                                    <div class="widget-posts-descr">
+                                                        <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                           title="">{{ e.name }}</a>
+                                                        <span class="widget-posts-date"><i
+                                                                    class="fa fa-calendar-check-o"></i>{{ e.date|date("d/m/Y") }} </span>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                             <!--box-widget-item end -->
                         </div>
                     </div>
@@ -204,6 +221,13 @@
 
     </div>
     <!-- content end-->
+
+
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="{{ asset('js/favorites.js') }}" type="text/javascript"></script>
 
 
 {% endblock %}

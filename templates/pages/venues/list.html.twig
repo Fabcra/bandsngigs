@@ -7,10 +7,9 @@
 
                             <div class="geodir-category-img">
 
-                                <img src="{{ v.photo.url }}" alt="">
+                                <a href="{{ path('venue',{'slug': v.slug}) }}"><img src="{{ v.photo.url }}" alt="">
                                 <div class="overlay"></div>
-                                <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
-
+                                </a>
                             </div>
                             <div class="geodir-category-content fl-wrap">
 

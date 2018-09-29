@@ -25,26 +25,36 @@ class Event implements GroupSequenceProviderInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @Assert\Type("string")
+     * @ORM\Column(type="string", length=150)
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     private $name;
 
     /**
      * @ORM\Column(type="date", length=20)
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
+     * @Assert\Range(min="now", minMessage="La date doit être au plus tôt le lendemain")
      */
     private $date;
 
     /**
      * @ORM\Column(type="time", length=20)
+     * @Assert\NotBlank(message="cette valeur ne peut-être vide")
      */
     private $time;
 
     /**
+     * @Assert\Type("numeric", message="Veuillez n'utiliser que des caractères numériques")
+     * @Assert\Range(min=0, max="100", minMessage="Veuillez définir une valeur entre 0 et 100")
      * @ORM\Column(type="integer", length=4)
+     * @Assert\NotBlank(message="cette valeur ne peut-être vide")
      */
     private $price;
 
     /**
+     * @Assert\NotBlank(message="Cette valeur ne peut être vide")
+     * @Assert\Type("string")
      * @ORM\Column(type="text", length=255)
      */
     private $description;
@@ -79,11 +89,13 @@ class Event implements GroupSequenceProviderInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="Style", inversedBy="events")
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     private $styles;
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $flyer;
 
@@ -96,6 +108,7 @@ class Event implements GroupSequenceProviderInterface
     /**
      * @ORM\OneToMany(targetEntity="UnsubscribedBand", mappedBy="event", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     private $unsubscribedBands;
 
@@ -111,13 +124,24 @@ class Event implements GroupSequenceProviderInterface
      */
     private $registrationDate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="favEvents")
+     */
+    private $favUsers;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->styles = new ArrayCollection();
         $this->bands = new ArrayCollection();
         $this->unsubscribedBands = new ArrayCollection();
         $this->registrationDate = new \DateTime();
-
+        $this->favUsers = new ArrayCollection();
+        $this->setActive(true);
     }
 
     /**
@@ -425,5 +449,40 @@ class Event implements GroupSequenceProviderInterface
         ];
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFavUsers()
+    {
+        return $this->favUsers;
+    }
+
+    /**
+     * @param mixed $favUsers
+     */
+    public function setFavUsers($favUsers)
+    {
+        $this->favUsers[] = $favUsers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+
+
 
 }

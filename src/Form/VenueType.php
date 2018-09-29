@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Venue;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,9 +25,14 @@ class VenueType extends AbstractType
             ->add('styles')
             ->add('photo', ImageType::class)
             ->add('videoPlaylist', null, [
-                'label'=>'Url Youtube Playlist'
+                'label' => 'Url Youtube Playlist'
             ])
-        ;
+            ->add('active', ChoiceType::class, [
+                'choices' => [
+                    'yes' => true,
+                    'no' => false
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

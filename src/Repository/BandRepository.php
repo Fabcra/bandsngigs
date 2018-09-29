@@ -19,6 +19,17 @@ class BandRepository extends ServiceEntityRepository
         parent::__construct($registry, Band::class);
     }
 
+    public function findAllActiveBands(){
+
+        $qb = $this->createQueryBuilder('b');
+
+        $qb->andWhere('b.active = true');
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findBandsByUser($id)
     {
 
@@ -37,6 +48,7 @@ class BandRepository extends ServiceEntityRepository
     public function findBandsWithLogo()
     {
         $qb = $this->createQueryBuilder('b')
+            ->andWhere('b.active = true')
             ->leftJoin('b.logo', 'l')->addSelect('l')
             ->orderBy('b.registrationDate', 'DESC')
             ->setMaxResults(10);
@@ -44,6 +56,23 @@ class BandRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+
+
+    public function findFavoritesBandsByUser($id){
+
+        $qb = $this->createQueryBuilder('band')
+            ->leftJoin('band.favUsers', 'favUsers')
+            ->andWhere('favUsers.id like :id')
+            ->setParameter('id', $id);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+
+    }
+
+
+
 
 
 }

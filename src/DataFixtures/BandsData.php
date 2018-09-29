@@ -27,7 +27,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band1->setName('Silver Maiden');
         $band1->setDescription($faker->realText());
         $band1->setMail($faker->email);
-        $band1->setPhone($faker->phoneNumber);
+        $band1->setPhone('0000000000');
         $band1->setWebsite($faker->url);
         $band1->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -53,7 +53,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band2->setName('Meshuggrah');
         $band2->setDescription($faker->realText());
         $band2->setMail($faker->email);
-        $band2->setPhone($faker->phoneNumber);
+        $band2->setPhone('00000000');
         $band2->setWebsite($faker->url);
         $band2->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -78,7 +78,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band3->setName('Two Foot Ninja');
         $band3->setDescription($faker->realText());
         $band3->setMail($faker->email);
-        $band3->setPhone($faker->phoneNumber);
+        $band3->setPhone('0000000000');
         $band3->setWebsite($faker->url);
         $band3->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -104,7 +104,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band4->setName('Avengers Sevenfold');
         $band4->setDescription($faker->realText());
         $band4->setMail($faker->email);
-        $band4->setPhone($faker->phoneNumber);
+        $band4->setPhone('0000000000');
         $band4->setWebsite($faker->url);
         $band4->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -129,7 +129,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band5->setName('Cheetah');
         $band5->setDescription($faker->realText());
         $band5->setMail($faker->email);
-        $band5->setPhone($faker->phoneNumber);
+        $band5->setPhone('0000000000');
         $band5->setWebsite($faker->url);
         $band5->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -154,7 +154,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band6->setName('Drumtheater');
         $band6->setDescription($faker->realText());
         $band6->setMail($faker->email);
-        $band6->setPhone($faker->phoneNumber);
+        $band6->setPhone('0000000000');
         $band6->setWebsite($faker->url);
         $band6->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -179,7 +179,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band7->setName('Symfony X');
         $band7->setDescription($faker->realText());
         $band7->setMail($faker->email);
-        $band7->setPhone($faker->phoneNumber);
+        $band7->setPhone('0000000000');
         $band7->setWebsite($faker->url);
         $band7->setRegistrationDate($faker->dateTimeThisYear());
 
@@ -204,7 +204,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band8->setName('Nicaragua');
         $band8->setDescription($faker->realText());
         $band8->setMail($faker->email);
-        $band8->setPhone($faker->phoneNumber);
+        $band8->setPhone('0000000000');
         $band8->setWebsite($faker->url);
         $band8->setRegistrationDate($faker->dateTimeThisYear());
         $band8->setVideoPlaylist("https://www.youtube.com/watch?v=h2JgqF384cU&list=PLphGROqmao1IO8VDsvYeC6eM48e-MSgSx");
@@ -229,7 +229,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band9->setName('Godsmash');
         $band9->setDescription($faker->realText());
         $band9->setMail($faker->email);
-        $band9->setPhone($faker->phoneNumber);
+        $band9->setPhone('0000000000');
         $band9->setWebsite($faker->url);
         $band9->setRegistrationDate($faker->dateTimeThisYear());
         $band9->setVideoPlaylist("https://www.youtube.com/watch?v=pVohVy8d0s0&list=PL99O_K7Ai5RzxWcdLGWZZ4m8ulyF6wczQ");
@@ -254,7 +254,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band10->setName('Corn');
         $band10->setDescription($faker->realText());
         $band10->setMail($faker->email);
-        $band10->setPhone($faker->phoneNumber);
+        $band10->setPhone('0000000000');
         $band10->setWebsite($faker->url);
         $band10->setRegistrationDate($faker->dateTimeThisYear());
         $band10->setVideoPlaylist("https://www.youtube.com/watch?v=cl2D7J_FL_U&list=PLImEsAJ7sjmBySHJjeA_8iLabmlEK8z4W");
@@ -279,7 +279,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band11->setName('Pink Flood');
         $band11->setDescription($faker->realText());
         $band11->setMail($faker->email);
-        $band11->setPhone($faker->phoneNumber);
+        $band11->setPhone('0000000000');
         $band11->setWebsite($faker->url);
         $band11->setRegistrationDate($faker->dateTimeThisYear());
         $band11->setVideoPlaylist("https://www.youtube.com/watch?v=iLFwTqdsuxw&list=PLlAIujS66Q6CdVGg7lwFZuc0VG2VVMDJz");
@@ -304,7 +304,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band12->setName('Guns n\' Prosit');
         $band12->setDescription($faker->realText());
         $band12->setMail($faker->email);
-        $band12->setPhone($faker->phoneNumber);
+        $band12->setPhone('0000000000');
         $band12->setWebsite($faker->url);
         $band12->setRegistrationDate($faker->dateTimeThisYear());
         $band12->setVideoPlaylist("https://www.youtube.com/watch?v=8SbUC-UaAxE&list=PL2wCCiky2eR3Roemc3ZjWsVCUZM47Gp3_");
@@ -329,7 +329,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band13->setName('AB CD');
         $band13->setDescription($faker->realText());
         $band13->setMail($faker->email);
-        $band13->setPhone($faker->phoneNumber);
+        $band13->setPhone('0000000000');
         $band13->setWebsite($faker->url);
         $band13->setRegistrationDate($faker->dateTimeThisYear());
         $band13->setVideoPlaylist("https://www.youtube.com/watch?v=jQBLGxabQ2Q&list=PLx1MDbsLNfVQfLBqmbxjsYJG3j_B3TkCp");
@@ -354,7 +354,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band14->setName('Metallicats');
         $band14->setDescription($faker->realText());
         $band14->setMail($faker->email);
-        $band14->setPhone($faker->phoneNumber);
+        $band14->setPhone('0000000000');
         $band14->setWebsite($faker->url);
         $band14->setRegistrationDate($faker->dateTimeThisYear());
         $band14->setVideoPlaylist("https://www.youtube.com/watch?v=uhBHL3v4d3I&list=PLJvQXRgtxlumAHceNRk3cx3P7MZVUCdBl");
@@ -379,7 +379,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band15->setName('Dismounted');
         $band15->setDescription($faker->realText());
         $band15->setMail($faker->email);
-        $band15->setPhone($faker->phoneNumber);
+        $band15->setPhone('0000000000');
         $band15->setWebsite($faker->url);
         $band15->setRegistrationDate($faker->dateTimeThisYear());
         $band15->setVideoPlaylist("https://www.youtube.com/watch?v=ayV1MQUIHPY&list=PLif2iIyBTjSJmUOLMZj2tqOtGMwHWqUL6");
@@ -404,7 +404,7 @@ class BandsData extends Fixture implements DependentFixtureInterface
         $band16->setName('System of a Dad');
         $band16->setDescription($faker->realText());
         $band16->setMail($faker->email);
-        $band16->setPhone($faker->phoneNumber);
+        $band16->setPhone('0000000000');
         $band16->setWebsite($faker->url);
         $band16->setRegistrationDate($faker->dateTimeThisYear());
         $band16->setVideoPlaylist("https://www.youtube.com/watch?v=zUzd9KyIDrM&list=PLcRCYbVrSCinAvcPOXDFVY4ovGVXs82AL");

@@ -32,7 +32,8 @@ class PwdType extends AbstractType
         $builder
             ->add('oldPassword', PasswordType::class)
             ->add('password', RepeatedType::class,[
-                'type'=>PasswordType::class
+                'type'=>PasswordType::class,
+                'invalid_message'=> 'Les mots de passe ne correspondent pas'
             ])
         ;
     }

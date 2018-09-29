@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    Rewritecond %{HTTP_HOST} ^fabrice-crahay.be$
+    Rewriterule ^(.*) https://www.fabrice-crahay.be/index.php/$1 [QSA,L,R=301]
+</IfModule>

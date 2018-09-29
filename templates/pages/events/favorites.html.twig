@@ -1,0 +1,34 @@
+{% extends 'pages/default/layout.html.twig' %}
+
+{% block content %}
+    <!--section -->
+    <section>
+        <div class="container">
+            <div class="row home-posts">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Favorites events</h2>
+                        <div class="section-subtitle">Favorites events</div>
+                        <span class="section-separator"></span>
+                        <p>Browse your favorites events.</p>
+                    </div>
+                </div>
+
+                {% if favorites %}
+                    <div class="marginbottom20">
+
+                        {% include 'pages/others/googlemap.html.twig' %}
+                    </div>
+                    {% include 'pages/events/list.html.twig' %}
+                {% else %}
+
+                    <p>you don't have any favorites events ! See all events <a href="{{ path('events') }}">HERE</a></p>
+
+                {% endif %}
+            </div>
+        </div>
+
+    </section>
+    <!-- section end -->
+
+{% endblock %}

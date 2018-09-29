@@ -22,6 +22,7 @@
                     {% if app.user %}
                         <li><a href="{{ path('band-new') }}">New band</a></li>
                         <li><a href="{{ path('bands-manage') }}">Manage bands</a></li>
+                        <li><a href="{{ path('favorites-bands') }}">Favorites bands</a></li>
                     {% endif %}
                 </ul>
 
@@ -34,6 +35,7 @@
                     {% if app.user %}
                         <li><a href="{{ path('venue-new') }}">New venue</a></li>
                         <li><a href="{{ path('venues-manage') }}">Manage venues</a></li>
+                        <li><a href="{{ path('favorites-venues') }}">Favorites venues</a></li>
                     {% endif %}
                 </ul>
 
@@ -45,7 +47,8 @@
 
                     {% if app.user %}
                         <li><a href="{{ path('event-new') }}">New event</a></li>
-                    <li><a href="{{ path('events-manage') }}">Manage event</a></li>
+                        <li><a href="{{ path('events-manage') }}">Manage event</a></li>
+                        <li><a href="{{ path('favorites-events') }}">Favorites events</a></li>
                     {% endif %}
                 </ul>
             </li>

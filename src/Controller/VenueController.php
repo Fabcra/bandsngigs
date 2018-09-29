@@ -9,11 +9,13 @@
 namespace App\Controller;
 
 
+use App\Entity\Event;
 use App\Entity\Image;
+use App\Entity\Locality;
 use App\Entity\Venue;
-use App\Form\BandType;
 use App\Form\VenueType;
 use App\Service\FileUploader;
+use App\Service\MapLocation;
 use App\Service\YoutubeAPI;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 class VenueController extends Controller
 {
 
+    // private static $apikey = "AIzaSyA-nXEJ0eim6B9-G3B9GQLUnLsNxrs9A7g";
+
     /** CREER UN NOUVEAU CAFE-CONCERT
      * @param Request $request
      * @param FileUploader $fileUploader
@@ -30,10 +34,11 @@ class VenueController extends Controller
      * @Route("venues/new", name="venue-new")
      * @Method({"GET","POST"})
      */
-    public function newAction(Request $request, FileUploader $fileUploader)
+    public function newAction(Request $request, FileUploader $fileUploader, MapLocation $mapLocation)
     {
 
         $venue = new Venue();
+
 
         $user = $this->getUser();
 
@@ -42,6 +47,30 @@ class VenueController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $myaddress = $request->request->get('venue');
+
+            $streetname = $myaddress['streetName'];
+            $housenb = $myaddress['houseNb'];
+            $locality = $myaddress['locality'];
+
+            $localityname = $this->getDoctrine()->getRepository(Locality::class)->findOneById($locality);
+            $fulladdress = $streetname . "+" . $housenb . "+" . $localityname;
+            $address = str_replace(" ", "+", $fulladdress);
+
+
+            /*  $json = file_get_contents("https://maps.google.com/maps/api/geocode/json?key=".self::$apikey."&address=$address");
+
+              $json = json_decode($json);
+
+
+              $res = $json->results[0];*/
+
+            $res = $mapLocation->getPosition($address);
+
+            $lat = $res->geometry->location->lat;
+            $lng = $res->geometry->location->lng;
 
             // upload de l'image
             $img = $venue->getPhoto();
@@ -54,6 +83,9 @@ class VenueController extends Controller
 
             // l'utilisateur est considéré comme gestionnaire du profil café-concert
             $venue->setManagers($user);
+
+            $venue->setLat($lat);
+            $venue->setLng($lng);
 
             $em->persist($venue);
             $em->flush();
@@ -68,7 +100,7 @@ class VenueController extends Controller
         ]);
     }
 
-    /** LISER LES CAFES-CONCERT
+    /** LISTER LES CAFES-CONCERT
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/venues", name="venues")
@@ -78,7 +110,7 @@ class VenueController extends Controller
 
         $doctrine = $this->getDoctrine();
 
-        $venues = $doctrine->getRepository(Venue::class)->findAll();
+        $venues = $doctrine->getRepository(Venue::class)->findActiveVenues();
 
         //pagination
         $paginator = $this->get('knp_paginator');
@@ -176,6 +208,42 @@ class VenueController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/venues/favorites", name="favorites-venues")
+     */
+    public function favoritesVenues(Request $request)
+    {
+        $doctrine = $this->getDoctrine();
+        $user = $this->getUser();
+
+        if ($user) {
+            $user_id = $user->getId();
+            $venues = $doctrine->getRepository(Venue::class)->findFavoritesVenuesByUser($user_id);
+
+          if ($venues) {
+
+                  $paginator = $this->get('knp_paginator');
+                  $pagination = $paginator->paginate(
+                      $venues,
+                      $request->query->getInt('page', 1),
+                      $request->query->getInt('limit', 3)
+                  );
+
+
+          } else {
+              $pagination = null;
+          }
+
+            return $this->render('pages/venues/favorites.html.twig', [
+                'venues' => $pagination, 'events' => null
+            ]);
+
+        }
+    }
+
+
     /** AFFICHER LA PAGE DU CAFE-CONCERT
      *
      * @Route("/venues/{slug}", name="venue"))
@@ -183,25 +251,46 @@ class VenueController extends Controller
     public function viewAction(YoutubeAPI $youtubeAPI, $slug)
     {
         $doctrine = $this->getDoctrine();
-
         $venue = $doctrine->getRepository(Venue::class)->findOneBy(['slug' => $slug]);
-
         $playlist = $venue->getVideoPlaylist();
 
-        if($playlist) {
+        $user = $this->getUser();
+        $venue_id = $venue->getId();
+
+        $favorite = 'unliked';
+
+        if ($playlist) {
             $regex = '/list=(.+)/';
             preg_match($regex, $playlist, $matches);
             $src = $matches[1];
-
-
             $videos = $youtubeAPI->getVideosFromPlaylist($src, 10);
-        }else{
+        } else {
             $videos = null;
         }
+
+        if ($user) {
+
+            $favvenues = $user->getFavVenues();
+
+            foreach ($favvenues as $favvenue) {
+                $favvenue_id[] = $favvenue->getId();
+
+                if (in_array($venue_id, $favvenue_id)) {
+
+                    $favorite = 'liked';
+
+                } else {
+
+                    $favorite = 'unliked';
+
+                }
+            }
+
+        }
+
         return $this->render('pages/venues/venue.html.twig', [
-            'venue' => $venue, 'videos'=>$videos
+            'venue' => $venue, 'videos' => $videos, 'favorite' => $favorite
         ]);
     }
-
 
 }

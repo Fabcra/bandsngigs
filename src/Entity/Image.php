@@ -24,7 +24,14 @@ class Image
 
 
     /**
-     * @Assert\File(maxSize="2M")
+     * @Assert\File(
+     *     maxSize="2M",
+     *     maxSizeMessage="La taille de l'image ne peut dépasser 2Mo",
+     *     mimeTypes={"image/jpeg", "image/png"},
+     *     mimeTypesMessage="Veuillez charger une image de type jpg ou png"
+     * )
+     *
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     protected $file;
 

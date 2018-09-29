@@ -61,11 +61,15 @@ class SecurityController extends Controller
             $oldPwd = $request->request->get('pwd');
             $oldPwd = $oldPwd['oldPassword'];
 
+            $newPwd= $request->request->get('pwd');
+            $newPwd= $newPwd['password']['first'];
+
+
 
             //vérification de l'ancien mot de passe
             if (password_verify($oldPwd, $pwd)) {
                 // cryptage du nouveau mot de passe
-                $plainPassword = $user->getPassword();
+                $plainPassword = $newPwd;
                 $encoder = $encoderFactory->getEncoder($user);
                 $encoded = $encoder->encodePassword($plainPassword, '');
 

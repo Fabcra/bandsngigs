@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TempUserRepository")
+ * @UniqueEntity("mail", message="Cette adresse E-mail est déjà enregistrée")
  */
 class TempUser
 {
@@ -17,11 +20,16 @@ class TempUser
     private $id;
 
     /**
+     * @Assert\Email(message="Adresse e-mail invalide")
      * @ORM\Column(type="string", length=100)
      */
     private $mail;
 
     /**
+     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/",
+     *     message="Le mot de passe doit obligatoirement se composer au minimum d'une minuscule,
+     *              d'une majuscule, d'un chiffre et d'un caractère spécial (oui c'est pénible mais c'est comme ça)")
+     * @Assert\Length(min=8, minMessage="Le mot de passe doit avoir minimum 8 caractères")
      * @ORM\Column(type="string", length=100)
      */
     private $password;
@@ -32,6 +40,7 @@ class TempUser
     private $token;
 
     /**
+     *
      * @ORM\Column(type="date", length=10)
      */
     private $registrationDate;

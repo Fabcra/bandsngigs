@@ -63,9 +63,10 @@ class MyGoogleAuthenticator extends SocialAuthenticator
         $user = $this->em->getRepository(User::class)
             ->findOneBy(['email' => $email]);
         if ($user) {
-
             return $user;
         } else {
+
+
             $user = new User();
 
             $user->setGoogleId($googleUser->getId());
@@ -75,6 +76,7 @@ class MyGoogleAuthenticator extends SocialAuthenticator
             $user->setRegistrationDate(new \DateTime('now'));
             $user->setValid(true);
             $user->setRoles(['ROLE_USER']);
+            $user->setConfidentiality('false');
 
 
             $avatar = new Image();

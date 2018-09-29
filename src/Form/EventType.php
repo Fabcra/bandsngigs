@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Band;
 use App\Entity\Event;
 use App\Entity\Venue;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -25,9 +26,9 @@ class EventType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker']
             ])
-            ->add('time', TimeType::class,[
-                'widget'=>'single_text',
-                'attr'=>['class'=>'js-datepicker']
+            ->add('time', TimeType::class, [
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker']
             ])
             ->add('price', MoneyType::class)
             ->add('description')
@@ -35,9 +36,13 @@ class EventType extends AbstractType
                 'multiple' => true,
                 'class' => Band::class,
                 'label' => 'add subscribed bands',
-                'attr'=>array(
-                    'class'=>'js-example-basic-multiple fullwidth'
-                )
+                'attr' => array(
+                    'class' => 'js-example-basic-multiple fullwidth'
+                ),
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->where('b.active = true');
+                },
             ])
             ->add('unsubscribedBands', CollectionType::class, array(
                 'label' => false,
@@ -47,13 +52,13 @@ class EventType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
             ))
-            ->add('typeVenue', ChoiceType::class,[
+            ->add('typeVenue', ChoiceType::class, [
                 'attr' => [
                     'class' => 'js-venuetype js-example-basic-single'
                 ],
-                'choices'=>[
-                    'subscribed'=> 1,
-                    'unsubscribed'=>2,
+                'choices' => [
+                    'subscribed' => 1,
+                    'unsubscribed' => 2,
                 ]
             ])
             ->add('venue', EntityType::class, [
@@ -64,13 +69,24 @@ class EventType extends AbstractType
                 'class' => Venue::class,
                 'label' => 'set subscribed venue',
                 'placeholder' => '--choose or fill the next form--',
+                'required' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->where('v.active = true');
+                },
+            ])
+            ->add('unsubscribedVenue', UnsubscribedVenueType::class, [
                 'required' => false
             ])
-            ->add('unsubscribedVenue', UnsubscribedVenueType::class,[
-                'required'=>false
-            ])
             ->add('styles')
-            ->add('flyer', ImageType::class);
+            ->add('flyer', ImageType::class)
+            ->add('active', ChoiceType::class, [
+                'choices'=>[
+                    'yes'=>true,
+                    'no'=>false
+                ]
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

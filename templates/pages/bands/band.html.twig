@@ -12,11 +12,27 @@
                  data-scrollax="properties: { translateY: '30%' }"></div>
             <div class="overlay"></div>
             <div class="container">
-                <div class="section-title center-align">
-                    <h2><span>{{ band.name }}</span></h2>
+                <div class="section-title">
+
+                    <h2>{{ band.name }}</h2>
 
                     <span class="section-separator"></span>
+                    {% if app.user %}
+                        <div class="list-post-counter single-list-post-counter js-fav-item">
+                            <a href="#"
+                               class="js-fav"
+                               data-url="{{ path('favorites',{type:'band', id:band.id}) }}">
+                                {% if favorite == 'unliked' %}
+                                    <i class="fa fa-heart-o"></i>
+                                {% endif %}
+                                {% if favorite == 'liked' %}
+                                    <i class="fa fa-heart"></i>
+                                {% endif %}
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
+
             </div>
             <div class="header-sec-link">
                 <div class="container"><a href="#sec1" class="custom-scroll-link">Let's Start</a></div>
@@ -91,29 +107,34 @@
                         </div>
                         <!-- list-single-main-item-->
                         {% if videos %}
-                        <div class="list-single-main-item fl-wrap" id="sec3">
-                            <div class="list-single-main-item-title fl-wrap">
-                                <h3>Video playlist</h3>
-                            </div>
-                            <div class="list-single-main-media fl-wrap">
-                                <div class="single-slider-wrapper fl-wrap">
-                                    <div class="single-slider fl-wrap">
-                                        {% for v in videos %}
-                                            <div class="slick-slide-item">
-                                                <iframe width="640" height="480"
-                                                        src="https://www.youtube.com/embed/{{ v.snippet.resourceId.videoId }}"
-                                                        frameborder="0"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        {% endfor %}
+                            <div class="list-single-main-item fl-wrap" id="sec3">
+                                <div class="list-single-main-item-title fl-wrap">
+                                    <h3>Video playlist</h3>
+                                </div>
+                                <div class="list-single-main-media fl-wrap">
+                                    <div class="single-slider-wrapper fl-wrap">
+                                        <div class="single-slider fl-wrap">
+
+
+                                            {% for v in videos %}
+
+
+                                                <div class="slick-slide-item">
+                                                    <iframe width="640" height="480"
+                                                            src="https://www.youtube.com/embed/{{ v.snippet.resourceId.videoId }}"
+                                                            frameborder="0"
+                                                            allowfullscreen></iframe>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                        <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i>
+                                        </div>
+                                        <div class="swiper-button-next sw-btn"><i
+                                                    class="fa fa-long-arrow-right"></i></div>
                                     </div>
-                                    <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i>
-                                    </div>
-                                    <div class="swiper-button-next sw-btn"><i
-                                                class="fa fa-long-arrow-right"></i></div>
                                 </div>
                             </div>
-                        </div>
                         {% endif %}
                         <!-- list-single-main-item end -->
                     </div>
@@ -175,45 +196,49 @@
                             <!--box-widget-item end -->
                             <!--box-widget-item -->
                             {% if band.events is not empty %}
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>Events : </h3>
-                                </div>
-                                <div class="box-widget widget-posts blog-widgets">
-                                    <div class="box-widget-content">
-                                        <ul>
-                                            {% for e in band.events %}
-                                                <li class="clearfix">
-                                                    <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                       class="widget-posts-img"><img src="{{ e.flyer.url }}"
-                                                                                     alt="{{ e.name }}"></a>
-                                                    <div class="widget-posts-descr">
-                                                        <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                           title="">{{ e.name }}</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>Events : </h3>
+                                    </div>
+                                    <div class="box-widget widget-posts blog-widgets">
+                                        <div class="box-widget-content">
+                                            <ul>
+                                                {% for e in events %}
+                                                    {% if e.active == true %}
+                                                        <li class="clearfix">
+                                                            <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                               class="widget-posts-img"><img src="{{ e.flyer.url }}"
+                                                                                             alt="{{ e.name }}"></a>
+                                                            <div class="widget-posts-descr">
+                                                                <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                                   title="">{{ e.name }}</a>
+                                                                <span class="widget-posts-date"><i
+                                                                            class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
 
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             {% endif %}
                             <!--box-widget-item end -->
                             <!--box-widget-item -->
                             {% if audio %}
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>Spotify : </h3>
-                                </div>
-                                <div class="box-widget widget-posts blog-widgets">
-                                    <div class="box-widget-content">
-                                        <iframe src="https://open.spotify.com/embed?uri=spotify:{{ audio }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>Spotify : </h3>
+                                    </div>
+                                    <div class="box-widget widget-posts blog-widgets">
+                                        <div class="box-widget-content">
+                                            <iframe src="https://open.spotify.com/embed?uri=spotify:{{ audio }}"
+                                                    width="300" height="380" frameborder="0" allowtransparency="true"
+                                                    allow="encrypted-media"></iframe>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             {% endif %}
                             <!--box-widget-item end -->
                         </div>
@@ -230,3 +255,10 @@
 
 
 {% endblock %}
+    {% block javascripts %}
+
+        {{ parent() }}
+        <script src="{{ asset('js/favorites.js') }}" type="text/javascript"></script>
+
+
+    {% endblock %}

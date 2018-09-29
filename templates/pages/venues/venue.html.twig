@@ -15,11 +15,22 @@
 
                         <h2>{{ venue.name }}</h2>
                         <span class="section-separator"></span>
-                        <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
-                            <span>(11 reviews)</span>
-                        </div>
-                        <div class="list-post-counter single-list-post-counter"><span>4</span><i
-                                    class="fa fa-heart"></i></div>
+                        {% if app.user %}
+                            <div class="list-post-counter single-list-post-counter js-fav-item">
+                                <a href="#"
+                                   class="js-fav"
+                                   data-url="{{ path('favorites',{type:'venue', id:venue.id}) }}">
+                                    {% if favorite == 'unliked' %}
+                                        <i class="fa fa-heart-o"></i>
+                                    {% endif %}
+                                    {% if favorite == 'liked' %}
+                                        <i class="fa fa-heart"></i>
+                                    {% endif %}
+                                </a>
+                            </div>
+                        {% endif %}
+
+
                         <div class="clearfix"></div>
                         <div class="row">
                             <div class="col-md-6">
@@ -58,9 +69,9 @@
                         <li><a class="act-scrlink" href="#sec1">Top</a></li>
                         <li><a href="#sec2">Details</a></li>
                         <li><a href="#sec3">Gallery</a></li>
+                        <li><a href="#sec4">Videos</a></li>
                     </ul>
                 </nav>
-                <a href="#" class="save-btn"> <i class="fa fa-heart"></i> Save </a>
             </div>
         </div>
         <!--  section  -->
@@ -126,7 +137,7 @@
                             <!-- list-single-main-item end -->
 
                             <!-- list-single-main-item-->
-                            <div class="list-single-main-item fl-wrap" id="sec3">
+                            <div class="list-single-main-item fl-wrap" id="sec4">
                                 <div class="list-single-main-item-title fl-wrap">
                                     <h3>Video playlist</h3>
                                 </div>
@@ -161,10 +172,6 @@
                                     <h3>Location / Contacts : </h3>
                                 </div>
                                 <div class="box-widget">
-                                    <div class="map-container">
-                                        <div id="singleMap" data-latitude="{{ venue.lat }}"
-                                             data-longitude="{{ venue.lng }}" data-mapTitle="Out Location"></div>
-                                    </div>
                                     <div class="box-widget-content">
                                         <div class="list-author-widget-contacts list-item-widget-contacts">
                                             <ul>
@@ -259,3 +266,10 @@
     <!--  content end  -->
 
 {% endblock %}
+ {% block javascripts %}
+
+     {{ parent() }}
+     <script src="{{ asset('js/favorites.js') }}" type="text/javascript"></script>
+
+
+ {% endblock %}

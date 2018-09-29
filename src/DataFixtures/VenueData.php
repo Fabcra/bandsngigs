@@ -42,7 +42,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $venue->setDescription($faker->text());
             $venue->setStreetName($faker->streetName);
             $venue->setHouseNb(mt_rand(1, 99));
-            $venue->setPhone($faker->phoneNumber);
+            $venue->setPhone('000000000');
             $venue->setMail($faker->companyEmail);
             $venue->setLat($lat1 . '.' . $latlng2);
             $venue->setLng($lng1 . '.' . $latlng2);

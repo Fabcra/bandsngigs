@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\Band;
+use App\Entity\Event;
 use App\Entity\Image;
 use App\Form\BandType;
 use App\Form\MediaBandType;
@@ -73,7 +74,7 @@ class BandController extends Controller
 
         $doctrine = $this->getDoctrine();
 
-        $bands = $doctrine->getRepository(Band::class)->findAll();
+        $bands = $doctrine->getRepository(Band::class)->findAllActiveBands();
 
         //pagination
         $paginator = $this->get('knp_paginator');
@@ -128,8 +129,6 @@ class BandController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Modification effectuée avec succès');
-
-
         }
 
         if (in_array($user_id, $member_id)) {
@@ -166,7 +165,7 @@ class BandController extends Controller
     public function manageMedias($id, Request $request)
     {
         $doctrine = $this->getDoctrine();
-        $band = $doctrine->getRepository(Band::class)->findOneBy(['id'=>$id]);
+        $band = $doctrine->getRepository(Band::class)->findOneBy(['id' => $id]);
 
         $form = $this->createForm(MediaBandType::class, $band, ['method' => 'POST']);
 
@@ -174,20 +173,67 @@ class BandController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($band);
             $em->flush();
 
             $this->addFlash('success', 'Modification effectuée avec succès');
-
         }
 
         return $this->render('pages/bands/medias.html.twig', [
-            'mediaForm' => $form->createView(), 'band' => $band, 'id'=>$id
+            'mediaForm' => $form->createView(), 'band' => $band, 'id' => $id
         ]);
 
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/bands/favorites", name="favorites-bands")
+     */
+    public function favoritesBands(Request $request)
+    {
+
+        $doctrine = $this->getDoctrine();
+        $user = $this->getUser();
+
+        if ($user) {
+            $user_id = $user->getId();
+            $bands = $doctrine->getRepository(Band::class)->findFavoritesBandsByUser($user_id);
+
+
+            if ($bands) {
+
+                foreach ($bands as $band) {
+
+                    $band_id = $band->getId();
+
+                    $events = $doctrine->getRepository(Event::class)->findEventsByFavBands($user_id, $band_id);
+
+                    $paginator = $this->get('knp_paginator');
+                    $pagination = $paginator->paginate(
+                        $bands,
+                        $request->query->getInt('page', 1),
+                        $request->query->getInt('limit', 3)
+
+                    );
+
+                }
+            } else {
+                $pagination = null;
+                $events = null;
+            }
+
+            return $this->render('pages/bands/favorites.html.twig', [
+                'bands' => $pagination, 'events' => $events, 'venues' => null
+            ]);
+
+
+        }
+    }
+
 
     /** AFFICHE LA PAGE DU GROUPE
      *
@@ -197,35 +243,57 @@ class BandController extends Controller
      */
     public function showBand(YoutubeAPI $youtubeAPI, $slug)
     {
-
         $doctrine = $this->getDoctrine();
         $band = $doctrine->getRepository(Band::class)->findOneBy(['slug' => $slug]);
         $videoplaylist = $band->getVideoPlaylist();
         $audioplaylist = $band->getAudioPlaylist();
 
-     if($videoplaylist) {
-         $regex = '/list=(.+)/';
-         preg_match($regex, $videoplaylist, $matches);
-         $src = $matches[1];
-         $videos = $youtubeAPI->getVideosFromPlaylist($src, 10);
-     }else {
-         $videos = null;
-     }
+        $events = $band->getEvents();
 
-     if($audioplaylist){
-         $regex2 = '/open\.spotify\.com\/(.+)/';
-         preg_match($regex2, $audioplaylist, $matches);
-         $audio = str_replace("/", ":", $matches[1]);
 
-     } else {
-         $audio = null;
-     }
+        $user = $this->getUser();
+        $band_id = $band->getId();
 
-        return $this->render('pages/bands/band.html.twig', ['band' => $band, 'videos' => $videos, 'audio'=>$audio]);
+        $favorite = 'unliked';
 
+
+        if ($videoplaylist) {
+            $regex = '/list=(.+)/';
+
+            preg_match($regex, $videoplaylist, $matches);
+            $src = $matches[1];
+            $videos = $youtubeAPI->getVideosFromPlaylist($src, 10);
+
+        } else {
+            $videos = null;
+        }
+
+        if ($audioplaylist) {
+            $regex2 = '/open\.spotify\.com\/(.+)/';
+            preg_match($regex2, $audioplaylist, $matches);
+            $audio = str_replace("/", ":", $matches[1]);
+
+        } else {
+            $audio = null;
+        }
+
+        if ($user) {
+
+            $favbands = $user->getFavBands();
+
+            foreach ($favbands as $favband) {
+                $favband_id[] = $favband->getId();
+
+                if (in_array($band_id, $favband_id)) {
+
+                    $favorite = 'liked';
+                } else {
+                    $favorite = 'unliked';
+                }
+            }
+        }
+        return $this->render('pages/bands/band.html.twig', ['band' => $band, 'videos' => $videos, 'audio' => $audio, 'favorite' => $favorite, 'events' => $events]);
     }
-
-
 
 
 }

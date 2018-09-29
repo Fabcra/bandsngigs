@@ -23,6 +23,7 @@ class GoogleController extends Controller
      */
     public function connectAction()
     {
+
         return $this->get('oauth2.registry')
             ->getClient('google_main')
             ->redirect();
