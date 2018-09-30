@@ -30,7 +30,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $l = mt_rand(1, 49);
             $s = mt_rand(1, 6);
 
-            $lat1 = mt_rand(50, 51);
+            $lat1 = mt_rand(49, 50);
             $latlng2 = mt_rand(111111, 999999);
 
             $lng1 = mt_rand(3, 5);
@@ -44,7 +44,7 @@ class VenueData extends Fixture implements DependentFixtureInterface
             $venue->setHouseNb(mt_rand(1, 99));
             $venue->setPhone('000000000');
             $venue->setMail($faker->companyEmail);
-            $venue->setLat($lat1 . '.' . $latlng2);
+            $venue->setLat('50' . '.' . $latlng2);
             $venue->setLng($lng1 . '.' . $latlng2);
             $venue->setWebsite('http://www.' . $faker->word . '.com');
             $venue->setRegistrationDate($faker->dateTimeThisYear());

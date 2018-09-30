@@ -71,8 +71,10 @@
                                             class="fa fa-angle-right"></i></button>
                             </div>
                             <!-- profile-edit-container end-->
+                            {{ form_widget(eventForm._token) }}
 
-                            {{ form_end(eventForm) }}
+
+                            {{ form_end(eventForm, {'render_rest':false }) }}
                         </div>
                     {% endblock %}
                 </div>

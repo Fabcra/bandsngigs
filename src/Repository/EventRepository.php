@@ -58,7 +58,9 @@ class EventRepository extends ServiceEntityRepository
     {
 
         $qb = $this->createQueryBuilder('e')
-            ->andWhere('e.active = true');
+            ->andWhere('e.active = true')
+            ->andWhere('e.date >= CURRENT_DATE()');
+
 
         return $qb->getQuery()
             ->getResult();
@@ -76,6 +78,7 @@ class EventRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+
 
     public function findEventsByUser($id)
     {
@@ -151,7 +154,26 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->andWhere('event.active = true')
             ->andWhere('b.active = true')
-            ->andWhere('v.active = true');
+            ->andWhere('v.active = true')
+            ->andWhere('event.date >= CURRENT_DATE()');
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findEventsByVenue($id)
+    {
+
+        $qb = $this->createQueryBuilder('event')
+            ->leftJoin('event.bands', 'b')
+            ->leftJoin('event.venue', 'v')
+            ->andWhere('v.id like :id')
+            ->setParameter('id', $id)
+            ->andWhere('event.active = true')
+            ->andWhere('b.active = true')
+            ->andWhere('v.active = true')
+            ->andWhere('event.date >= CURRENT_DATE()');
 
         return $qb
             ->getQuery()

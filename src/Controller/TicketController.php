@@ -42,6 +42,7 @@ class TicketController extends Controller
         $doctrine = $this->getDoctrine();
 
         $event = $doctrine->getRepository(Event::class)->findOneById($event_id);
+        $slugevent = $event->getSlug();
 
         $unit_price = $event->getprice();
 
@@ -56,6 +57,8 @@ class TicketController extends Controller
             $spot_nb = $spot_nb['purchasedTicketsNb'];
             $total_amount = ($unit_price * $spot_nb);
 
+
+
             $amountCents = $total_amount * 100; //convertir le montant en centimes pour Stripe
 
             $ticket->setAmount($total_amount);
@@ -65,7 +68,9 @@ class TicketController extends Controller
             $verificationNB = sha1(uniqid(mt_rand(), true));
 
             //code QR
-            $qrCode = new QrCode('https://www.fabrice-crahay.be/tickets/check/' . $verificationNB);
+            //$qrCode = new QrCode('https://www.fabrice-crahay.be/tickets/check/' . $verificationNB);
+            $qrCode = new QrCode('https://www.fabrice-crahay.be/events/'. $slugevent);
+
             $qrCode->setSize(300);
 
             $qrCode->writeFile(__DIR__ . '/../../public/uploads/qrcode/' . $verificationNB . '.png');
@@ -101,7 +106,7 @@ class TicketController extends Controller
             //mail du ticket
             $mail = $user->getEmail();
             $subject = $event->getName();
-            $body = "test";
+            $body = $this->renderView('pages/tickets/ticket-mail.html.twig', array('ticket' => $ticket));
             $filepathURL = '../public/uploads/pdf/' . $pdf;
 
 

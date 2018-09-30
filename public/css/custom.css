@@ -117,10 +117,11 @@
     margin-right: 800px;
 }
 
-.logohome {
+.logohome{
 
     width: inherit !important;
-    max-height: 150px !important;
+    height: 130px !important;
+    max-width : 200px !important;
 
 }
 
@@ -149,7 +150,43 @@
     margin-right : 150px;
 }
 
+.bands img{
 
+    height: 250px !important;
+}
+
+.update-btn{
+    float: right !important;
+}
+
+.event-image{
+    height: 250px;
+    width:auto;
+    overflow: hidden;
+}
+
+.mini-img img{
+    
+    height : 40px;
+    width:auto;
+    overflow: hidden;
+    border-radius: 0px;
+}
+
+.band-venue-members-img img{
+
+    width : 85px;
+    height:auto;
+    overflow: hidden;
+    margin-left : -45px;
+    border-radius: 0px;
+;
+}
+
+.profile-avatar-img{
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
 
 
 

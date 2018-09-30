@@ -130,25 +130,38 @@ class EventController extends Controller
     }
 
 
-    /**
+    /** API REST - récupérer les évènements d'un groupe ou café-concert
+     *
      *
      * @Rest\Get(
-     *     path="/api/events/{id}",
+     *     path="/api/events/{slug}",
      *     name="list-events",
      *     )
      *
      * @Rest\View()
      */
-    public function getevents($id)
+    public function getevents($slug)
     {
 
-        $band = $this->getDoctrine()->getRepository(Band::class)->findOneById($id);
+        $doctrine = $this->getDoctrine();
+
+        $band = $doctrine->getRepository(Band::class)->findOneBy(['slug'=>$slug]);
+
+        if($band == null){
+            $venue = $doctrine->getRepository(Venue::class)->findOneBy(['slug'=>$slug]);
+
+            $venue_id = $venue->getId();
+
+            $events = $doctrine->getRepository(Event::class)->findEventsByVenue($venue_id);
+
+        }else{
 
         $band_id = $band->getId();
 
-        $events = $this->getDoctrine()->getRepository(Event::class)->findEventsByBand($band_id);
+        $events = $doctrine->getRepository(Event::class)->findEventsByBand($band_id);
+        }
 
-        $eventbyband = [];
+        $eventbyx = [];
 
         foreach ($events as $event){
 
@@ -156,7 +169,7 @@ class EventController extends Controller
 
 
 
-            $eventbyband[] = [
+            $eventbyx[] = [
                 'name'=>$event->getName(),
                 'date'=>$event->getDate(),
                 'time'=>$event->getTime(),
@@ -170,7 +183,7 @@ class EventController extends Controller
             ];
         }
 
-        return $eventbyband;
+        return $eventbyx;
 
     }
 
@@ -287,6 +300,11 @@ class EventController extends Controller
 
         $event_id = $event->getId();
 
+        $venue = $event->getId();
+
+        $events = $doctrine->getRepository(Event::class)->findEventsByVenue($venue);
+
+
         $favorite = 'unliked';
 
         if ($user) {
@@ -306,8 +324,25 @@ class EventController extends Controller
         }
 
         return $this->render('pages/events/event.html.twig', [
-            'event' => $event, 'favorite' => $favorite
+            'event' => $event, 'events'=>$events, 'favorite' => $favorite
         ]);
+    }
+
+
+    /** TEST FONCTIONNEMENT DE L'API
+     *
+     *
+     * @param $slug
+     * @Route("/testapi/{slug}", name="testapi")
+     */
+    public function testApi($slug){
+
+        $url = file_get_contents('https://www.fabrice-crahay.be/api/events/'.$slug);
+
+$response = json_decode($url, true);
+
+        dump($response);
+        die();
     }
 
 

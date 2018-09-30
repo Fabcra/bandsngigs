@@ -14,19 +14,19 @@
                     {{ form_row(eventForm.time, {'attr':{'class': 'floatleft', 'label':'Time'}}) }}
                 </div>
 
-                <div class="check-user floatleft marginbottom20">
+                <div class="col-md-6 check-user floatleft marginbottom20">
                     {{ form_row(eventForm.bands, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
                 </div>
-                <div class="check-user bigmarginright">
+                <div class="col-md-6 check-user bigmarginright">
                     <p>You can add unsubscribed bands in the website on in this event</p>
                     <ul class="members"
                         data-prototype="{{ form_row(eventForm.unsubscribedBands.vars.prototype)|e }}">
                     </ul>
                 </div>
-                <div class="check-user floatleft marginbottom20">
+                <div class="col-md-6 check-user floatleft marginbottom20">
                     {{ form_row(eventForm.typeVenue) }}
                 </div>
-                <div class="check-user floatleft marginbottom20 js-sub-venue">
+                <div class="col-md-6 check-user floatleft marginbottom20 js-sub-venue">
                     {{ form_row(eventForm.venue) }}
                 </div>
 

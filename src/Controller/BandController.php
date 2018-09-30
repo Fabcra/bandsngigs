@@ -52,6 +52,8 @@ class BandController extends Controller
 
             $band->setMembers($user);
 
+            $band->setActive(true);
+
             $em->persist($band);
             $em->flush();
 
@@ -248,11 +250,9 @@ class BandController extends Controller
         $videoplaylist = $band->getVideoPlaylist();
         $audioplaylist = $band->getAudioPlaylist();
 
-        $events = $band->getEvents();
-
-
         $user = $this->getUser();
         $band_id = $band->getId();
+        $events = $doctrine->getRepository(Event::class)->findEventsByBand($band_id);
 
         $favorite = 'unliked';
 

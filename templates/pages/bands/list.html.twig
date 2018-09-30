@@ -5,15 +5,12 @@
         <article class="geodir-category-listing fl-wrap">
 
             <a href="{{ path('band', {'slug':b.slug}) }}">
-                <div class="geodir-category-img">
+                <div class="geodir-category-img bands">
 
-                    <img src="{{ b.logo.url }}" alt="" width="200px">
+                    <img src="{{ b.logo.url }}" alt="{{ b.name }}" width="200px">
 
                     <div class="overlay">
-
                     </div>
-
-
                 </div>
             </a>
 
@@ -29,16 +26,14 @@
                                         aria-hidden="true"></i> update</a>
                         {% endif %}
                     {% endfor %}
-
                 {% endif %}
-                {% for u in b.members %}
+               {# {% for u in b.members %}
                     <div class="listing-avatar"><a href="{{ path('user', {'id':u.id}) }}"><img
-
                                     src="{{ u.avatar.url }}"
                                     alt="{{ u.firstName }}"></a>
                         <span class="avatar-tooltip">With <strong>{{ u.firstName }}</strong></span>
                     </div>
-                {% endfor %}
+                {% endfor %}#}
 
                 <h3><a href="{{ path('band',{'slug':b.slug}) }}">{{ b.name }}</a></h3>
                 <p>{{ b.description }}</p>

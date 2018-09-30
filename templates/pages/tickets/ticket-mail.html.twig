@@ -1,0 +1,6 @@
+<h1>Votre ticket pour le concert à {{ ticket.event.venue.name }} le {{ ticket.event.date|date("d/m/Y") }}</h1>
+{% for b in ticket.event.bands %}
+<h2>{{ b.name }}</h2>
+{% endfor %}
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non iaculis quam. Ut non dictum massa, sit amet molestie velit. Ut id mauris at nibh eleifend ultricies facilisis ac justo. Cras suscipit libero sem. In ullamcorper quam vel urna pharetra fermentum. Aliquam facilisis eu sem at vulputate. Vestibulum bibendum nibh ac bibendum tempor. Cras aliquam erat quis ullamcorper porttitor. In mi urna, sodales quis iaculis vitae, auctor sed lorem.</p>
+<p>Félicitation pour votre achat, conservez bien ce ticket</p>

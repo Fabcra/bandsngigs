@@ -200,7 +200,7 @@
                                     <h3>Hosted by : </h3>
                                 </div>
                                 {% for u in venue.managers %}
-                                    <div class="box-widget list-author-widget">
+                                    <div class="box-widget list-author-widget band-venue-members-img">
                                         <div class="list-author-widget-header shapes-bg-small  color-bg fl-wrap">
                                                 <span class="list-author-widget-link"><a
                                                             href="{{ path('user', {'id':u.id}) }}">{{ u.firstName }} {{ u.lastName }}</a></span>
@@ -225,33 +225,36 @@
                                 {% endfor %}
                             </div>
                             <!--box-widget-item end -->
-                            <!--box-widget-item -->
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>More events from this venue : </h3>
-                                </div>
-                                <div class="box-widget widget-posts">
-                                    <div class="box-widget-content">
-                                        <ul>
-                                            {% for e in venue.events %}
-                                                <li class="clearfix">
-                                                    <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                       class="widget-posts-img"><img
-                                                                src="{{ e.flyer.url }}"
-                                                                alt="{{ e.name }}"></a>
-                                                    <div class="widget-posts-descr">
-                                                        <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                           title="">{{ e.name }}</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
 
-                                        </ul>
+                            <!--box-widget-item -->
+                            {% if events is not empty %}
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>More events from this venue : </h3>
+                                    </div>
+                                    <div class="box-widget widget-posts">
+                                        <div class="box-widget-content">
+                                            <ul>
+                                                {% for e in events %}
+                                                        <li class="clearfix">
+                                                            <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                               class="widget-posts-img"><img
+                                                                        src="{{ e.flyer.url }}"
+                                                                        alt="{{ e.name }}"></a>
+                                                            <div class="widget-posts-descr">
+                                                                <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                                   title="">{{ e.name }}</a>
+                                                                <span class="widget-posts-date"><i
+                                                                            class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
+                                                            </div>
+                                                        </li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                             <!--box-widget-item end -->
                         </div>
                     </div>

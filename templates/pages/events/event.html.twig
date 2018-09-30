@@ -147,7 +147,7 @@
                             {% if app.user %}
                                 <div class="box-widget-item fl-wrap">
                                     <div class="box-widget-item-header">
-                                        <h3>Register Now : </h3>
+                                        <h3>Order your spot : </h3>
                                     </div>
                                     <div class="box-widget opening-hours">
 
@@ -157,10 +157,10 @@
 
                                                 <fieldset>
                                                     <label><i class="fa fa-user-o"></i></label>
-                                                    <input type="text" placeholder="{{ app.user.fullName }}" value=""/>
+                                                    <input type="text" placeholder="{{ app.user.fullName }}" disabled="disabled" value=""/>
                                                     <div class="clearfix"></div>
                                                     <label><i class="fa fa-envelope-o"></i> </label>
-                                                    <input type="text" placeholder="{{ app.user.email }}" value=""/>
+                                                    <input type="text" placeholder="{{ app.user.email }}" disabled="disabled" value=""/>
                                                     <div class="quantity fl-wrap">
                                                         <span><i class="fa fa-user-plus"></i>Persons : </span>
                                                         <div class="quantity-item">
@@ -183,7 +183,7 @@
                             <!--box-widget-item end -->
 
                             <!--box-widget-item -->
-                            {% if event.venue %}
+                            {% if events %}
                             <div class="box-widget-item fl-wrap">
                                 <div class="box-widget-item-header">
                                     <h3>More events from this venue : </h3>
@@ -191,7 +191,7 @@
                                 <div class="box-widget widget-posts">
                                     <div class="box-widget-content">
                                         <ul>
-                                            {% for e in event.venue.events %}
+                                            {% for e in events %}
                                                 <li class="clearfix">
                                                     <a href="{{ path('event', {'slug':e.slug}) }}"
                                                        class="widget-posts-img"><img src="{{ e.flyer.url }}" alt=""></a>

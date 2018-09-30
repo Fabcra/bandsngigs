@@ -74,7 +74,7 @@
                                     </div>
                                     <p>{{ band.description }}</p>
                                     {% for u in band.members %}
-                                        <div class="post-author"><a href="{{ path('user', {'id':u.id}) }}"><img
+                                        <div class="post-author mini-img"><a href="{{ path('user', {'id':u.id}) }}"><img
                                                         src="{{ u.avatar.url }}"
                                                         alt="{{ u.firstName }}"><span>{{ u.firstName }}</span></a>
                                         </div>
@@ -147,7 +147,7 @@
                                 <div class="box-widget-item fl-wrap">
 
                                     <div class="box-widget list-author-widget">
-                                        <div class="list-author-widget-header shapes-bg-small  color-bg fl-wrap">
+                                        <div class="list-author-widget-header shapes-bg-small  color-bg fl-wrap band-venue-members-img">
                                             <span class="list-author-widget-link"><a
                                                         href="{{ path('user',{'id':u.id}) }}">{{ u.firstName }} {{ u.lastName }}</a></span>
                                             <img src="{{ u.avatar.url }}" alt="{{ u.firstName }}">

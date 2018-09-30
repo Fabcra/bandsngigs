@@ -99,6 +99,7 @@ class Venue
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
+     * @Assert\Valid()
      *
      * @ORM\JoinColumn(onDelete="CASCADE")
      */

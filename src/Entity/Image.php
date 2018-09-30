@@ -18,6 +18,8 @@ class Image
     private $id;
 
     /**
+     * @Assert\Valid()
+     *
      * @ORM\Column(type="string", length=240)
      */
     protected $url;
@@ -32,6 +34,7 @@ class Image
      * )
      *
      * @Assert\NotBlank(message="cette valeur ne peut être vide")
+
      */
     protected $file;
 

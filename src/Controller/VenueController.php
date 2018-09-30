@@ -55,6 +55,7 @@ class VenueController extends Controller
             $housenb = $myaddress['houseNb'];
             $locality = $myaddress['locality'];
 
+
             $localityname = $this->getDoctrine()->getRepository(Locality::class)->findOneById($locality);
             $fulladdress = $streetname . "+" . $housenb . "+" . $localityname;
             $address = str_replace(" ", "+", $fulladdress);
@@ -86,6 +87,8 @@ class VenueController extends Controller
 
             $venue->setLat($lat);
             $venue->setLng($lng);
+
+            $venue->setActive(true);
 
             $em->persist($venue);
             $em->flush();
@@ -257,6 +260,10 @@ class VenueController extends Controller
         $user = $this->getUser();
         $venue_id = $venue->getId();
 
+        $events = $doctrine->getRepository(Event::class)->findEventsByVenue($venue_id);
+
+
+
         $favorite = 'unliked';
 
         if ($playlist) {
@@ -289,7 +296,7 @@ class VenueController extends Controller
         }
 
         return $this->render('pages/venues/venue.html.twig', [
-            'venue' => $venue, 'videos' => $videos, 'favorite' => $favorite
+            'venue' => $venue, 'videos' => $videos, 'favorite' => $favorite, 'events'=>$events
         ]);
     }
 

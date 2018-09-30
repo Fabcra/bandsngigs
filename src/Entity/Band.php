@@ -88,6 +88,7 @@ class Band
 
     /**
      * @ORM\ManyToMany(targetEntity="Style", inversedBy="bands")
+     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     private $styles;
 

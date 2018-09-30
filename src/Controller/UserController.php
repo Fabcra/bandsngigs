@@ -65,7 +65,6 @@ class UserController extends Controller
             'userForm'=>$form->createView(), 'id'=>$id
         ]);
 
-
     }
 
 }

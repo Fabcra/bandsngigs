@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
-<base href="http://localhost:8000">
+<base href="https://www.fabrice-crahay.be">
 </head>
 <div>
     <div>
         <h1>{{ ticket.event.name }}</h1>
         {{ ticket.event.description }}
         <h2>N° {{ ticket.verificationNb }}</h2>
+        <h3>{{ ticket.event.date|date("d/m/Y") }}</h3>
         <hr>
 
         <h2>IN {{ ticket.event.venue.name }}</h2>

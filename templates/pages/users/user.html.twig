@@ -2,8 +2,7 @@
 
 
 {% block content %}
-    <!-- wrapper -->
-    <div id="wrapper">
+
         <!--Content -->
         <div class="content">
             <!--section -->
@@ -12,7 +11,7 @@
                 <div class="container">
                     <div class="section-title center-align">
                         <h2><span>{{ user.firstName }} {{ user.lastName }}</span></h2>
-                        <div class="user-profile-avatar">
+                        <div class="user-profile-avatar profile-avatar-img">
                             {% if user.avatar %}
                                 <img src="{{ user.avatar.url }}" alt="{{ user.firstName }}">
                             {% else %}
@@ -51,21 +50,22 @@
                                     <div class="listing-item list-layout">
                                         <article class="geodir-category-listing fl-wrap">
                                             <div class="geodir-category-img">
-                                                <img src="{{ b.logo.url }}" alt="">
+                                                <img src="{{ b.logo.url }}" alt="{{ b.name }}">
                                                 <div class="overlay"></div>
-                                                <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i>
-                                                </div>
                                             </div>
                                             <div class="geodir-category-content fl-wrap">
                                                 <h3><a href="{{ path('band', {'slug':b.slug}) }}">{{ b.name }}</a></h3>
                                                 <p>{{ b.description }}</p>
                                                 <div class="geodir-category-options fl-wrap">
                                                     {% if b.locality %}
-                                                    <div class="geodir-category-location"><a href="#"><i
-                                                                    class="fa fa-map-marker"
-                                                                    aria-hidden="true"></i>{{ b.locality.locality }}</a>
-                                                    </div>
-                                                        {% endif %}
+                                                        <div class="geodir-category-location"><a
+                                                                    href="http://maps.google.fr/maps?f=q&hl=fr&q={{ b.locality.locality }}"
+                                                                    target="_blank"><i
+                                                                        class="fa fa-map-marker"
+                                                                        aria-hidden="true"></i>{{ b.locality.locality }}
+                                                            </a>
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </article>
@@ -89,10 +89,10 @@
                                             <div class="list-author-widget-contacts list-item-widget-contacts">
                                                 <ul>
                                                     {% if user.locality %}
-                                                    <li><span><i class="fa fa-map-marker"></i> City :</span> <a
-                                                                href="http://maps.google.fr/maps?f=q&hl=fr&q={{ user.locality.locality }}">{{ user.locality.locality }}</a>
-                                                    </li>
-                                                        {% endif %}
+                                                        <li><span><i class="fa fa-map-marker"></i> City :</span> <a
+                                                                    href="http://maps.google.fr/maps?f=q&hl=fr&q={{ user.locality.locality }}">{{ user.locality.locality }}</a>
+                                                        </li>
+                                                    {% endif %}
                                                     <li><span><i class="fa fa-phone"></i> Phone :</span> <a
                                                                 href="tel:{{ user.phone }}">{{ user.phone }}</a>
                                                     </li>
@@ -107,37 +107,41 @@
                                 </div>
                                 <!--box-widget-item end -->
                                 <!--box-widget-item -->
-                                <div class="box-widget-item fl-wrap">
-                                    <div class="box-widget-item-header">
-                                        <h3>Next events : </h3>
-                                    </div>
-                                    <div class="box-widget widget-posts">
-                                        <div class="box-widget-content">
-                                            <ul>
-                                                {% for b in user.bands %}
-                                                    {% for e in b.events %}
-                                                        <li class="clearfix">
-                                                            <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                               class="widget-posts-img"><img
-                                                                        src="{{ e.flyer.url }}"
-                                                                        alt="{{ e.name }}"></a>
-                                                            <div class="widget-posts-descr">
+                                {% for b in user.bands %}
+                                    {% if b.events is not empty %}
+                                        <div class="box-widget-item fl-wrap">
+                                            <div class="box-widget-item-header">
+                                                <h3>Next events : </h3>
+                                            </div>
+                                            <div class="box-widget widget-posts">
+                                                <div class="box-widget-content">
+                                                    <ul>
+                                                        {% for e in b.events %}
+                                                            <li class="clearfix">
                                                                 <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                                   title="">{{ e.name }}</a>
-                                                                <span class="widget-posts-date"><i
-                                                                            class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
-                                                            </div>
-                                                        </li>
-                                                    {% endfor %}
-                                                {% endfor %}
+                                                                   class="widget-posts-img"><img
+                                                                            src="{{ e.flyer.url }}"
+                                                                            alt="{{ e.name }}"></a>
+                                                                <div class="widget-posts-descr">
+                                                                    <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                                       title="">{{ e.name }}</a>
+                                                                    <span class="widget-posts-date"><i
+                                                                                class="fa fa-calendar-check-o"></i> {{ e.date|date("d/m/Y") }} </span>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
 
-                                            </ul>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <!--box-widget-item end -->
+                                        <!--box-widget-item end -->
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
+
                         <!--box-widget-wrap end-->
                     </div>
                 </div>
@@ -147,6 +151,5 @@
             <!--section -->
         </div>
         <!-- content end -->
-    </div>
-    <!-- wrapper end -->
+
 {% endblock %}
