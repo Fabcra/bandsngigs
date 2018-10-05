@@ -14,13 +14,16 @@ use App\Entity\Event;
 use App\Entity\Locality;
 use App\Entity\Venue;
 use App\Form\EventType;
+use App\Form\RemoveEventType;
 use App\Service\FileUploader;
+use App\Service\Mailer;
 use App\Service\MapLocation;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\Annotation as Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use function Sodium\add;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +52,7 @@ class EventController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $event->setActive(true);
 
             // upload d'un flyers
             $img = $event->getFlyer();
@@ -145,40 +149,39 @@ class EventController extends Controller
 
         $doctrine = $this->getDoctrine();
 
-        $band = $doctrine->getRepository(Band::class)->findOneBy(['slug'=>$slug]);
+        $band = $doctrine->getRepository(Band::class)->findOneBy(['slug' => $slug]);
 
-        if($band == null){
-            $venue = $doctrine->getRepository(Venue::class)->findOneBy(['slug'=>$slug]);
+        if ($band == null) {
+            $venue = $doctrine->getRepository(Venue::class)->findOneBy(['slug' => $slug]);
 
             $venue_id = $venue->getId();
 
             $events = $doctrine->getRepository(Event::class)->findEventsByVenue($venue_id);
 
-        }else{
+        } else {
 
-        $band_id = $band->getId();
+            $band_id = $band->getId();
 
-        $events = $doctrine->getRepository(Event::class)->findEventsByBand($band_id);
+            $events = $doctrine->getRepository(Event::class)->findEventsByBand($band_id);
         }
 
         $eventbyx = [];
 
-        foreach ($events as $event){
+        foreach ($events as $event) {
 
             $venue = $event->getVenue();
 
 
-
             $eventbyx[] = [
-                'name'=>$event->getName(),
-                'date'=>$event->getDate(),
-                'time'=>$event->getTime(),
-                'description'=>$event->getDescription(),
-                'price'=>$event->getPrice(),
+                'name' => $event->getName(),
+                'date' => $event->getDate(),
+                'time' => $event->getTime(),
+                'description' => $event->getDescription(),
+                'price' => $event->getPrice(),
                 'venue' => $venue->getName(),
                 'streetname' => $venue->getStreetName(),
-                'housenb'=>$venue->getHouseNb(),
-                'locality'=>$venue->getLocality()->getLocality()
+                'housenb' => $venue->getHouseNb(),
+                'locality' => $venue->getLocality()->getLocality()
 
             ];
         }
@@ -202,6 +205,8 @@ class EventController extends Controller
         $doctrine = $this->getDoctrine();
         $event = $doctrine->getRepository(Event::class)->findOneById($id);
 
+        $active = $event->getActive();
+
         $organiser_id = $event->getOrganiser()->getId();
         $user_id = $this->getUser()->getId();
 
@@ -218,12 +223,18 @@ class EventController extends Controller
             $this->addFlash('success', 'Modification effectuée avec succès');
         }
 
-        if ($user_id === $organiser_id) {
-            return $this->render('pages/events/update.html.twig', [
-                'eventForm' => $form->createView(), 'id' => $id, 'event' => $event
-            ]);
+        if ($active === true) {
+
+            if ($user_id === $organiser_id) {
+                return $this->render('pages/events/update.html.twig', [
+                    'eventForm' => $form->createView(), 'id' => $id, 'event' => $event
+                ]);
+            } else {
+                $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                return $this->redirectToRoute('homepage');
+            }
         } else {
-            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+
             return $this->redirectToRoute('homepage');
         }
     }
@@ -263,6 +274,7 @@ class EventController extends Controller
         $doctrine = $this->getDoctrine();
         $user = $this->getUser();
 
+
         if ($user) {
             $user_id = $user->getId();
             $events = $doctrine->getRepository(Event::class)->findFavEvents($user_id);
@@ -282,6 +294,77 @@ class EventController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("/events/remove/{id}", name="events-remove")
+     */
+    public function removeEvent(Request $request, $id, Mailer $mailer)
+    {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $doctrine = $this->getDoctrine();
+        $event = $doctrine->getRepository(Event::class)->findOneById($id);
+        $active = $event->getActive();
+        $organiser_id = $event->getOrganiser()->getId();
+        $user_id = $this->getUser()->getId();
+
+        $form = $this->createForm(RemoveEventType::class, $event, ['method' => 'POST']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($event);
+            $em->flush();
+
+            $active = $event->getActive();
+
+            if ($active === false) {
+                $this->addFlash('success', 'Vous avez supprimé l\'évènement ' . $event->getName());
+
+
+                //envoyer mail
+
+                // je récupére le tableau des tickets vendus pour l'évènement
+                $tickets = $event->getTickets();
+
+                foreach ($tickets as $ticket) {
+
+                    //je récupère les adresses e-mails des spectateurs qui ont achetés un ticket en ligne
+
+                    $spectator = $ticket->getSpectator();
+                    $mail = $spectator->getEmail();
+                    $subject = 'Concert annulé !!! ';
+                    $body = $this->renderView(
+                        'pages/events/cancellation_mail.html.twig', array('event' => $event, 'spectator' => $spectator));
+
+                    $mailer->sendMail($mail, $subject, $body);
+                }
+                return $this->redirectToRoute('homepage');
+            }
+        }
+
+        if ($active === true) {
+
+            if ($user_id === $organiser_id) {
+                return $this->render('pages/events/remove.html.twig', [
+                    'removeEventForm' => $form->createView(), 'id' => $id, 'event' => $event
+                ]);
+            } else {
+                $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                return $this->redirectToRoute('homepage');
+            }
+        } else {
+            $this->addFlash('danger', 'Cet évènement a déjà été supprimé');
+            return $this->redirectToRoute('homepage');
+        }
+
+    }
+
 
     /** AFFICHER LA PAGE D'UN EVENEMENT
      *
@@ -297,6 +380,9 @@ class EventController extends Controller
         $doctrine = $this->getDoctrine();
 
         $event = $doctrine->getRepository(Event::class)->findOneBy(['slug' => $slug]);
+
+        $active = $event->getActive();
+
 
         $event_id = $event->getId();
 
@@ -323,8 +409,14 @@ class EventController extends Controller
             }
         }
 
+        if ($active === false) {
+
+            $this->addFlash('danger', 'Attention, cet évènement a été annulé, les places précédemment achetées seront remboursées intégralement');
+        }
+
+
         return $this->render('pages/events/event.html.twig', [
-            'event' => $event, 'events'=>$events, 'favorite' => $favorite
+            'event' => $event, 'events' => $events, 'favorite' => $favorite
         ]);
     }
 
@@ -335,11 +427,12 @@ class EventController extends Controller
      * @param $slug
      * @Route("/testapi/{slug}", name="testapi")
      */
-    public function testApi($slug){
+    public function testApi($slug)
+    {
 
-        $url = file_get_contents('https://www.fabrice-crahay.be/api/events/'.$slug);
+        $url = file_get_contents('https://www.fabrice-crahay.be/api/events/' . $slug);
 
-$response = json_decode($url, true);
+        $response = json_decode($url, true);
 
         dump($response);
         die();

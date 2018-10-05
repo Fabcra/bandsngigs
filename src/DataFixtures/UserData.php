@@ -67,7 +67,7 @@ class UserData extends Fixture implements DependentFixtureInterface
         $user2->setLocality($this->getReference('locality'. $x));
         $user2->setAvatar($this->getReference('image'. $i));
         $user2->setRegistrationDate($faker->dateTimeThisYear());
-        $user2->setRoles(['ROLE_USER']);
+        $user2->setRoles(['ROLE_ADMIN']);
         $user2->setConfidentiality('true');
 
         $user2->setPassword('$2y$10$xAHGwNsB6Pd3mM2fsIuJCeYWXMnUZU6YROLCZwtvij2XhnG/ymrYO');

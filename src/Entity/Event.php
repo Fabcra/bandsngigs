@@ -60,12 +60,13 @@ class Event implements GroupSequenceProviderInterface
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="events" )
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="events")
      */
     private $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="shows")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="shows", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $organiser;
 
@@ -81,7 +82,8 @@ class Event implements GroupSequenceProviderInterface
     protected $typeVenue;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Venue", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="Venue", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\JoinColumn(nullable=true)
      * @Assert\NotBlank(groups={"subscribed"}, message="Cette valeur ne peut être vide")
      */
@@ -106,9 +108,8 @@ class Event implements GroupSequenceProviderInterface
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="UnsubscribedBand", mappedBy="event", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UnsubscribedBand", mappedBy="event", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
-     * @Assert\NotBlank(message="cette valeur ne peut être vide")
      */
     private $unsubscribedBands;
 
@@ -133,6 +134,12 @@ class Event implements GroupSequenceProviderInterface
      * @ORM\Column(type="boolean")
      */
     private $active;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ticket", mappedBy="event")
+     */
+    private $tickets;
+
 
     public function __construct()
     {
@@ -387,7 +394,7 @@ class Event implements GroupSequenceProviderInterface
         if ($this->unsubscribedBands->contains($unsubscribedBand)) {
             $this->unsubscribedBands->removeElement($unsubscribedBand);
         }
-        return $this->getName();
+        return $this->unsubscribedBands;
     }
 
 
@@ -481,6 +488,23 @@ class Event implements GroupSequenceProviderInterface
     {
         $this->active = $active;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    /**
+     * @param mixed $tickets
+     */
+    public function setTickets($tickets)
+    {
+        $this->tickets = $tickets;
+    }
+
 
 
 

@@ -1,0 +1,25 @@
+{% extends "pages/admin/layout.html.twig" %}
+
+{% block right %}
+
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        {{ form_start(userForm, {attr:{novalidate:'novalidate'}}) }}
+        <div class="profile-edit-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>Ban User</h4>
+            </div>
+
+            <div class="custom-form">
+                {{ form_row(userForm.valid, {'label':'Voulez-vous bannir ce compte ?', 'attr':{'class':'js-example-basic-single fullwidth'}}) }}
+
+                <button class="btn  big-btn  color-bg flat-btn">Kill him<i
+                            class="fa fa-angle-right"></i></button>
+            </div>
+        </div>
+        {{ form_widget(userForm._token) }}
+        {{ form_end(userForm, {'render_rest':false}) }}
+
+    </div>
+
+{% endblock %}

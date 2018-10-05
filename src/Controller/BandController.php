@@ -14,8 +14,11 @@ use App\Entity\Event;
 use App\Entity\Image;
 use App\Form\BandType;
 use App\Form\MediaBandType;
+use App\Form\RemoveBandType;
 use App\Service\FileUploader;
+use App\Service\Mailer;
 use App\Service\YoutubeAPI;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -95,12 +98,11 @@ class BandController extends Controller
 
     /**
      * @param Request $request
-     * @param FileUploader $fileUploader
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("bands/update/{id}", name="bands-update")
      */
-    public function updateBand(Request $request, FileUploader $fileUploader, $id)
+    public function updateBand(Request $request, $id)
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -108,6 +110,8 @@ class BandController extends Controller
         $doctrine = $this->getDoctrine();
         $repo = $doctrine->getRepository(Band::class);
         $band = $repo->findOneById($id);
+
+        $active = $band->getActive();
 
         $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($id);
 
@@ -133,12 +137,16 @@ class BandController extends Controller
             $this->addFlash('success', 'Modification effectuée avec succès');
         }
 
-        if (in_array($user_id, $member_id)) {
-            return $this->render('pages/bands/update.html.twig', [
-                'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
-            ]);
-        }
+        if ($active === true) {
 
+            if (in_array($user_id, $member_id)) {
+                return $this->render('pages/bands/update.html.twig', [
+                    'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
+                ]);
+            }
+        } else {
+            return $this->redirectToRoute('homepage');
+        }
     }
 
 
@@ -237,6 +245,79 @@ class BandController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/bands/remove/{id}", name="bands-remove")
+     */
+    public function removeBand(Request $request, $id, Mailer $mailer)
+    {
+
+        $doctrine = $this->getDoctrine();
+
+        $band = $doctrine->getRepository(Band::class)->findOneById($id);
+        $active = $band->getActive();
+        $members = $band->getMembers();
+        $user = $this->getUser();
+        $user_id = $user->getId();
+
+        foreach ($members as $member) {
+            $member_id[] = $member->getId();
+        }
+
+        $form = $this->createForm(RemoveBandType::class, $band, ['method' => 'POST']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($band);
+            $em->flush();
+
+            $active = $band->getActive();
+
+
+            //si actif est désactivé par l'utilisateur -> suppression du groupe
+            if ($active === false) {
+
+                $this->addFlash('success', 'Le groupe ' . $band->getName() . ' a été supprimé');
+
+                foreach ($members as $member){
+
+                    $mail = $member->getEmail();
+                    $subject = 'Suppression de votre groupe';
+                    $body = $this->renderView('pages/bands/cancellation-mail.html.twig',
+                        array('user'=>$member, 'band'=>$band));
+
+                    $mailer->sendMail($mail, $subject,$body);
+
+
+                }
+
+
+            }
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        if($active === true) {
+
+            if (in_array($user_id, $member_id)) {
+                return $this->render('pages/bands/remove.html.twig', [
+                    'removeBandForm' => $form->createView(), 'id' => $id, 'band' => $band,
+                ]);
+            }
+        } else{
+            $this->addFlash('danger', 'ce groupe n\'est plus inscrit sur le site');
+            return $this->redirectToRoute('homepage');
+
+        }
+    }
+
+
     /** AFFICHE LA PAGE DU GROUPE
      *
      * @param $slug
@@ -247,6 +328,9 @@ class BandController extends Controller
     {
         $doctrine = $this->getDoctrine();
         $band = $doctrine->getRepository(Band::class)->findOneBy(['slug' => $slug]);
+
+        $active = $band->getActive();
+
         $videoplaylist = $band->getVideoPlaylist();
         $audioplaylist = $band->getAudioPlaylist();
 
@@ -292,7 +376,14 @@ class BandController extends Controller
                 }
             }
         }
-        return $this->render('pages/bands/band.html.twig', ['band' => $band, 'videos' => $videos, 'audio' => $audio, 'favorite' => $favorite, 'events' => $events]);
+
+        if ($active === true) {
+            return $this->render('pages/bands/band.html.twig', ['band' => $band, 'videos' => $videos, 'audio' => $audio, 'favorite' => $favorite, 'events' => $events]);
+        }else{
+            $this->addFlash('danger', 'Ce groupe n\'est plus enregistré sur ce site');
+            return $this->redirectToRoute('homepage');
+        }
+
     }
 
 

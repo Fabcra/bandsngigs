@@ -26,12 +26,6 @@ class VenueType extends AbstractType
             ->add('photo', ImageType::class)
             ->add('videoPlaylist', null, [
                 'label' => 'Url Youtube Playlist'
-            ])
-            ->add('active', ChoiceType::class, [
-                'choices' => [
-                    'yes' => true,
-                    'no' => false
-                ]
             ]);
     }
 

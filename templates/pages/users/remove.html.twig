@@ -1,0 +1,24 @@
+{% extends "pages/users/layout.html.twig" %}
+
+{% block right %}
+
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        {{ form_start(userForm, {attr:{novalidate:'novalidate'}}) }}
+        <div class="profile-edit-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>My Account</h4>
+            </div>
+
+            <div class="custom-form">
+                {{ form_row(userForm.valid, {'label':'Voulez-vous supprimer votre compte définitivement ?', 'attr':{'class':'js-example-basic-single fullwidth'}}) }}
+                <button class="btn  big-btn  color-bg flat-btn">Adieu<i
+                            class="fa fa-angle-right"></i></button>
+            </div>
+        </div>
+        {{ form_widget(userForm._token) }}
+        {{ form_end(userForm, {'render_rest':false}) }}
+
+    </div>
+
+{% endblock %}

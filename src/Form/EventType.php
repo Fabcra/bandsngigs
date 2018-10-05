@@ -80,12 +80,7 @@ class EventType extends AbstractType
             ])
             ->add('styles')
             ->add('flyer', ImageType::class)
-            ->add('active', ChoiceType::class, [
-                'choices'=>[
-                    'yes'=>true,
-                    'no'=>false
-                ]
-            ])
+
         ;
     }
 

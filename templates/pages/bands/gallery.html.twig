@@ -39,25 +39,7 @@
     {{ parent() }}
 
 
-    <script>
-        jQuery(document).ready(function () {
-            $('.js-remove-image-gallery').on('click', function (e) {
-                e.preventDefault();
+    <script src="{{ asset('js/manage_gallery.js') }}" type="text/javascript"></script>
 
-                var $el = $(this).closest('.js-gallery-item');
-
-                $(this).find('.fa-close')
-                    .removeClass('fa-close')
-
-                $.ajax({
-                    url: $(this).data('url'),
-                    method: 'DELETE'
-                }).done(function () {
-                    $el.fadeOut();
-                })
-            });
-
-        });
-    </script>
 
 {% endblock %}

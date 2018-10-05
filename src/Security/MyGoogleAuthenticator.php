@@ -63,6 +63,19 @@ class MyGoogleAuthenticator extends SocialAuthenticator
         $user = $this->em->getRepository(User::class)
             ->findOneBy(['email' => $email]);
         if ($user) {
+
+            // si l'utilisateur a déjà été insrit et souhaite se réinscrire, réactiver son compte
+            $valid = $user->getValid();
+
+            if($valid === false){
+                $user->setConfidentiality(false);
+                $user->setvalid(true);
+
+                $this->em->persist($user);
+                $this->em->flush();
+
+            }
+
             return $user;
         } else {
 

@@ -1,0 +1,38 @@
+{% extends 'pages/admin/layout.html.twig' %}
+
+{% block right %}
+    <div class="col-md-9">
+    <!--  section  -->
+    <section class="gray-bg no-pading no-top-padding" id="sec1">
+        <div class="col-list-wrap  center-col-list-wrap left-list">
+
+            <div class="container">
+
+                <!-- list-main-wrap-->
+                <div class="list-main-wrap fl-wrap card-listing">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Admin bands</h2>
+                            <div class="section-subtitle">Admin Bands</div>
+                            <span class="section-separator"></span>
+                            <p>Admin all bands</p>
+                        </div>
+                    </div>
+
+
+                    {% include 'pages/admin/bands/list.html.twig' %}
+                    <!-- listing-item end-->
+
+                    <!-- pagination-->
+                    <div class="pagination">
+                        {{ knp_pagination_render(bands) }}
+                    </div>
+                </div>
+                <!-- list-main-wrap end-->
+            </div>
+        </div>
+    </section>
+    <!--  section  end-->
+    </div>
+{% endblock %}
+

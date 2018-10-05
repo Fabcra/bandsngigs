@@ -20,6 +20,9 @@
 
                     <li><a href="{{ path('bands-medias', {'id' : band.id }) }}"><i class="fa fa-users"></i> Manage Media
                         </a></li>
+
+                    <li><a href="{{ path('bands-remove', {'id' : band.id }) }}"><i class="fa fa-users"></i> Remove Band
+                        </a></li>
                 </ul>
             </div>
             <a href="{{ path('logout') }}" class="log-out-btn">Log Out</a>

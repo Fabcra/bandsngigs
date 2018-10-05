@@ -30,11 +30,18 @@ class DefaultController extends Controller
         $lastvenues = $doctrine->getRepository(Venue::class)->findVenuesWithPhoto();
         $events = $doctrine->getRepository(Event::class)->findEventsWithFlyer();
         $styles = $doctrine->getRepository(Style::class)->findAll();
-        $venues=$doctrine->getRepository(Venue::class)->findActiveVenues();
+        $venues = $doctrine->getRepository(Venue::class)->findActiveVenues();
 
         $user = $this->getUser();
 
         if ($user) {
+
+            $valid = $user->getValid();
+
+            if ($valid === false) {
+               return $this->redirectToRoute('logout');
+            }
+
             $confidentiality = $user->getConfidentiality();
 
             if ($confidentiality == 0) {

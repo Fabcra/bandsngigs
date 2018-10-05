@@ -112,7 +112,7 @@ class Band
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="UnscribedMember", mappedBy="band", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UnscribedMember", mappedBy="band", cascade={"persist"}, orphanRemoval=true      )
      */
     private $unscribedMembers;
 
@@ -411,6 +411,19 @@ class Band
     {
         $this->unscribedMembers = $unscribedMembers;
 
+    }
+
+    /**
+     * @param User $member
+     * @return ArrayCollection
+     */
+    public function removeMember(User $member){
+
+        if ($this->members->contains($member)){
+            $this->members->removeElement($member);
+        }
+
+        return $this->members;
     }
 
 

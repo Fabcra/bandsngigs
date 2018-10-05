@@ -1,4 +1,3 @@
-
                 <!-- listing-item -->
                 {% for v in venues %}
                     <div class="listing-item list-layout">
@@ -37,7 +36,7 @@
                                     <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
                                         <span>(7 reviews)</span>
                                     </div>
-                                    <div class="geodir-category-location"><a href="#"><i class="fa fa-map-marker"
+                                    <div class="geodir-category-location"><a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ v.streetName }},{{ v.houseNb }} {{ v.locality.locality }}" target="_blank"><i class="fa fa-map-marker"
                                                                                          aria-hidden="true"></i>{{ v.streetName }}
                                             , {{ v.houseNb }}-{{ v.locality.locality }}</a></div>
                                 </div>

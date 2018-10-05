@@ -13,8 +13,10 @@ use App\Entity\Event;
 use App\Entity\Image;
 use App\Entity\Locality;
 use App\Entity\Venue;
+use App\Form\RemoveVenueType;
 use App\Form\VenueType;
 use App\Service\FileUploader;
+use App\Service\Mailer;
 use App\Service\MapLocation;
 use App\Service\YoutubeAPI;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,7 +27,6 @@ use Symfony\Component\HttpFoundation\Request;
 class VenueController extends Controller
 {
 
-    // private static $apikey = "AIzaSyA-nXEJ0eim6B9-G3B9GQLUnLsNxrs9A7g";
 
     /** CREER UN NOUVEAU CAFE-CONCERT
      * @param Request $request
@@ -60,13 +61,6 @@ class VenueController extends Controller
             $fulladdress = $streetname . "+" . $housenb . "+" . $localityname;
             $address = str_replace(" ", "+", $fulladdress);
 
-
-            /*  $json = file_get_contents("https://maps.google.com/maps/api/geocode/json?key=".self::$apikey."&address=$address");
-
-              $json = json_decode($json);
-
-
-              $res = $json->results[0];*/
 
             $res = $mapLocation->getPosition($address);
 
@@ -145,6 +139,7 @@ class VenueController extends Controller
         $doctrine = $this->getDoctrine();
         $venues = $doctrine->getRepository(Venue::class)->findVenuesByUser($id);
 
+
         //pagination
         $paginator = $this->get('knp_paginator');
 
@@ -175,6 +170,8 @@ class VenueController extends Controller
         $doctrine = $this->getDoctrine();
         $venue = $doctrine->getRepository(Venue::class)->findOneById($id);
 
+        $active = $venue->getActive();
+
         $gallery = $doctrine->getRepository(Image::class)->findImagesByVenue($id);
 
         $managers = $venue->getManagers();
@@ -200,13 +197,22 @@ class VenueController extends Controller
             $this->addFlash('success', 'Modification effectuée avec succès');
         }
 
-        if (in_array($user_id, $manager_id)) {
-            return $this->render('pages/venues/update.html.twig', [
-                'venueForm' => $form->createView(), 'id' => $id, 'venue' => $venue, 'gallery' => $gallery
-            ]);
+        if ($active === true) {
+
+            if (in_array($user_id, $manager_id)) {
+                return $this->render('pages/venues/update.html.twig', [
+                    'venueForm' => $form->createView(), 'id' => $id, 'venue' => $venue, 'gallery' => $gallery
+                ]);
+            } else {
+                $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                return $this->redirectToRoute('homepage');
+            }
         } else {
-            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+            $this->addFlash('danger', 'Ce café-concert n\'est plus enregistré');
+
             return $this->redirectToRoute('homepage');
+
+
         }
     }
 
@@ -225,24 +231,94 @@ class VenueController extends Controller
             $user_id = $user->getId();
             $venues = $doctrine->getRepository(Venue::class)->findFavoritesVenuesByUser($user_id);
 
-          if ($venues) {
+            if ($venues) {
 
-                  $paginator = $this->get('knp_paginator');
-                  $pagination = $paginator->paginate(
-                      $venues,
-                      $request->query->getInt('page', 1),
-                      $request->query->getInt('limit', 3)
-                  );
+                $paginator = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                    $venues,
+                    $request->query->getInt('page', 1),
+                    $request->query->getInt('limit', 3)
+                );
 
 
-          } else {
-              $pagination = null;
-          }
+            } else {
+                $pagination = null;
+            }
 
             return $this->render('pages/venues/favorites.html.twig', [
                 'venues' => $pagination, 'events' => null
             ]);
 
+        }
+    }
+
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/venues/remove/{id}", name="remove-venues")
+     */
+    public function removeVenue(Request $request, $id, Mailer $mailer)
+    {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $doctrine = $this->getDoctrine();
+        $venue = $doctrine->getRepository(Venue::class)->findOneById($id);
+        $user = $this->getUser();
+        $user_id = $user->getId();
+        $managers = $venue->getManagers();
+        $active = $venue->getActive();
+
+        foreach ($managers as $manager) {
+            $manager_id[] = $manager->getId();
+        }
+
+        $form = $this->createForm(RemoveVenueType::class, $venue, ['method' => 'POST']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($venue);
+            $em->flush();
+
+            $active = $venue->getActive();
+
+            if ($active === false) {
+                $this->addFlash('success', 'Vous avez supprimé le café-concert ' . $venue->getName());
+
+                foreach ($managers as $manager) {
+
+                    $mail = $manager->getEmail();
+                    $subject = 'Suppression de votre café-concert';
+
+                    $body = $this->renderView('pages/venues/cancellation-mail.html.twig', array('user'=>$manager, 'venue'=>$venue));
+
+                    $mailer->sendMail($mail,$subject,$body);
+
+                }
+
+            }
+            return $this->redirectToRoute('homepage');
+        }
+
+        if ($active === true) {
+
+            if (in_array($user_id, $manager_id)) {
+                return $this->render('pages/venues/remove.html.twig', [
+                    'removeVenueForm' => $form->createView(), 'id' => $id, 'venue' => $venue
+                ]);
+            } else {
+                $this->addFlash('danger', 'Vous n\'êtes pas autorisé à modifier cet élément');
+                return $this->redirectToRoute('homepage');
+            }
+        } else {
+            $this->addFlash('danger', 'Ce café-concert a déjà été supprimé');
+            return $this->redirectToRoute('homepage');
         }
     }
 
@@ -262,6 +338,7 @@ class VenueController extends Controller
 
         $events = $doctrine->getRepository(Event::class)->findEventsByVenue($venue_id);
 
+        $active = $venue->getActive();
 
 
         $favorite = 'unliked';
@@ -295,9 +372,17 @@ class VenueController extends Controller
 
         }
 
-        return $this->render('pages/venues/venue.html.twig', [
-            'venue' => $venue, 'videos' => $videos, 'favorite' => $favorite, 'events'=>$events
-        ]);
+
+        if ($active === true) {
+
+            return $this->render('pages/venues/venue.html.twig', [
+                'venue' => $venue, 'videos' => $videos, 'favorite' => $favorite, 'events' => $events
+            ]);
+        } else {
+            $this->addFlash('danger', 'ce café-concert n\'est plus enregistré sur le site');
+
+            return $this->redirectToRoute('homepage');
+        }
     }
 
 }

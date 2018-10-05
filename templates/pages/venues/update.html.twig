@@ -49,7 +49,6 @@
             <div class="custom-form">
                 {{ form_row(venueForm.description) }}
                 {{ form_row(venueForm.videoPlaylist) }}
-                {{ form_row(venueForm.active, {'attr':{'class':'js-example-basic-single fullwidth'}}) }}
             </div>
 
 
@@ -68,7 +67,7 @@
 
     <div class="col-md-2">
         <div class="edit-profile-photo fl-wrap">
-            <img src="{{ venue.photo.url }}" class="respimg" alt="">
+            <img src="{{ venue.photo.url }}" class="respimg" alt="{{ venue.name }}">
         </div>
 
     </div>

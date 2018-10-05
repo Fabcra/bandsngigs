@@ -85,7 +85,8 @@ class EventRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('event')
             ->leftJoin('event.organiser', 'organiser')
             ->andWhere('organiser.id like :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->andWhere('event.active = true');
 
         return $qb
             ->getQuery()
@@ -99,8 +100,8 @@ class EventRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('event')
             ->leftJoin('event.favUsers', 'favUsers')
             ->andWhere('favUsers.id like :id')
-            ->andWhere('event.active = true')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->andWhere('event.date >= CURRENT_DATE()');
 
         return $qb
             ->getQuery()
@@ -135,7 +136,8 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('venue_id', $venue_id)
             ->leftJoin('venue.favUsers', 'favusers')
             ->andWhere('favusers.id like :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->andWhere('event.date >= CURRENT_DATE()');
 
 
         return $qb
@@ -152,7 +154,6 @@ class EventRepository extends ServiceEntityRepository
             ->leftJoin('event.venue', 'v')
             ->andWhere('b.id like :id')
             ->setParameter('id', $id)
-            ->andWhere('event.active = true')
             ->andWhere('b.active = true')
             ->andWhere('v.active = true')
             ->andWhere('event.date >= CURRENT_DATE()');
@@ -179,6 +180,8 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
 
 
 }

@@ -21,6 +21,9 @@
                     <p>You can add unsubscribed bands in the website on in this event</p>
                     <ul class="members"
                         data-prototype="{{ form_row(eventForm.unsubscribedBands.vars.prototype)|e }}">
+                        {% for b in eventForm.unsubscribedBands %}
+                        <li>{{ form_row(b.name) }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="col-md-6 check-user floatleft marginbottom20">
@@ -45,10 +48,6 @@
                 <section>
                     {{ form_row(eventForm.price, {'attr':{'class': 'floatleft', 'label':'Price'}}) }}
                 </section>
-
-                <div class="custom-form">
-                    {{ form_row(eventForm.active, {'attr':{'class':'js-example-basic-single fullwidth'}}) }}
-                </div>
 
                 <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
                             class="fa fa-angle-right"></i></button>
@@ -86,5 +85,8 @@
     <script src="{{ asset('js/addmember.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/addmemberForm.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/deletemember.js') }}" type="text/javascript"></script>
+
+
+
 
 {% endblock %}

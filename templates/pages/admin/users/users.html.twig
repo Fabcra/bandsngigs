@@ -1,0 +1,45 @@
+{% extends "pages/admin/layout.html.twig" %}
+
+{% block right %}
+    <div class="col-md-6">
+        <!--box-widget-item -->
+        <div class="box-widget-item fl-wrap">
+            <div class="box-widget-item-header">
+                <h3>List of Users : </h3>
+            </div>
+            <div class="box-widget widget-posts">
+                <div class="box-widget-content">
+                    <ul>
+                        {% for u in users %}
+                            <li class="clearfix">
+                                <a href="{{ path('user',{'id':u.id}) }}" class="widget-posts-img"><img
+                                            src="{{ u.avatar.url }}" alt="{{ u.firstName }}"></a>
+                                <div class="widget-posts-descr">
+                                    <a href="{{ path('user',{'id':u.id}) }}">{{ u.firstName }} {{ u.lastName }}</a>
+                                    {% if u.valid == false %}
+                                        <span class="alert-danger">DELETED</span>
+                                    {% endif %}
+                                </div>
+                                <a href="{{ path('admin-users-profile', {'id':u.id}) }}">
+                                    <button class="btn color-bg flat-btn margintop20">Modif</button>
+                                </a>
+                                <a href="{{ path('admin-user-ban', {'id':u.id}) }}">
+                                    <button class="btn color-bg flat-btn margintop20">Bannir</button>
+                                </a>
+                                <a href="{{ path('admin-roles', {'id':u.id}) }}">
+                                    <button class="btn color-bg flat-btn margintop20">Roles</button>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- pagination-->
+                    <div class="pagination">
+                        {{ knp_pagination_render(users) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--box-widget-item end -->
+    </div>
+
+{% endblock %}

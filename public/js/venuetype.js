@@ -1,3 +1,4 @@
+// SCRIPT POUR AFFICHER SOIT LA VENUE NON-INSCRITE SOIT LA VENUE INSCRITE
 $("document").ready(function () {
 
     if($(".js-venuetype").val()==='1'){

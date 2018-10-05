@@ -1,0 +1,47 @@
+{% extends "pages/admin/layout.html.twig" %}
+
+
+{% block right %}
+    {{ form_start(bandForm) }}
+
+    <div class="col-md-7">
+
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container add-list-container">
+            <div class="profile-edit-header fl-wrap">
+                <button type="submit" class="btn color-bg flat-btn floatright">Save Changes<i
+                            class="fa fa-angle-right"></i>
+                </button>
+                <h4>Basic Informations</h4>
+            </div>
+            <div class="custom-form">
+                {{ form_row(bandForm.name) }}
+                {{ form_row(bandForm.locality, {'attr':{'class':'js-example-basic-single'}}) }}
+                {{ form_row(bandForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
+                {{ form_row(bandForm.mail) }}
+                {{ form_row(bandForm.phone) }}
+                {{ form_row(bandForm.website) }}
+                {{ form_row(bandForm.description) }}
+                {{ form_row(bandForm.members, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
+                {{ form_row(bandForm.videoPlaylist) }}
+                {{ form_row(bandForm.audioPlaylist) }}
+                {{ form_row(bandForm.active, {'label':'Voulez-vous supprimer ce groupe ?', 'attr':{'class':'custom-form'}}) }}
+
+            </div>
+
+        </div>
+
+        {{ form_end(bandForm) }}
+
+
+    </div>
+    <div class="col-md-2">
+        <div class="edit-profile-photo fl-wrap">
+            <img src="{{ band.logo.url }}" class="respimg" alt="">
+        </div>
+        <a href="{{ path('admin-bands-gallery', {'id':id}) }}" class="btn transparent-btn float-btn custom-scroll-link">Gallery <i class="fa fa-image"></i></a>
+
+
+    </div>
+{% endblock %}
+

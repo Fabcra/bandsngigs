@@ -28,7 +28,7 @@ class Venue
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=255)
      * @Assert\Type("string")
      */
     private $description;
@@ -251,6 +251,14 @@ class Venue
     }
 
 
+    public function removeManager(User $manager){
+
+        if ($this->managers->contains($manager)){
+            $this->managers->removeElement($manager);
+        }
+
+        return $this->managers;
+    }
     /**
      * @return mixed
      */

@@ -1,0 +1,25 @@
+{% extends "pages/admin/layout.html.twig" %}
+
+{% block right %}
+
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        {{ form_start(roleForm, {attr:{novalidate:'novalidate'}}) }}
+        <div class="profile-edit-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>Roles</h4>
+            </div>
+
+            <div class="roles">
+                {{ form_row(roleForm.roles, {'attr':{'class':'floatleft'}}) }}
+
+                <button class="btn  big-btn  color-bg flat-btn">Save<i
+                            class="fa fa-angle-right"></i></button>
+            </div>
+        </div>
+        {{ form_widget(roleForm._token) }}
+        {{ form_end(roleForm, {'render_rest':false}) }}
+
+    </div>
+
+{% endblock %}

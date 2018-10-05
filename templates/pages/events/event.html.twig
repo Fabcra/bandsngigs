@@ -15,7 +15,7 @@
                     <div class="list-single-header-item">
                         <h2>{{ event.name }} <span> - in </span>
                             {% if event.venue %}
-                            <a href="{{ path('venue', {'slug':event.venue.slug}) }}">{{ event.venue.name }}</a>
+                                <a href="{{ path('venue', {'slug':event.venue.slug}) }}">{{ event.venue.name }}</a>
                             {% else %}
                                 <span>{{ event.unsubscribedVenue.name }}</span>
                             {% endif %}
@@ -41,20 +41,22 @@
                                 <div class="list-single-header-contacts fl-wrap">
                                     <ul>
                                         {% if event.venue %}
-                                        <li><i class="fa fa-phone"></i>
-                                            <a href="tel:{{ event.venue.phone }}">{{ event.venue.phone }}</a></li>
+                                            <li><i class="fa fa-phone"></i>
+                                                <a href="tel:{{ event.venue.phone }}">{{ event.venue.phone }}</a></li>
 
-                                        <li><i class="fa fa-map-marker"></i><a
-                                                    href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.venue.streetName }}, {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}"
-                                                    target="_blank">{{ event.venue.streetName }}
-                                                , {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}</a>
-                                        </li>
-                                            {% else %}
-                                                <li><i class="fa fa-map-marker"></i><a
-                                                            href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.unsubscribedVenue.streetName }}, {{ event.unsubscribedVenue.houseNb }} - {{ event.unsubscribedVenue.locality.locality }}"
-                                                            target="_blank">{{ event.unsubscribedVenue.streetName }}
-                                                        , {{ event.unsubscribedVenue.houseNb }} - {{ event.unsubscribedVenue.locality.locality }}</a>
-                                                </li>
+                                            <li><i class="fa fa-map-marker"></i><a
+                                                        href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.venue.streetName }}, {{ event.venue.houseNb }} - {{ event.venue.locality.locality }}"
+                                                        target="_blank">{{ event.venue.streetName }}
+                                                    , {{ event.venue.houseNb }}
+                                                    - {{ event.venue.locality.locality }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li><i class="fa fa-map-marker"></i><a
+                                                        href="http://maps.google.fr/maps?f=q&hl=fr&q={{ event.unsubscribedVenue.streetName }}, {{ event.unsubscribedVenue.houseNb }} - {{ event.unsubscribedVenue.locality.locality }}"
+                                                        target="_blank">{{ event.unsubscribedVenue.streetName }}
+                                                    , {{ event.unsubscribedVenue.houseNb }}
+                                                    - {{ event.unsubscribedVenue.locality.locality }}</a>
+                                            </li>
                                         {% endif %}
 
                                     </ul>
@@ -135,6 +137,27 @@
                                         <!-- team-item  end-->
                                     {% endfor %}
                                 </div>
+                                {% if event.unsubscribedBands %}
+                                    <div class="team-holder fl-wrap">
+                                        {% for u in event.unsubscribedBands %}
+                                            <!-- team-item -->
+                                            <div class="team-box">
+                                                <div class="team-photo">
+                                                    <img src="/images/avatar/avatar-bg.png" alt="{{ u.name }}"
+                                                         class="respimg">
+                                                </div>
+                                                <div class="team-info">
+                                                    <h3>{{ u.name }}</h3>
+                                                    {% for s in u.styles %}
+                                                        <h4>{{ s.style }}</h4>
+                                                    {% endfor %}
+
+                                                </div>
+                                            </div>
+                                            <!-- team-item  end-->
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <!-- list-single-main-item end -->
 
@@ -144,69 +167,74 @@
                     <div class="col-md-4">
                         <div class="box-widget-wrap">
                             <!--box-widget-item -->
-                            {% if app.user %}
-                                <div class="box-widget-item fl-wrap">
-                                    <div class="box-widget-item-header">
-                                        <h3>Order your spot : </h3>
-                                    </div>
-                                    <div class="box-widget opening-hours">
-
-                                        <div class="box-widget-content">
-                                            <form action="{{ path('ticket-new', {'event_id':event.id}) }}"
-                                                  class="add-comment custom-form">
-
-                                                <fieldset>
-                                                    <label><i class="fa fa-user-o"></i></label>
-                                                    <input type="text" placeholder="{{ app.user.fullName }}" disabled="disabled" value=""/>
-                                                    <div class="clearfix"></div>
-                                                    <label><i class="fa fa-envelope-o"></i> </label>
-                                                    <input type="text" placeholder="{{ app.user.email }}" disabled="disabled" value=""/>
-                                                    <div class="quantity fl-wrap">
-                                                        <span><i class="fa fa-user-plus"></i>Persons : </span>
-                                                        <div class="quantity-item">
-                                                            <input type="button" value="-" class="minus">
-                                                            <input type="text" name="quantity" title="Qty" class="qty"
-                                                                   step="1" value="1">
-                                                            <input type="button" value="+" class="plus">
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <button class="btn  big-btn  color-bg flat-btn">Book Now<i
-                                                            class="fa fa-angle-right"></i></button>
-                                            </form>
+                            {% if event.active == true %}
+                                {% if app.user %}
+                                    <div class="box-widget-item fl-wrap">
+                                        <div class="box-widget-item-header">
+                                            <h3>Order your spot : </h3>
                                         </div>
+                                        <div class="box-widget opening-hours">
 
+                                            <div class="box-widget-content">
+                                                <form action="{{ path('ticket-new', {'event_id':event.id}) }}"
+                                                      class="add-comment custom-form">
+
+                                                    <fieldset>
+                                                        <label><i class="fa fa-user-o"></i></label>
+                                                        <input type="text" placeholder="{{ app.user.fullName }}"
+                                                               disabled="disabled" value=""/>
+                                                        <div class="clearfix"></div>
+                                                        <label><i class="fa fa-envelope-o"></i> </label>
+                                                        <input type="text" placeholder="{{ app.user.email }}"
+                                                               disabled="disabled" value=""/>
+                                                        <div class="quantity fl-wrap">
+                                                            <span><i class="fa fa-user-plus"></i>Persons : </span>
+                                                            <div class="quantity-item">
+                                                                <input type="button" value="-" class="minus">
+                                                                <input type="text" name="quantity" title="Qty"
+                                                                       class="qty"
+                                                                       step="1" value="1">
+                                                                <input type="button" value="+" class="plus">
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+
+                                                    <button class="btn  big-btn  color-bg flat-btn">Book Now<i
+                                                                class="fa fa-angle-right"></i></button>
+                                                </form>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             {% endif %}
                             <!--box-widget-item end -->
 
                             <!--box-widget-item -->
                             {% if events %}
-                            <div class="box-widget-item fl-wrap">
-                                <div class="box-widget-item-header">
-                                    <h3>More events from this venue : </h3>
-                                </div>
-                                <div class="box-widget widget-posts">
-                                    <div class="box-widget-content">
-                                        <ul>
-                                            {% for e in events %}
-                                                <li class="clearfix">
-                                                    <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                       class="widget-posts-img"><img src="{{ e.flyer.url }}" alt=""></a>
-                                                    <div class="widget-posts-descr">
+                                <div class="box-widget-item fl-wrap">
+                                    <div class="box-widget-item-header">
+                                        <h3>More events from this venue : </h3>
+                                    </div>
+                                    <div class="box-widget widget-posts">
+                                        <div class="box-widget-content">
+                                            <ul>
+                                                {% for e in events %}
+                                                    <li class="clearfix">
                                                         <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                           title="">{{ e.name }}</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i>{{ e.date|date("d/m/Y") }} </span>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
+                                                           class="widget-posts-img"><img src="{{ e.flyer.url }}" alt=""></a>
+                                                        <div class="widget-posts-descr">
+                                                            <a href="{{ path('event', {'slug':e.slug}) }}"
+                                                               title="">{{ e.name }}</a>
+                                                            <span class="widget-posts-date"><i
+                                                                        class="fa fa-calendar-check-o"></i>{{ e.date|date("d/m/Y") }} </span>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             {% endif %}
                             <!--box-widget-item end -->
                         </div>

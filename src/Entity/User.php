@@ -50,8 +50,6 @@ class User implements UserInterface, \Serializable
     private $fullName;
 
 
-
-
     /**
      *
      * @ORM\Column(type="integer", nullable=true, length=3)
@@ -182,6 +180,11 @@ class User implements UserInterface, \Serializable
      */
     private $favEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Ticket", mappedBy="spectator")
+     */
+    private $tickets;
+
     public function __construct()
     {
         $this->instruments = new ArrayCollection();
@@ -201,7 +204,6 @@ class User implements UserInterface, \Serializable
 
         return $roles;
     }
-
     /**
      * @param mixed $roles
      */
@@ -711,5 +713,22 @@ class User implements UserInterface, \Serializable
         $this->favEvents->removeElement($event);
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    /**
+     * @param mixed $tickets
+     */
+    public function setTickets($tickets)
+    {
+        $this->tickets = $tickets;
+    }
+
 
 }

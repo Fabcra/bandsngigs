@@ -20,9 +20,7 @@
                     <div class="grid-item-holder">
                         <div class="listing-item-grid">
                             <img src="{{ v.photo.url }}" alt="{{ v.name }}">
-                            {% for s in v.styles %}
-                                <div class="listing-counter">{{ s.style }}</div>
-                            {% endfor %}
+
                             <div class="listing-item-cat">
                                 <h3><a href="{{ path('venue', {'slug':v.slug}) }}">{{ v.name }}</a></h3>
                                 <p>{{ v.description }}</p>

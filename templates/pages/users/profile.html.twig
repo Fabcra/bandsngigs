@@ -48,7 +48,9 @@
 
 
                                 <!-- profile-edit-container end-->
-                                {{ form_end(userForm) }}
+                                {{ form_widget(userForm._token) }}
+                                {{ form_end(userForm, {'render_rest':false}) }}
+
                             </div>
                             <div class="col-md-2">
                                 <div class="edit-profile-photo fl-wrap">

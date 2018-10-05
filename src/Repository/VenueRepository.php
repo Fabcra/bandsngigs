@@ -46,7 +46,8 @@ class VenueRepository extends ServiceEntityRepository
 
         $qb->leftJoin('venue.managers', 'managers')
             ->andWhere('managers.id like :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->andWhere('venue.active = true');
 
         return $qb
             ->getQuery()

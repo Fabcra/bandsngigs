@@ -6,6 +6,7 @@
 
                 <article class="card-post">
 
+
                     <div class="card-post-img fl-wrap event-image">
 
                         <a href="{{ path('event',{'slug':e.slug}) }}"><img src="{{ e.flyer.url }}" alt="{{ e.name }}"></a>
@@ -15,7 +16,11 @@
                     <div class="card-post-content fl-wrap">
 
 
+
                         <h3><a href="{{ path('event',{'slug':e.slug}) }}">{{ e.name }}</a></h3>
+                        {% if e.active == false %}
+                        <span class="alert alert-danger">!!!!CANCELLED!!!</span>
+                        {% endif %}
                         {% if app.user %}
                             {% if app.user.slug == e.organiser.slug %}
                                 <a class="btn update-btn color-bg flat-btn" href="{{ path('events-update', {'id':e.id}) }}">update</a>
@@ -38,7 +43,6 @@
                                 {% endfor %}
                             </ul>
                         </div>
-
                     </div>
 
                 </article>

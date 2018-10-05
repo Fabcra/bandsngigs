@@ -37,7 +37,8 @@ class BandRepository extends ServiceEntityRepository
 
         $qb->leftJoin('band.members', 'members')
             ->andWhere('members.id like :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->andWhere('band.active = true');
 
         return $qb
             ->getQuery()

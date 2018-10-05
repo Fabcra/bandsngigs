@@ -18,12 +18,12 @@ class Ticket
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tickets")
      */
     private $spectator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="tickets")
      */
     private $event;
 
@@ -149,5 +149,9 @@ class Ticket
     {
         $this->verificationNb = $verificationNb;
     }
+
+
+
+
 
 }
