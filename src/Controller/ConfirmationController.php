@@ -59,12 +59,15 @@ class ConfirmationController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
 
+                $tempuser->setToken(null);
 
-                $user->setConfidentiality(false);
+                $em->persist($tempuser);
+                $em->flush();
+
+                $user->setConfidentiality(0);
                 $user->setValid(true);
                 $user->setRoles(['ROLE_USER']);
 
-                $em->remove($tempuser);
                 $em->persist($user);
 
                 $em->flush();

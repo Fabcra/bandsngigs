@@ -35,7 +35,7 @@ class EventType extends AbstractType
             ->add('bands', EntityType::class, [
                 'multiple' => true,
                 'class' => Band::class,
-                'label' => 'add subscribed bands',
+                'label' => 'Sélectionniez des groupes inscrits',
                 'attr' => array(
                     'class' => 'js-example-basic-multiple fullwidth'
                 ),
@@ -57,8 +57,8 @@ class EventType extends AbstractType
                     'class' => 'js-venuetype js-example-basic-single'
                 ],
                 'choices' => [
-                    'subscribed' => 1,
-                    'unsubscribed' => 2,
+                    'inscrit' => 1,
+                    'non-inscrit' => 2,
                 ]
             ])
             ->add('venue', EntityType::class, [
@@ -67,8 +67,8 @@ class EventType extends AbstractType
                 ],
                 'multiple' => false,
                 'class' => Venue::class,
-                'label' => 'set subscribed venue',
-                'placeholder' => '--choose or fill the next form--',
+                'label' => 'sélectionnez un café-concert inscrit',
+                'placeholder' => '--sélectionner ou choisissez non-incrit--',
                 'required' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('v')
@@ -80,6 +80,12 @@ class EventType extends AbstractType
             ])
             ->add('styles')
             ->add('flyer', ImageType::class)
+            ->add('active', ChoiceType::class, [
+                'choices'=>[
+                    'Oui'=>false,
+                    'Non'=>true
+                ]
+            ])
 
         ;
     }

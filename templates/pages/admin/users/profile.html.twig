@@ -6,31 +6,31 @@
                                 {{ form_start(userForm, {attr:{novalidate:'novalidate'}}) }}
                                 <div class="profile-edit-container">
                                     <div class="profile-edit-header fl-wrap">
-                                        <h4>User Profile</h4>
+                                        <h4>Profil utilisateur</h4>
                                     </div>
 
                                     <div class="custom-form">
-                                        {{ form_row(userForm.firstName) }}
-                                        {{ form_row(userForm.lastName) }}
+                                        {{ form_row(userForm.firstName, {'label':'Prénom'}) }}
+                                        {{ form_row(userForm.lastName, {'label':'Nom'}) }}
                                         <div class="col-md-12">
                                             <div class="col-md-4">
                                                 {{ form_row(userForm.age, {'attr':{'class':'input-age floatleft fontsize14 marginbottom20'}}) }}
                                             </div>
                                             <div class="col-md-4">
-                                                {{ form_row(userForm.gender, {'attr':{'class':'floatleft fontsize14 marginbottom20'}}) }}
+                                                {{ form_row(userForm.gender, {'label':'Genre', 'attr':{'class':'floatleft fontsize14 marginbottom20'}}) }}
                                             </div>
 
                                             <div class="col-md-4">
-                                                {{ form_row(userForm.locality, {'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
+                                                {{ form_row(userForm.locality, {'label':'Localité', 'attr':{'class':'select-locality floatleft fontsize14 marginbottom20'}}) }}
                                             </div>
                                         </div>
 
-                                        {{ form_row(userForm.phone) }}
+                                        {{ form_row(userForm.phone, {'label':'Téléphone'}) }}
 
 
                                         <section class="check-user floatleft formbackground">
                                             <div class="col-md-6">
-                                                {{ form_row(userForm.instruments, {'attr':{'class':'test'}}) }}
+                                                {{ form_row(userForm.instruments) }}
                                             </div>
                                             <div class="col-md-6">
                                                 {{ form_row(userForm.styles) }}
@@ -39,7 +39,7 @@
 
 
                                         {{ form_row(userForm.description) }}
-                                        <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                        <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
                                                     class="fa fa-angle-right"></i></button>
                                     </div>
                                 </div>

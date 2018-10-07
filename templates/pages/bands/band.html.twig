@@ -88,8 +88,8 @@
 
 
                                     <div class="share-holder hid-share">
-                                        <div class="showshare"><span>Share </span><i class="fa fa-share"></i></div>
-                                        <div class="share-container  isShare"></div>
+                                        <div class="showshare"><span>Partager </span><i class="fa fa-share"></i></div>
+                                        <div class="share-container isShare"></div>
                                     </div>
                                 </div>
                             </article>
@@ -151,14 +151,13 @@
                                                 {% endfor %}
                                                 <div class="list-author-widget-contacts">
                                                     <ul>
-                                                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                        <li><span><i class="fa fa-phone"></i> Téléphone :</span> <a
                                                                     href="tel:{{ u.phone }}">{{ u.phone }}</a></li>
                                                         <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
                                                                     href="mailto:{{ u.email }}">{{ u.email }}</a></li>
                                                     </ul>
                                                 </div>
-                                                <a href="{{ path('user',{'id':u.id}) }}" class="btn transparent-btn">View
-                                                    Profile <i class="fa fa-eye"></i></a>
+                                                <a href="{{ path('user',{'id':u.id}) }}" class="btn transparent-btn">Voir l'utilisateur <i class="fa fa-eye"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +189,7 @@
                             {% if band.events is not empty %}
                                 <div class="box-widget-item fl-wrap">
                                     <div class="box-widget-item-header">
-                                        <h3>Events : </h3>
+                                        <h3>Evènements : </h3>
                                     </div>
                                     <div class="box-widget widget-posts blog-widgets">
                                         <div class="box-widget-content">

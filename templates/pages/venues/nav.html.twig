@@ -3,21 +3,21 @@
         <div class="user-profile-menu-wrap fl-wrap">
             <!-- user-profile-menu-->
             <div class="user-profile-menu">
-                <h3>Main</h3>
+                <h3>Navigation</h3>
                 <ul>
                     <li><a href="{{ path('venues-update',{'id':id}) }}" class="user-profile-act"><i
-                                    class="fa fa-user-o"></i> Edit venue</a></li>
+                                    class="fa fa-user-o"></i> Modification Café-concert</a></li>
                     {#<li><a href="dashboard-messages.html"><i class="fa fa-envelope-o"></i> Messages#}
                     {#<span>3</span></a></li>#}
-                    <li><a href="{{ path('image',{'type':'photo', 'id':venue.id}) }}"><i class="fa fa-unlock-alt"></i> Edit
+                    <li><a href="{{ path('image',{'type':'photo', 'id':venue.id}) }}"><i class="fa fa-file-image-o"></i> Modification
                             photo</a></li>
 
-                    <li><a href="{{ path('gallery-image-new', {'type':'venue', 'id':venue.id}) }}"><i class="fa fa-star"></i> Edit Gallery
+                    <li><a href="{{ path('gallery-image-new', {'type':'venue', 'id':venue.id}) }}"><i class="fa fa-image"></i> Modification Gallery
                         </a></li>
 
-                    <li><a href="{{ path('venues-members', {'id':venue.id}) }}"><i class="fa fa-users"></i> Manage Members
+                    <li><a href="{{ path('venues-members', {'id':venue.id}) }}"><i class="fa fa-users"></i> Gestion des managers
                         </a></li>
-                    <li><a href="{{ path('remove-venues', {'id':venue.id}) }}"><i class="fa fa-users"></i>  Remove Venue
+                    <li><a href="{{ path('remove-venues', {'id':venue.id}) }}"><i class="fa fa-eraser"></i> Suppression café-concert
                         </a></li>
                 </ul>
             </div>

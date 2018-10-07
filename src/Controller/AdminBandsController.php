@@ -67,7 +67,6 @@ class AdminBandsController extends Controller
         $repo = $doctrine->getRepository(Band::class);
         $band = $repo->findOneById($id);
 
-        $gallery = $doctrine->getRepository(Image::class)->findImagesByBand($id);
 
         $form = $this->createForm(AdminBandType::class, $band, ['method' => 'POST']);
 
@@ -85,7 +84,7 @@ class AdminBandsController extends Controller
 
 
         return $this->render('pages/admin/bands/update.html.twig', [
-            'bandForm' => $form->createView(), 'id' => $id, 'band' => $band, 'gallery' => $gallery
+            'bandForm' => $form->createView(), 'id' => $id, 'band' => $band,
         ]);
 
     }

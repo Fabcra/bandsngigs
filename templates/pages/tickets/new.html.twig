@@ -16,12 +16,12 @@
                                 <h3>{{ event.name }}</h3>
                             </div>
                             <div class="list-single-main-media fl-wrap">
-                                <img src="{{ event.flyer.url }}" class="respimg" alt="">
+                                <img src="{{ event.flyer.url }}" class="respimg" alt="{{ event.name }}">
                             </div>
                             <p>{{ event.description }}</p>
                             <!-- list-single-main-item -->
                             <p>
-                                WITH :
+                                AVEC :
                             </p>
                             <div class="team-holder fl-wrap">
                                 {% for b in event.bands %}
@@ -48,7 +48,7 @@
                     <div class="col-md-6">
                         <div class="list-single-main-item fl-wrap">
                             <div class="list-single-main-item-title fl-wrap">
-                                <h3>Order your spot</h3>
+                                <h3>Acheter un billet</h3>
                             </div>
                             <script src="https://js.stripe.com/v3/"></script>
                             <form method="post" id="payment-form" name="payment">
@@ -65,14 +65,14 @@
                                                value=""/>
 
                                         <div class="quantity fl-wrap">
-                                            <span><i class="fa fa-user-plus"></i>Persons : </span>
+                                            <span><i class="fa fa-user-plus"></i>Nombre de personnes : </span>
                                             {{ form_row(ticketForm.purchasedTicketsNb, {'attr':{'value':quantity, 'class':'qty qty2', 'style':'color:#000 background:#fff border-top:none border-bottom:none'}}) }}
                                         </div>
                                     </fieldset>
 
 
                                     <label for="card-element" class="marginbottom20">
-                                        <b>Credit or debit card</b>
+                                        <b>Numéro de carte de crédit</b>
                                     </label>
                                     <div id="card-element">
                                         <!-- A Stripe Element will be inserted here. -->
@@ -81,7 +81,7 @@
                                     <!-- Used to display form errors. -->
                                     <div id="card-errors" role="alert"></div>
                                 </div>
-                                    <button class="btn  big-btn  color-bg flat-btn margintop20">Submit payment<i
+                                    <button class="btn  big-btn  color-bg flat-btn margintop20">Commander<i
                                                 class="fa fa-angle-right"></i></button>
                                 {{ form_end(ticketForm) }}
                             </form>

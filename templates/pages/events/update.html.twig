@@ -8,7 +8,7 @@
         {{ form_start(eventForm, {'attr':{novalidate:'novalidate'}}) }}
         <div class="profile-edit-container">
             <div class="custom-form">
-                {{ form_row(eventForm.name) }}
+                {{ form_row(eventForm.name, {'label':'Nom'}) }}
                 <div class="col-md-6">
                     {{ form_row(eventForm.date, {'attr':{'class': 'floatleft', 'label':'Date'}}) }}
                     {{ form_row(eventForm.time, {'attr':{'class': 'floatleft', 'label':'Time'}}) }}
@@ -18,7 +18,7 @@
                     {{ form_row(eventForm.bands, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
                 </div>
                 <div class="col-md-6 check-user bigmarginright">
-                    <p>You can add unsubscribed bands in the website on in this event</p>
+                    <p>Vous pouvez ajouter des groupes non-inscrits</p>
                     <ul class="members"
                         data-prototype="{{ form_row(eventForm.unsubscribedBands.vars.prototype)|e }}">
                         {% for b in eventForm.unsubscribedBands %}
@@ -27,7 +27,7 @@
                     </ul>
                 </div>
                 <div class="col-md-6 check-user floatleft marginbottom20">
-                    {{ form_row(eventForm.typeVenue) }}
+                    {{ form_row(eventForm.typeVenue, {'label':'Type de café-concert'}) }}
                 </div>
                 <div class="col-md-6 check-user floatleft marginbottom20 js-sub-venue">
                     {{ form_row(eventForm.venue) }}
@@ -46,10 +46,10 @@
                 {{ form_row(eventForm.description) }}
 
                 <section>
-                    {{ form_row(eventForm.price, {'attr':{'class': 'floatleft', 'label':'Price'}}) }}
+                    {{ form_row(eventForm.price, {'attr':{'class': 'floatleft', 'label':'Prix'}}) }}
                 </section>
 
-                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
                             class="fa fa-angle-right"></i></button>
             </div>
         </div>

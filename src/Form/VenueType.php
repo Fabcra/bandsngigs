@@ -26,7 +26,8 @@ class VenueType extends AbstractType
             ->add('photo', ImageType::class)
             ->add('videoPlaylist', null, [
                 'label' => 'Url Youtube Playlist'
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

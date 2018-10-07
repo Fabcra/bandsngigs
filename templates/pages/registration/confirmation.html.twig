@@ -10,7 +10,7 @@
             <!-- profile-edit-wrap -->
             <div class="profile-edit-wrap">
                 <div class="profile-edit-page-header">
-                    <h2>Confirmation profile</h2>
+                    <h2>Confirmation d'enregistrement</h2>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -18,10 +18,9 @@
                         {{ form_start(userForm) }}
                         <div class="profile-edit-container">
                             <div class="custom-form">
-                                {{ form_row(userForm.firstName) }}
-                                {{ form_row(userForm.lastName) }}
-                                {#{{ form_row(userForm.email) }}#}
-                                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                {{ form_row(userForm.firstName, {'label':'Prénom'}) }}
+                                {{ form_row(userForm.lastName, {'label':'Nom'}) }}
+                                <button class="btn  big-btn  color-bg flat-btn">S'enregistrer<i
                                             class="fa fa-angle-right"></i></button>
                             </div>
                         </div>
@@ -46,10 +45,10 @@
             <div class="join-wrap fl-wrap">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3>Do You Have Questions ?</h3>
+                        <h3>Vous avez des questions ?  ?</h3>
                         <p>Lorem ipsum dolor sit amet, harum dolor nec in, usu molestiae at no.</p>
                     </div>
-                    <div class="col-md-4"><a href="contacts.html" class="join-wrap-btn">Get In Touch <i
+                    <div class="col-md-4"><a href="mailto:contact@fabrice-crahay.be" class="join-wrap-btn">Contactez-nous <i
                                     class="fa fa-envelope-o"></i></a></div>
                 </div>
             </div>

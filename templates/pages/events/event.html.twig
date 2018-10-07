@@ -13,7 +13,7 @@
             <div class="list-single-header absolute-header fl-wrap">
                 <div class="container">
                     <div class="list-single-header-item">
-                        <h2>{{ event.name }} <span> - in </span>
+                        <h2>{{ event.name }} <span> - à </span>
                             {% if event.venue %}
                                 <a href="{{ path('venue', {'slug':event.venue.slug}) }}">{{ event.venue.name }}</a>
                             {% else %}
@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="fl-wrap list-single-header-column">
                                     <div class="share-holder hid-share">
-                                        <div class="showshare"><span>Share </span><i class="fa fa-share"></i></div>
+                                        <div class="showshare"><span>Partager </span><i class="fa fa-share"></i></div>
                                         <div class="share-container  isShare"></div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                     <ul>
                         <li><a class="act-scrlink" href="#sec1">Top</a></li>
                         <li><a href="#sec2">Details</a></li>
-                        <li><a href="#sec3">Bands</a></li>
+                        <li><a href="#sec3">Groupes</a></li>
                     </ul>
                 </nav>
             </div>
@@ -96,27 +96,17 @@
                         <div class="list-single-main-wrapper fl-wrap" id="sec2">
                             <div class="list-single-main-item fl-wrap">
                                 <div class="list-single-main-item-title fl-wrap">
-                                    <h3>About Event</h3>
+                                    <h3>A propos de l'évènement</h3>
                                 </div>
                                 <p>{{ event.description }}</p>
 
                                 <span class="fw-separator"></span>
 
-                                <div class="list-single-main-item-title fl-wrap">
-                                    <h3>Tags</h3>
-                                </div>
-
-                                <div class="list-single-tags tags-stylwrap">
-                                    {% for s in event.styles %}
-                                        <a href="#">{{ s.style }}</a>
-                                    {% endfor %}
-                                </div>
-
                             </div>
                             <!-- list-single-main-item -->
                             <div class="list-single-main-item fl-wrap" id="sec3">
                                 <div class="list-single-main-item-title fl-wrap">
-                                    <h3>Bands </h3>
+                                    <h3>Groupes </h3>
                                 </div>
                                 <div class="team-holder fl-wrap">
                                     {% for b in event.bands %}
@@ -171,7 +161,7 @@
                                 {% if app.user %}
                                     <div class="box-widget-item fl-wrap">
                                         <div class="box-widget-item-header">
-                                            <h3>Order your spot : </h3>
+                                            <h3>Achetez un billet : </h3>
                                         </div>
                                         <div class="box-widget opening-hours">
 
@@ -188,7 +178,7 @@
                                                         <input type="text" placeholder="{{ app.user.email }}"
                                                                disabled="disabled" value=""/>
                                                         <div class="quantity fl-wrap">
-                                                            <span><i class="fa fa-user-plus"></i>Persons : </span>
+                                                            <span><i class="fa fa-user-plus"></i>Personnes : </span>
                                                             <div class="quantity-item">
                                                                 <input type="button" value="-" class="minus">
                                                                 <input type="text" name="quantity" title="Qty"
@@ -199,7 +189,7 @@
                                                         </div>
                                                     </fieldset>
 
-                                                    <button class="btn  big-btn  color-bg flat-btn">Book Now<i
+                                                    <button class="btn  big-btn  color-bg flat-btn">Acheter<i
                                                                 class="fa fa-angle-right"></i></button>
                                                 </form>
                                             </div>
@@ -214,7 +204,7 @@
                             {% if events %}
                                 <div class="box-widget-item fl-wrap">
                                     <div class="box-widget-item-header">
-                                        <h3>More events from this venue : </h3>
+                                        <h3>Autres évènements dans ce café-concert: </h3>
                                     </div>
                                     <div class="box-widget widget-posts">
                                         <div class="box-widget-content">
@@ -222,7 +212,7 @@
                                                 {% for e in events %}
                                                     <li class="clearfix">
                                                         <a href="{{ path('event', {'slug':e.slug}) }}"
-                                                           class="widget-posts-img"><img src="{{ e.flyer.url }}" alt=""></a>
+                                                           class="widget-posts-img"><img src="{{ e.flyer.url }}" alt="e.name"></a>
                                                         <div class="widget-posts-descr">
                                                             <a href="{{ path('event', {'slug':e.slug}) }}"
                                                                title="">{{ e.name }}</a>

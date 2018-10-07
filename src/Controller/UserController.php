@@ -40,11 +40,10 @@ class UserController extends Controller
         $bands = $doctrine->getRepository(Band::class)->findBandsByUser($id);
 
 
-
-        if($valid === true) {
+        if ($valid === true) {
 
             return $this->render('pages/users/user.html.twig', [
-                'user' => $user, 'bands'=>$bands
+                'user' => $user, 'bands' => $bands
             ]);
         } else {
             $this->addFlash('danger', 'Cet utilisateur n\'existe pas ou n\'est plus membre du site !!! ');
@@ -103,14 +102,13 @@ class UserController extends Controller
 
         $id = $user->getId();
 
-        $form = $this->createForm(RemoveUserType::class, $user, ['method'=>'POST']);
+        $form = $this->createForm(RemoveUserType::class, $user, ['method' => 'POST']);
 
         $form->handleRequest($request);
 
 
 
-
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
@@ -120,12 +118,10 @@ class UserController extends Controller
 
             $valid = $user->getValid();
 
-            if ($valid == true){
+            if ($valid == true) {
                 $this->addFlash('success', 'Vous prenez la bonne décision');
                 return $this->redirectToRoute('homepage');
             } else {
-
-
 
 
                 $bands = $user->getBands();
@@ -136,40 +132,38 @@ class UserController extends Controller
 
                         $band->removeMember($user);
 
-                        $em = $this->getDoctrine()->getManager();
 
                         $em->persist($band);
                         $em->flush();
-
 
                     }
                 }
 
                 $venues = $user->getVenues();
 
-                if($venues) {
+                if ($venues) {
 
                     foreach ($venues as $venue) {
 
                         $venue->removeManager($user);
 
-                        $em = $this->getDoctrine()->getManager();
                         $em->persist($venue);
                         $em->flush();
                     }
                 }
 
 
+
                 $mail = $user->getEmail();
-                $subject='Suppression de votre compte sur Bands\'n Gigs';
-                $body = $this->renderView('pages/users/cancellation-mail.html.twig', array('user'=>$user));
+                $subject = 'Suppression de votre compte sur Bands\'n Gigs';
+                $body = $this->renderView('pages/users/cancellation-mail.html.twig', array('user' => $user));
 
                 $mailer->sendMail($mail, $subject, $body);
 
 
 
 
-                    return $this->redirectToRoute('logout');
+                return $this->redirectToRoute('logout');
 
             }
         }
@@ -179,7 +173,7 @@ class UserController extends Controller
             return $this->render('pages/users/remove.html.twig', [
                 'userForm' => $form->createView(), 'id' => $id
             ]);
-        }else{
+        } else {
             $this->addFlash('danger', 'Ce compte n\'existe plus');
         }
 

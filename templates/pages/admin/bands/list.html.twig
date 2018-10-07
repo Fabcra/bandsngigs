@@ -6,19 +6,19 @@
 
             <a class="listing-geodir-category" href="{{ path('admin-bands-update', {'id':b.id}) }}"><i
                         class="fa fa-star"
-                        aria-hidden="true"></i> update</a>
+                        aria-hidden="true"></i> modif</a>
             <div class="geodir-category-content fl-wrap">
                 <h3><a href="{{ path('band',{'slug':b.slug}) }}">{{ b.name }}</a></h3>
 
                 {% if b.active == false %}
-                <span class="alert alert-danger">DELETED !!!</span>
+                <span class="alert alert-danger">SUPPRIMÉ !!!</span>
                 {% endif %}
 
                 <p>{{ b.description }}</p>
                 <div class="geodir-category-options fl-wrap">
 
                     <div class="geodir-category-location">
-                        <a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ b.locality.locality }}">
+                        <a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ b.locality.locality }}" target="_blank">
                             <i class="fa fa-map-marker"
                                aria-hidden="true"></i>
                             {{ b.locality.locality }}</a>

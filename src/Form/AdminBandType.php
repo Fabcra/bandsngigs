@@ -27,8 +27,8 @@ class AdminBandType extends AbstractType
 
             ->add('active', ChoiceType::class, [
                 'choices'=>[
-                    'no'=>true,
-                    'yes'=>false
+                    'Non'=>true,
+                    'Oui'=>false
                 ]
             ])
         ;

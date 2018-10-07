@@ -5,8 +5,8 @@
             <a href="{{ path('homepage') }}"><img src="/images/logo.png" alt="band's n gigs"></a>
         </div>
         {%  if app.user == null %}
-        <a href="{{ path('registration') }}" class="add-list">Register</a>
-        <a href="{{ path('login') }}"><div class="show-reg-form"><i class="fa fa-sign-in"></i>Sign In</div></a>
+        <a href="{{ path('registration') }}" class="add-list">S'enregistrer</a>
+        <a href="{{ path('login') }}"><div class="show-reg-form"><i class="fa fa-sign-in"></i>Se connecter</div></a>
        {% else %}
            <div class="header-user-menu">
                <div class="header-user-name">
@@ -19,7 +19,7 @@
                    Hello , {% if (app.user.firstName) %}{{ app.user.firstName }}{% endif %}
                </div>
                <ul>
-                   <li><a href="{{ path('profile') }}"> Edit profile</a></li>
+                   <li><a href="{{ path('profile') }}"> Modification profil</a></li>
                    {% if is_granted('ROLE_ADMIN') %}
                        <li><a href="{{ path('admin') }}"> Admin</a></li>
                    {% endif %}

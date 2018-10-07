@@ -26,7 +26,14 @@ class RemoveUserType extends AbstractType
                 'choices' => array(
                     'Non' => true,
                     'Oui' => false)
-            ));
+            ))
+            ->add('bannedgoogle', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false
+                ],
+                'multiple' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

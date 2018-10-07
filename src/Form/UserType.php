@@ -24,8 +24,8 @@ class UserType extends AbstractType
             ->add('age', IntegerType::class)
             ->add('gender', ChoiceType::class, [
                 'choices'=>[
-                    'male'=>'male',
-                    'female'=>'female'
+                    'Homme'=>'male',
+                    'Femme'=>'female'
                 ],
                 'multiple'=>false,
             ])
@@ -44,6 +44,7 @@ class UserType extends AbstractType
                 'multiple'=>false,
                 'class'=>Locality::class,
             ))
+
 
         ;
     }

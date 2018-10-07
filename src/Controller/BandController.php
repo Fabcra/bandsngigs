@@ -18,11 +18,10 @@ use App\Form\RemoveBandType;
 use App\Service\FileUploader;
 use App\Service\Mailer;
 use App\Service\YoutubeAPI;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BandController extends Controller
 {

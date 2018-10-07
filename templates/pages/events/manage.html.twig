@@ -11,15 +11,15 @@
                         <div class="list-main-wrap fl-wrap card-listing">
                             <div class="container">
                                 <div class="section-title">
-                                    <h2>Manage events</h2>
-                                    <div class="section-subtitle">Manage events</div>
+                                    <h2>Gestion évènements</h2>
+                                    <div class="section-subtitle">Gestion évènements</div>
                                     <span class="section-separator"></span>
-                                    <p>Manage your events</p>
+                                    <p>Gestion de vos évènements</p>
                                 </div>
                             </div>
                             {% if events is empty %}
-                            <p>You have no event</p>
-                                <a href="{{ path('event-new') }}" class="btn transparent-btn custom-scroll-link">Create yours <i class="fa fa-music"></i></a>
+                            <p>Vous n'avez pas d'évènement</p>
+                                <a href="{{ path('event-new') }}" class="btn transparent-btn custom-scroll-link">Créez-en un ! <i class="fa fa-music"></i></a>
 
                             {% endif %}
                             {% include "pages/events/list.html.twig" %}

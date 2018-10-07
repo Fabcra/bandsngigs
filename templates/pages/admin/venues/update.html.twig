@@ -1,0 +1,81 @@
+{% extends "pages/admin/layout.html.twig" %}
+
+
+{% block right %}
+    {{ form_start(venueForm) }}
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container add-list-container">
+            <div class="profile-edit-header fl-wrap">
+                <button type="submit" class="btn color-bg flat-btn floatright">Enregistrer<i class="fa fa-angle-right"></i>
+                </button>
+                <h4>Informations divers</h4>
+
+            </div>
+
+            <div class="custom-form">
+                {{ form_row(venueForm.name, {'label':'Nom'}) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(venueForm.streetName, {'label':'Rue'}) }}
+                        {{ form_row(venueForm.houseNb, {'label':'N°'}) }}
+                        {{ form_row(venueForm.locality, {'label':'Localité', 'attr':{'class':'js-example-basic-single'}}) }}
+                    </div>
+                    <div class="col-md-6 check-user">
+                        {{ form_row(venueForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container add-list-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>Location / Contacts</h4>
+            </div>
+            <div class="custom-form">
+                {{ form_row(venueForm.mail) }}
+                {{ form_row(venueForm.phone, {'label':'Téléphone'}) }}
+                {{ form_row(venueForm.website) }}
+            </div>
+        </div>
+
+        <div class="profile-edit-container add-list-container">
+            <div class="profile-edit-header fl-wrap">
+                <h4>Autres Informations</h4>
+            </div>
+            <div class="custom-form">
+                {{ form_row(venueForm.description) }}
+                {{ form_row(venueForm.videoPlaylist) }}
+                {{ form_row(venueForm.managers, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
+                {{ form_row(venueForm.active, {'label':'Voulez-vous supprimer ce café-concert ?', 'attr':{'class':'js-example-basic-single fullwidth'}}) }}
+
+            </div>
+
+
+
+        </div>
+        <button class="btn  big-btn  color-bg flat-btn margintop20">Enregistrer<i class="fa fa-angle-right"></i>
+        </button>
+    </div>
+
+    <!-- profile-edit-container end-->
+
+
+    {{ form_widget(venueForm._token) }}
+
+    {{ form_end(venueForm, {'render_rest':false}) }}
+
+    <div class="col-md-2">
+        <div class="edit-profile-photo fl-wrap">
+            <img src="{{ venue.photo.url }}" class="respimg" alt="{{ venue.name }}">
+        </div>
+        <a href="{{ path('admin-venues-gallery', {'id':id}) }}" class="btn transparent-btn float-btn custom-scroll-link">Gallery <i class="fa fa-image"></i></a>
+
+    </div>
+
+
+{% endblock %}
+

@@ -7,19 +7,19 @@
         <!-- profile-edit-container-->
         <div class="profile-edit-container add-list-container">
             <div class="profile-edit-header fl-wrap">
-                <button type="submit" class="btn color-bg flat-btn floatright">Save Changes<i class="fa fa-angle-right"></i>
+                <button type="submit" class="btn color-bg flat-btn floatright">Enregistrer<i class="fa fa-angle-right"></i>
                 </button>
-                <h4>Basic Informations</h4>
+                <h4>Informations diverses</h4>
 
             </div>
 
             <div class="custom-form">
-                {{ form_row(venueForm.name) }}
+                {{ form_row(venueForm.name, {'label':'Nom'}) }}
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(venueForm.streetName) }}
+                        {{ form_row(venueForm.streetName, {'label':'Rue'}) }}
                         {{ form_row(venueForm.houseNb) }}
-                        {{ form_row(venueForm.locality, {'attr':{'class':'js-example-basic-single'}}) }}
+                        {{ form_row(venueForm.locality, {'label':'Localité', 'attr':{'class':'js-example-basic-single'}}) }}
                     </div>
                     <div class="col-md-6 check-user">
                         {{ form_row(venueForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
@@ -37,14 +37,14 @@
             </div>
             <div class="custom-form">
                 {{ form_row(venueForm.mail) }}
-                {{ form_row(venueForm.phone) }}
+                {{ form_row(venueForm.phone, {'label':'Téléphone'}) }}
                 {{ form_row(venueForm.website) }}
             </div>
         </div>
 
         <div class="profile-edit-container add-list-container">
             <div class="profile-edit-header fl-wrap">
-                <h4>Detailed Information</h4>
+                <h4>Autres informations</h4>
             </div>
             <div class="custom-form">
                 {{ form_row(venueForm.description) }}
@@ -54,7 +54,7 @@
 
 
         </div>
-        <button class="btn  big-btn  color-bg flat-btn margintop20">Save Changes<i class="fa fa-angle-right"></i>
+        <button class="btn  big-btn  color-bg flat-btn margintop20">Enregistrer<i class="fa fa-angle-right"></i>
         </button>
     </div>
 

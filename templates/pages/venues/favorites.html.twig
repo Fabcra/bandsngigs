@@ -10,10 +10,10 @@
                 <div class="list-main-wrap fl-wrap card-listing">
                     <div class="container">
                         <div class="section-title">
-                            <h2>Favorites Venues</h2>
-                            <div class="section-subtitle">Favorites Venues</div>
+                            <h2>Cafés-concerts favoris</h2>
+                            <div class="section-subtitle">Cafés-concerts favoris</div>
                             <span class="section-separator"></span>
-                            <p>See your favorites venues</p>
+                            <p>Liste de vos cafés-concerts favoris</p>
                         </div>
                     </div>
 
@@ -23,7 +23,7 @@
                     </div>
                     {% include 'pages/venues/list.html.twig' %}
                     {% else %}
-                        <p> you don't have any favorites see all <a href="{{ path("venues") }}">HERE</a></p>
+                        <p> Vous n'avez pas de café-concert favoris, les voici tous <a href="{{ path("venues") }}">ICI</a></p>
                     {% endif %}
 
                 </div>

@@ -11,7 +11,7 @@
                 <!-- profile-edit-wrap -->
                 <div class="profile-edit-wrap">
                     <div class="profile-edit-page-header">
-                        <h2>New event</h2>
+                        <h2>Nouvel évènement</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -25,13 +25,13 @@
                                     <h4>Nom de l'évènement, date et groupes à l'affiche</h4>
                                 </div>
                                 <div class="custom-form">
-                                    {{ form_row(eventForm.name) }}
+                                    {{ form_row(eventForm.name, {'label':'Nom'}) }}
                                     {{ form_row(eventForm.date, {'attr':{'class': 'floatleft', 'label':'Date'}}) }}
                                     {{ form_row(eventForm.time, {'attr':{'class': 'floatleft marginbottom20', 'label':'Time'}}) }}
-                                    {{ form_row(eventForm.bands) }}
+                                    {{ form_row(eventForm.bands, {'label':'Groupes inscrits'}) }}
                                     <br>
                                     <div class="check-user bigmarginright">
-                                        <p>You can add unsubscribed bands in the website on in this event</p>
+                                        <p>Vous pouvez ajouter des groupes non-inscrits à l'évènements</p>
                                         <ul class="members"
                                             data-prototype="{{ form_row(eventForm.unsubscribedBands.vars.prototype)|e }}">
                                         </ul>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="custom-form">
                                     <div class="floatleft">
-                                        {{ form_row(eventForm.typeVenue) }}
+                                        {{ form_row(eventForm.typeVenue, {'label':'Sélectionnez le type de café-concert'}) }}
                                     </div>
                                     <div class="check-user floatleft marginbottom20 js-sub-venue">
                                         {{ form_row(eventForm.venue) }}
@@ -66,7 +66,7 @@
 
                                 </div>
 
-                                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
                                             class="fa fa-angle-right"></i></button>
                             </div>
                             <!-- profile-edit-container end-->

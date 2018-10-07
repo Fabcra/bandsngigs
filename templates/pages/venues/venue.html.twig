@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <div class="fl-wrap list-single-header-column">
                                     <div class="share-holder hid-share">
-                                        <div class="showshare"><span>Share </span><i class="fa fa-share"></i></div>
+                                        <div class="showshare"><span>Partagez </span><i class="fa fa-share"></i></div>
                                         <div class="share-container  isShare"></div>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                     <ul>
                         <li><a class="act-scrlink" href="#sec1">Top</a></li>
                         <li><a href="#sec2">Details</a></li>
-                        <li><a href="#sec3">Gallery</a></li>
+                        <li><a href="#sec3">Galerie</a></li>
                         <li><a href="#sec4">Videos</a></li>
                     </ul>
                 </nav>
@@ -86,7 +86,7 @@
                             </div>
                             <div class="list-single-main-item fl-wrap">
                                 <div class="list-single-main-item-title fl-wrap">
-                                    <h3>About {{ venue.name }} </h3>
+                                    <h3>A propos de {{ venue.name }} </h3>
                                 </div>
                                 <p>{{ venue.description }}</p>
                             </div>
@@ -94,7 +94,7 @@
 
                             <div class="list-single-main-item fl-wrap" id="sec3">
                                 <div class="list-single-main-item-title fl-wrap">
-                                    <h3>Gallery - Photos</h3>
+                                    <h3>Galerie - Photos</h3>
                                 </div>
                                 <!-- gallery-items   -->
                                 <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
@@ -165,12 +165,12 @@
                                     <div class="box-widget-content">
                                         <div class="list-author-widget-contacts list-item-widget-contacts">
                                             <ul>
-                                                <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a
+                                                <li><span><i class="fa fa-map-marker"></i> Adresse :</span> <a
                                                             target="_blank"
                                                             href="http://maps.google.fr/maps?f=q&hl=fr&q={{ venue.streetName }},{{ venue.houseNb }} {{ venue.locality.locality }}">{{ venue.streetName }}
                                                         ,{{ venue.houseNb }}
                                                         - {{ venue.locality.locality }}</a></li>
-                                                <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                <li><span><i class="fa fa-phone"></i> Téléphone :</span> <a
                                                             href="tel:{{ venue.phone }}">{{ venue.phone }}</a>
                                                 </li>
                                                 <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
@@ -188,7 +188,7 @@
                             {% if venue.managers is not empty %}
                             <div class="box-widget-item fl-wrap">
                                 <div class="box-widget-item-header">
-                                    <h3>Hosted by : </h3>
+                                    <h3>Géré par : </h3>
                                 </div>
                                 {% for u in venue.managers %}
                                     <div class="box-widget list-author-widget band-venue-members-img">
@@ -201,14 +201,14 @@
                                             <div class="list-author-widget-text">
                                                 <div class="list-author-widget-contacts">
                                                     <ul>
-                                                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a
+                                                        <li><span><i class="fa fa-phone"></i> Téléphone :</span> <a
                                                                     href="tel:{{ u.phone }}">{{ u.phone }}</a></li>
                                                         <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a
                                                                     href="mailto:{{ u.email }}">{{ u.email }}</a></li>
                                                     </ul>
                                                 </div>
-                                                <a href="{{ path('user', {'id':u.id}) }}" class="btn transparent-btn">View
-                                                    Profile <i
+                                                <a href="{{ path('user', {'id':u.id}) }}" class="btn transparent-btn">Voir
+                                                    profil <i
                                                             class="fa fa-eye"></i></a>
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@
                             {% if events is not empty %}
                                 <div class="box-widget-item fl-wrap">
                                     <div class="box-widget-item-header">
-                                        <h3>More events from this venue : </h3>
+                                        <h3>Plus d'évènements dans ce café-concert : </h3>
                                     </div>
                                     <div class="box-widget widget-posts">
                                         <div class="box-widget-content">

@@ -6,15 +6,15 @@
 
         <div class="custom-form">
             <div class="profile-edit-header fl-wrap">
-                <h4>Manage members</h4>
+                <h4>Gérer les membres</h4>
             </div>
 
             <div class="check-user floatleft marginbottom20">
-                {{ form_row(memberForm.members, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
+                {{ form_row(memberForm.members, {'label':'Membres inscrits', 'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
             </div>
 
             <section class="check-user bigmarginright">
-                <p>You can add unscribed people in the website on your band page</p>
+                <p>Vous pouvez ajouter des utilisateurs non-inscrits dans votre page</p>
 
                 <ul class="members"
                     data-prototype="{{ form_row(memberForm.unscribedMembers.vars.prototype)|e }}">
@@ -25,7 +25,7 @@
             </section>
 
 
-            <button  class="btn  big-btn  color-bg flat-btn margintop20">Save Changes<i class="fa fa-angle-right"></i>
+            <button  class="btn  big-btn  color-bg flat-btn margintop20">Enregistrer<i class="fa fa-angle-right"></i>
             </button>
 
         </div>

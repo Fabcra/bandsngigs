@@ -3,16 +3,16 @@
         <div class="user-profile-menu-wrap fl-wrap">
             <!-- user-profile-menu-->
             <div class="user-profile-menu">
-                <h3>Main</h3>
+                <h3>Navigation</h3>
                 <ul>
                     <li><a href="{{ path('events-update', {'id':event.id}) }}" class="user-profile-act"><i
-                                    class="fa fa-calendar"></i> Edit event</a></li>
+                                    class="fa fa-calendar"></i> Modifier évènement</a></li>
 
-                    <li><a href="{{ path('image', {'type': 'flyer', 'id':event.id }) }}"><i class="fa fa-image"></i> Edit
+                    <li><a href="{{ path('image', {'type': 'flyer', 'id':event.id }) }}"><i class="fa fa-image"></i> Modifier
                             Flyer</a></li>
 
-                    <li><a href="{{ path('events-remove', {'id':event.id }) }}"><i class="fa fa-image"></i> Remove
-                            Event</a></li>
+                    <li><a href="{{ path('events-remove', {'id':event.id }) }}"><i class="fa fa-eraser"></i> Supprimer
+                            l'évènement</a></li>
                 </ul>
             </div>
             <!-- user-profile-menu end-->

@@ -2,6 +2,7 @@
                 {% for v in venues %}
                     <div class="listing-item list-layout">
 
+
                         <article class="geodir-category-listing fl-wrap">
 
                             <div class="geodir-category-img">
@@ -9,37 +10,34 @@
                                 <a href="{{ path('venue',{'slug': v.slug}) }}"><img src="{{ v.photo.url }}" alt="">
                                 <div class="overlay"></div>
                                 </a>
+
+
                             </div>
                             <div class="geodir-category-content fl-wrap">
-
-
-
-                                    <div class="listing-avatar">
-                                    {% if app.user %}
-                                        {% for u in v.managers %}
-
-                                            {% if app.user.slug == u.slug %}
-                                                <a class="listing-geodir-category" href="{{ path('venues-update', {'id':v.id}) }}">update</a>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                    {% endif %}
-                                    </div>
-
 
 
                                 <h3><a href="{{ path('venue',{'slug': v.slug}) }}">{{ v.name }}</a></h3>
 
                                 <p>{{ v.description }}</p>
+                                {% if app.user %}
+                                    {% for u in v.managers %}
+                                        {% if app.user.slug == u.slug %}
+                                            <a href="{{ path('venues-update', {'id':v.id}) }}">
+                                                <button class="btn color-bg flat-btn">Modif</button>
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                {% endif %}
+
 
                                 <div class="geodir-category-options fl-wrap">
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
-                                        <span>(7 reviews)</span>
-                                    </div>
+
                                     <div class="geodir-category-location"><a href="http://maps.google.fr/maps?f=q&hl=fr&q={{ v.streetName }},{{ v.houseNb }} {{ v.locality.locality }}" target="_blank"><i class="fa fa-map-marker"
                                                                                          aria-hidden="true"></i>{{ v.streetName }}
                                             , {{ v.houseNb }}-{{ v.locality.locality }}</a></div>
                                 </div>
+
                             </div>
                         </article>
                     </div>

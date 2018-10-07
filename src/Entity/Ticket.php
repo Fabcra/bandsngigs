@@ -29,6 +29,7 @@ class Ticket
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1, max="10", minMessage="Vous devez acheter au moins un billet", maxMessage="Vous ne pouvez pas acheter plus de 10 billets à la fois")
      */
     private $purchasedTicketsNb;
 

@@ -13,42 +13,42 @@
                 <a href="{{ path('homepage') }}">Home</a>
             </li>
             <li>
-                <a href="{{ path('bands') }}">Bands<i class="fa fa-caret-down"></i></a>
+                <a href="{{ path('bands') }}">Groupes<i class="fa fa-caret-down"></i></a>
                 <!--second level -->
                 <ul>
 
-                    <li><a href="{{ path('bands') }}">List</a></li>
+                    <li><a href="{{ path('bands') }}">Liste</a></li>
 
                     {% if app.user %}
-                        <li><a href="{{ path('band-new') }}">New band</a></li>
-                        <li><a href="{{ path('bands-manage') }}">Manage bands</a></li>
-                        <li><a href="{{ path('favorites-bands') }}">Favorites bands</a></li>
+                        <li><a href="{{ path('band-new') }}">Nouveau</a></li>
+                        <li><a href="{{ path('bands-manage') }}">Gestion</a></li>
+                        <li><a href="{{ path('favorites-bands') }}">Favoris</a></li>
                     {% endif %}
                 </ul>
 
             </li>
             <li>
-                <a href="{{ path('venues') }}">Venues<i class="fa fa-caret-down"></i></a>
+                <a href="{{ path('venues') }}">Cafés-concerts<i class="fa fa-caret-down"></i></a>
                 <ul>
-                    <li><a href="{{ path('venues') }}">List</a></li>
+                    <li><a href="{{ path('venues') }}">Liste</a></li>
 
                     {% if app.user %}
-                        <li><a href="{{ path('venue-new') }}">New venue</a></li>
-                        <li><a href="{{ path('venues-manage') }}">Manage venues</a></li>
-                        <li><a href="{{ path('favorites-venues') }}">Favorites venues</a></li>
+                        <li><a href="{{ path('venue-new') }}">Nouveau</a></li>
+                        <li><a href="{{ path('venues-manage') }}">Gestion</a></li>
+                        <li><a href="{{ path('favorites-venues') }}">Favoris</a></li>
                     {% endif %}
                 </ul>
 
             </li>
             <li>
-                <a href="{{ path('events') }}">Events<i class="fa fa-caret-down"></i></a>
+                <a href="{{ path('events') }}">Evènements<i class="fa fa-caret-down"></i></a>
                 <ul>
-                    <li><a href="{{ path('events') }}">List</a></li>
+                    <li><a href="{{ path('events') }}">Liste</a></li>
 
                     {% if app.user %}
-                        <li><a href="{{ path('event-new') }}">New event</a></li>
-                        <li><a href="{{ path('events-manage') }}">Manage event</a></li>
-                        <li><a href="{{ path('favorites-events') }}">Favorites events</a></li>
+                        <li><a href="{{ path('event-new') }}">Nouveau</a></li>
+                        <li><a href="{{ path('events-manage') }}">Gestion</a></li>
+                        <li><a href="{{ path('favorites-events') }}">Favoris</a></li>
                     {% endif %}
                 </ul>
             </li>

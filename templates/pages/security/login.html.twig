@@ -7,13 +7,12 @@
         <div class="main-register-holder">
             <div class="main-register fl-wrap">
                 <h3>Sign In <span>Bands N'<strong> Gigs</strong></span></h3>
-                <p>Don't have an account ? <span class="fontsize14"><a href="{{ path('registration') }}">click here for register</a></span></p>
+                <p>Vous n'avez pas de compte ? <span class="fontsize14"><a href="{{ path('registration') }}">cliquez ici pour vous enregistrer</a></span></p>
                 <div class="soc-log fl-wrap">
-                    <p>For faster login use your social account.</p>
-                    <a href="{{ path('connect_google') }}" class="google-log"><i class="fa fa-google-plus-official"></i>Login
-                        with Google</a>
+                    <p>Pour vous connecter plus rapidement, utilisez votre compte Google.</p>
+                    <a href="{{ path('connect_google') }}" class="google-log"><i class="fa fa-google-plus-official"></i>Se connecter avec Google</a>
                 </div>
-                <div class="log-separator fl-wrap"><span>or</span></div>
+                <div class="log-separator fl-wrap"><span>ou</span></div>
                 <div id="tabs-container">
                     <div class="tab">
                         <div id="tab-1" class="tab-content">
@@ -26,16 +25,13 @@
                                     {% endif %}
 
                                 <form method="post" action="{{ path('login') }}">
-                                     <label>Username or Email Address * </label>
+                                     <label>Adresse e-mail *</label>
                                      <input type="email" name="_username" id="username" value="{{ last_username }}">
-                                     <label>Password * </label>
+                                     <label>Mot de passe * </label>
                                       <input type="password" name="_password" id="password">
-                                     <button type="submit" class="log-submit-btn"><span>Log In</span></button>
+                                     <button type="submit" class="log-submit-btn"><span>Se connecter</span></button>
                                      <div class="clearfix"></div>
                                  </form>
-                                <div class="lost_password">
-                                    <a href="#">Lost Your Password?</a>
-                                </div>
                             </div>
                         </div>
                     </div>

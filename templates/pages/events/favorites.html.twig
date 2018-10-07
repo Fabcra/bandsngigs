@@ -7,10 +7,10 @@
             <div class="row home-posts">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Favorites events</h2>
-                        <div class="section-subtitle">Favorites events</div>
+                        <h2>Evènements favoris</h2>
+                        <div class="section-subtitle">Evènements favoris</div>
                         <span class="section-separator"></span>
-                        <p>Browse your favorites events.</p>
+                        <p>Liste de vos évènements favoris</p>
                     </div>
                 </div>
 
@@ -22,7 +22,7 @@
                     {% include 'pages/events/list.html.twig' %}
                 {% else %}
 
-                    <p>you don't have any favorites events ! See all events <a href="{{ path('events') }}">HERE</a></p>
+                    <p>Vous n'avez aucun évènement favori, les voici tous <a href="{{ path('events') }}">ICI</a></p>
 
                 {% endif %}
             </div>

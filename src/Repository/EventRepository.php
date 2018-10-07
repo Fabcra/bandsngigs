@@ -53,6 +53,17 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findNextEvents()
+    {
+
+        $qb = $this->createQueryBuilder('e')
+            ->andWhere('e.date >= CURRENT_DATE()');
+
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
 
     public function findActiveEvents()
     {

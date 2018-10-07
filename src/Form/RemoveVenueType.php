@@ -15,8 +15,8 @@ class RemoveVenueType extends AbstractType
         $builder
             ->add('active', ChoiceType::class, [
                 'choices' => [
-                    'yes' => false,
-                    'no' => true
+                    'Oui' => false,
+                    'Non' => true
                 ]
             ]);
     }

@@ -10,15 +10,15 @@
                 <div class="list-main-wrap fl-wrap card-listing">
                     <div class="container">
                         <div class="section-title">
-                            <h2>Your venues</h2>
-                            <div class="section-subtitle">Subscribed Venues</div>
+                            <h2>Vos Cafés-concerts</h2>
+                            <div class="section-subtitle">Vos Cafés-concerts</div>
                             <span class="section-separator"></span>
-                            <p>Manage your venues</p>
+                            <p>Gérez vos cafés-concerts</p>
                         </div>
                     </div>
                     {% if venues is empty %}
-                        <p>You have no venue</p>
-                        <a href="{{ path("venue-new") }}" class="btn transparent-btn custom-scroll-link">Create yours <i class="fa fa-music"></i></a>
+                        <p>Vous n'avez pas de café-concert</p>
+                        <a href="{{ path("venue-new") }}" class="btn transparent-btn custom-scroll-link">Créez le vôtre <i class="fa fa-music"></i></a>
 
 
                     {% endif %}

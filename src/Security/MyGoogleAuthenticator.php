@@ -67,13 +67,17 @@ class MyGoogleAuthenticator extends SocialAuthenticator
             // si l'utilisateur a déjà été insrit et souhaite se réinscrire, réactiver son compte
             $valid = $user->getValid();
 
+            $banned = $user->getBannedGoogle();
+
+            // si l'inscription n'est plus valide
             if($valid === false){
-                $user->setConfidentiality(false);
-                $user->setvalid(true);
 
-                $this->em->persist($user);
-                $this->em->flush();
+                if ($banned === false) {
+                    $user->setValid(true);
 
+                    $this->em->persist($user);
+                    $this->em->flush();
+                }
             }
 
             return $user;
@@ -89,7 +93,7 @@ class MyGoogleAuthenticator extends SocialAuthenticator
             $user->setRegistrationDate(new \DateTime('now'));
             $user->setValid(true);
             $user->setRoles(['ROLE_USER']);
-            $user->setConfidentiality('false');
+            $user->setConfidentiality(false);
 
 
             $avatar = new Image();

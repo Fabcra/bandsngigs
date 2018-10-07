@@ -32,8 +32,8 @@ class BandType extends AbstractType
             ))
             ->add('active', ChoiceType::class, [
                 'choices'=>[
-                    'yes'=>true,
-                    'no'=>false
+                    'Oui'=>true,
+                    'Non'=>false
                 ]
             ])
 

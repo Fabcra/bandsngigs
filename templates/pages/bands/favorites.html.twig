@@ -11,22 +11,21 @@
                 <div class="list-main-wrap fl-wrap card-listing">
                     <div class="container">
                         <div class="section-title">
-                            <h2>Favorites bands</h2>
-                            <div class="section-subtitle">Favorites Bands</div>
+                            <h2>Groupes favoris</h2>
+                            <div class="section-subtitle">Groupes favoris</div>
                             <span class="section-separator"></span>
-                            <p>Browse your favorites bands</p>
+                            <p>Liste de vos groupes favoris</p>
                         </div>
                     </div>
 
-
                     <div class="marginbottom20">
-                        <p>Next shows of your favorites bands</p>
+                        <p>Prochains concerts de vos groupes préférés</p>
                         {% if events %}
                         {% include 'pages/others/googlemap.html.twig' %}
                     </div>
                     {% include 'pages/bands/list.html.twig' %}
                     {% else %}
-                        <p>you don't have any favorites, see all <a href="{{ path("bands") }}">HERE</a></p>
+                        <p>vous n'avez pas de groupe préféré, retrouvez-les tous <a href="{{ path("bands") }}">ICI</a></p>
                     {% endif %}
                     <!-- listing-item end-->
 

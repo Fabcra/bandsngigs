@@ -1,0 +1,29 @@
+{% extends 'pages/admin/layout.html.twig' %}
+
+{% block right %}
+    <div class="col-md-7">
+        <!--  section  -->
+        <section class="gray-bg no-pading no-top-padding" id="sec1">
+            <div class="col-list-wrap  center-col-list-wrap left-list">
+                <div class="container">
+                    <!-- list-main-wrap-->
+                    <div class="list-main-wrap fl-wrap card-listing">
+                        <div class="container">
+                            <div class="section-title">
+                                <h2>Admin cafés-concerts</h2>
+                                <div class="section-subtitle">Administration cafés-concerts</div>
+                                <span class="section-separator"></span>
+                                <p>Liste des cafés-concerts</p>
+                            </div>
+                        </div>
+
+                        {% include 'pages/admin/venues/list.html.twig' %}
+
+                    </div>
+                    <!-- list-main-wrap end-->
+                </div>
+            </div>
+        </section>
+        <!--  section  end-->
+    </div>
+{% endblock %}

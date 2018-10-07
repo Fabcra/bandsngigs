@@ -1,0 +1,51 @@
+<!-- listing-item -->
+{% for v in venues %}
+    <div class="listing-item list-layout">
+
+
+        <article class="geodir-category-listing fl-wrap">
+
+            <div class="geodir-category-img">
+
+
+
+                <a href="{{ path('venue',{'slug': v.slug}) }}"><img src="{{ v.photo.url }}" alt="">
+                    <div class="overlay"></div>
+                </a>
+
+                <a href="{{ path('admin-venues-update', {'id':v.id}) }}">
+                    <button class="btn color-bg flat-btn">Modif</button>
+                </a>
+
+            </div>
+            <div class="geodir-category-content fl-wrap">
+
+                {% if v.active == false %}
+                    <span class="alert alert-danger">DELETED !!!</span>
+                {% endif %}
+                <h3><a href="{{ path('venue',{'slug': v.slug}) }}">{{ v.name }}</a></h3>
+
+                <p>{{ v.description }}</p>
+
+
+                <div class="geodir-category-options fl-wrap">
+
+                    <div class="geodir-category-location"><a
+                                href="http://maps.google.fr/maps?f=q&hl=fr&q={{ v.streetName }},{{ v.houseNb }} {{ v.locality.locality }}"
+                                target="_blank"><i class="fa fa-map-marker"
+                                                   aria-hidden="true"></i>{{ v.streetName }}
+                            , {{ v.houseNb }}-{{ v.locality.locality }}</a></div>
+                </div>
+
+
+            </div>
+
+        </article>
+    </div>
+{% endfor %}
+<!-- listing-item end-->
+<!-- pagination-->
+<div class="pagination">
+    {{ knp_pagination_render(venues) }}
+</div>
+

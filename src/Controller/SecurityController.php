@@ -90,21 +90,39 @@ class SecurityController extends Controller
                 $this->addFlash('success', 'password modifié avec succès');
                 return $this->redirectToRoute('homepage');
 
-                //todo: envoyer un mail de confirmation
 
             }
 
             // si l'ancien mot de passe est incorrect
             $this->addFlash('danger', 'password incorrect');
+
+
+            $mail = $user->getEmail();
+            $subject = "Changement du mot de passe";
+            $body = $this->renderView('pages/security/errormodif-pwd-mail.html.twig', array('user'=>$user));
+
+            $mailer->sendMail($mail, $subject, $body);
+
             return $this->render('pages/security/newpassword.html.twig', [
                 'pwdForm' => $form->createView()
             ]);
 
-            //todo: envoyer un mail d'avertissement
         }
-        return $this->render('pages/security/newpassword.html.twig', [
-            'pwdForm' => $form->createView()
-        ]);
+
+        $googleuser = $user->getGoogleId();
+
+        if(!$googleuser) {
+            return $this->render('pages/security/newpassword.html.twig', [
+                'pwdForm' => $form->createView()
+            ]);
+        }else{
+
+            $this->addFlash('danger', 'Vous ne pouvez pas accéder à cette page');
+
+            return $this->redirectToRoute('homepage');
+        }
+
+
 
 
     }

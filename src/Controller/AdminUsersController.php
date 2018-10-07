@@ -102,11 +102,22 @@ class AdminUsersController extends Controller
 
         $user = $doctrine->getRepository(User::class)->findOneById($id);
 
+        $google_user = $user->getGoogleId();
+
+
+
         $form = $this->createForm(RemoveUserType::class, $user, ['method' => 'POST']);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if($google_user){
+
+
+                $user->setBannedgoogle(true);
+
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -114,14 +125,15 @@ class AdminUsersController extends Controller
 
             $valid = $user->getValid();
 
+
             if ($valid === false) {
 
-                $this->addFlash('success', 'Vous avez banni ' . $user->getFirstName() . ' ' . $user->getLastName());
+                $this->addFlash('success', 'Vous avez banni ' . $user->getFirstName() . ' ' . $user->getLastName(). 'et cette sentence est irrévocable ! ');
             }
         }
 
         return $this->render('pages/admin/users/ban-profile.html.twig', [
-            'userForm' => $form->createView(), 'id' => $id
+            'userForm' => $form->createView(), 'id' => $id, 'user'=>$user
         ]);
     }
 
@@ -175,7 +187,7 @@ class AdminUsersController extends Controller
             $this->addFlash('danger', 'Cet utilisateur ne peut être administrateur
             sans accepter les règles de confidentialités du site');
 
-            return $this->redirectToRoute('admin-users');
+            return $this->redirectToRoute('admin');
         }
     }
 

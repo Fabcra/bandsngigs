@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ImageController extends Controller
 {
 
-    /** INSERTION D'UN AVATAR
+    /** INSERTION D'AVATAR, LOGO, FLYERS
      *
      * @param Request $request
      * @param FileUploader $fileUploader
@@ -41,6 +41,8 @@ class ImageController extends Controller
         $type = $request->get('type'); // Quel est le type de l'image ? logo, avatar ou photo
         $doctrine = $this->getDoctrine();
 
+        $user = $this->getUser();
+        $user_id = $user->getId();
 
         switch ($type) {
 
@@ -48,23 +50,65 @@ class ImageController extends Controller
             case "avatar":
                 $user = $this->getUser();
                 $user_id = $user->getId();
+
+                $id = $request->get('id');
+
+
+                if ($id != $user_id){
+                    $this->addFlash('danger', 'Vous n\'êtes pas l\'utilisateur correspondant à cette url');
+                    return $this->redirectToRoute('homepage');
+
+                }
                 break;
 
             // si le type est logo, récupérer le groupe avec l'id envoyé
             case "logo":
                 $band_id = $request->get('id');
                 $band = $doctrine->getRepository(Band::class)->findOneById($band_id);
+
+                $members = $band->getMembers();
+
+                foreach ($members as $member){
+
+                    $member_id[] = $member->getId();
+
+                    if (!in_array($user_id, $member_id)){
+                        $this->addFlash('danger', 'vous ne pouvez pas modifier cette image sans être membre du groupe');
+                        return $this->redirectToRoute('homepage');
+                    }
+                }
+
                 break;
 
             //si le type est photo, récupérer le café-concert avec l'id envoyé
             case "photo":
                 $venue_id = $request->get('id');
                 $venue = $doctrine->getRepository(Venue::class)->findOneById($venue_id);
+
+                $managers = $venue->getManagers();
+
+                foreach ($managers as $manager) {
+
+                    $manager_id[] = $manager->getId();
+                    if (!in_array($user_id, $manager_id)){
+                        $this->addFlash('danger', 'vous ne pouvez pas modifier cette image sans être membre du café-concert');
+                        return $this->redirectToRoute('homepage');
+                    }
+                }
                 break;
 
             case "flyer":
                 $event_id = $request->get('id');
                 $event = $doctrine->getRepository(Event::class)->findOneById($event_id);
+
+                $organiser = $event->getOrganiser();
+
+                $organiser_id = $organiser->getId();
+
+                if ($organiser_id !== $user_id){
+                    $this->addFlash('danger', 'vous ne pouvez pas modifier cette image sans être l\'organisateur du concert');
+                    return $this->redirectToRoute('homepage');
+                }
                 break;
         }
 
@@ -77,6 +121,8 @@ class ImageController extends Controller
             $file = $image->getFile();
             $filename = $fileUploader->upload($file);
             $image->setUrl('/uploads/img/' . $filename);
+
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);
@@ -104,6 +150,7 @@ class ImageController extends Controller
                     $em->persist($event);
                     break;
             }
+
 
 
             $em->flush();

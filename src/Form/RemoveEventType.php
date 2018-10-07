@@ -24,8 +24,8 @@ class RemoveEventType extends AbstractType
 
             ->add('active', ChoiceType::class, [
                 'choices'=>[
-                    'yes'=>false,
-                    'no'=>true
+                    'Oui'=>false,
+                    'Non'=>true
                 ]
             ])
         ;

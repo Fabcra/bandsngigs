@@ -33,6 +33,11 @@ class User implements UserInterface, \Serializable
      */
     private $googleId;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $bannedgoogle;
+
 
     /**
      * @Assert\Type("string")
@@ -192,6 +197,7 @@ class User implements UserInterface, \Serializable
         $this->favBands= new ArrayCollection();
         $this->favVenues = new ArrayCollection();
         $this->favEvents = new ArrayCollection();
+        $this->bannedgoogle = false;
     }
 
     public function getRoles()
@@ -729,6 +735,24 @@ class User implements UserInterface, \Serializable
     {
         $this->tickets = $tickets;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBannedgoogle()
+    {
+        return $this->bannedgoogle;
+    }
+
+    /**
+     * @param mixed $bannedgoogle
+     */
+    public function setBannedgoogle($bannedgoogle)
+    {
+        $this->bannedgoogle = $bannedgoogle;
+    }
+
+
 
 
 }

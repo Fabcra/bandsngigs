@@ -27,13 +27,6 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-               {# {% for u in b.members %}
-                    <div class="listing-avatar"><a href="{{ path('user', {'id':u.id}) }}"><img
-                                    src="{{ u.avatar.url }}"
-                                    alt="{{ u.firstName }}"></a>
-                        <span class="avatar-tooltip">With <strong>{{ u.firstName }}</strong></span>
-                    </div>
-                {% endfor %}#}
 
                 <h3><a href="{{ path('band',{'slug':b.slug}) }}">{{ b.name }}</a></h3>
                 <p>{{ b.description }}</p>

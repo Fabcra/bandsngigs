@@ -6,22 +6,22 @@
                 <h3>Main</h3>
                 <ul>
                     <li><a href="{{ path('bands-update', {'id':id}) }}" class="user-profile-act"><i
-                                    class="fa fa-user-o"></i> Edit band</a></li>
+                                    class="fa fa-user-o"></i> Modifier groupe</a></li>
                     {#<li><a href="dashboard-messages.html"><i class="fa fa-envelope-o"></i> Messages#}
                     {#<span>3</span></a></li>#}
-                    <li><a href="{{ path('image', {'type': 'logo', 'id':band.id }) }}"><i class="fa fa-unlock-alt"></i> Edit
+                    <li><a href="{{ path('image', {'type': 'logo', 'id':band.id }) }}"><i class="fa fa-file-picture-o"></i> Modifier
                             Logo</a></li>
 
-                    <li><a href="{{ path('gallery-image-new', {'type' : 'band', 'id':band.id }) }}"><i class="fa fa-star"></i> Edit Gallery
+                    <li><a href="{{ path('gallery-image-new', {'type' : 'band', 'id':band.id }) }}"><i class="fa fa-image"></i> Modifer galerie
                         </a></li>
 
-                    <li><a href="{{ path('bands-members', {'id' : band.id }) }}"><i class="fa fa-users"></i> Manage Members
+                    <li><a href="{{ path('bands-members', {'id' : band.id }) }}"><i class="fa fa-users"></i> Gérer membres
                         </a></li>
 
-                    <li><a href="{{ path('bands-medias', {'id' : band.id }) }}"><i class="fa fa-users"></i> Manage Media
+                    <li><a href="{{ path('bands-medias', {'id' : band.id }) }}"><i class="fa fa-video-camera"></i> Gérer médias
                         </a></li>
 
-                    <li><a href="{{ path('bands-remove', {'id' : band.id }) }}"><i class="fa fa-users"></i> Remove Band
+                    <li><a href="{{ path('bands-remove', {'id' : band.id }) }}"><i class="fa fa-eraser"></i> Supprimer groupe
                         </a></li>
                 </ul>
             </div>

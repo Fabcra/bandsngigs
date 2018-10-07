@@ -1,0 +1,25 @@
+{% extends 'pages/admin/layout.html.twig' %}
+
+{% block right %}
+    <div class="col-md-9">
+    <!--section -->
+    <section>
+        <div class="container">
+            <div class="row home-posts">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Prochains concerts</h2>
+                        <div class="section-subtitle">Prochains concerts</div>
+                        <span class="section-separator"></span>
+                        <p>Liste des concerts enregistrés sur notre site</p>
+                    </div>
+                </div>
+                {% include 'pages/admin/events/list.html.twig' %}
+            </div>
+        </div>
+
+    </section>
+    <!-- section end -->
+    </div>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "pages/admin/layout.html.twig" %}
+
+
+{% block right %}
+    {{ form_start(eventForm) }}
+    <div class="col-md-7">
+        <!-- profile-edit-container-->
+        {{ form_start(eventForm, {'attr':{novalidate:'novalidate'}}) }}
+        <div class="profile-edit-container">
+            <div class="custom-form">
+                {{ form_row(eventForm.name, {'label':'Nom du concert'}) }}
+                <div class="col-md-6">
+                    {{ form_row(eventForm.date, {'attr':{'class': 'floatleft', 'label':'Date'}}) }}
+                    {{ form_row(eventForm.time, {'attr':{'class': 'floatleft', 'label':'Time'}}) }}
+                </div>
+
+                <div class="col-md-6 check-user floatleft marginbottom20">
+                    {{ form_row(eventForm.bands, {'attr':{'class':'js-example-basic-multiple', 'style':'width:100%'}}) }}
+                </div>
+                <div class="col-md-6 check-user bigmarginright">
+                    <p>Vous pouvez ajouter des groupes non-inscrits sur le site</p>
+                    <ul class="members"
+                        data-prototype="{{ form_row(eventForm.unsubscribedBands.vars.prototype)|e }}">
+                        {% for b in eventForm.unsubscribedBands %}
+                        <li>{{ form_row(b.name) }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-6 check-user floatleft marginbottom20">
+                    {{ form_row(eventForm.typeVenue, {'label':'Type de café-concert'}) }}
+                </div>
+                <div class="col-md-6 check-user floatleft marginbottom20 js-sub-venue">
+                    {{ form_row(eventForm.venue) }}
+                </div>
+
+                <div class="check-user floatleft marginbottom20 js-unsub-venue">
+                    {{ form_row(eventForm.unsubscribedVenue) }}
+                </div>
+
+                <section class="check-user floatleft formbackground">
+                    <div class="col-md-6">
+                        {{ form_row(eventForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
+                    </div>
+                </section>
+
+                {{ form_row(eventForm.description) }}
+
+                <section>
+                    {{ form_row(eventForm.price, {'attr':{'class': 'floatleft', 'label':'Montant'}}) }}
+                    {{ form_row(eventForm.active, {'label':'Voulez-vous supprimer cet évènement ?' , 'attr':{'class':'js-example-basic-single fullwidth'}}) }}
+                </section>
+
+                <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
+                            class="fa fa-angle-right"></i></button>
+            </div>
+        </div>
+    </div>
+    {{ form_widget(eventForm._token) }}
+
+
+    <!-- profile-edit-container end-->
+    {{ form_end(eventForm, {'render_rest':false}) }}
+
+    <div class="col-md-2">
+        <div class="edit-profile-photo fl-wrap">
+            <img src="{{ event.flyer.url }}" class="respimg" alt="">
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        jQuery(function ($) {
+            $(document).on('nested:fieldRemoved', function (event) {
+                $('[required]', event.field).removeAttr('required');
+            });
+        });
+    </script>
+
+    <script src="{{ asset('js/venuetype.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/addmember.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/addmemberForm.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/deletemember.js') }}" type="text/javascript"></script>
+
+
+
+
+{% endblock %}

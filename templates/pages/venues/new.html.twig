@@ -11,7 +11,7 @@
                 <!-- profile-edit-wrap -->
                 <div class="profile-edit-wrap">
                     <div class="profile-edit-page-header">
-                        <h2>New venue</h2>
+                        <h2>Nouveau café-concert</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -26,12 +26,12 @@
                                 </div>
                                 <div class="custom-form">
                                     <!-- Nom et contacts -->
-                                    {{ form_row(venueForm.name) }}
-                                    {{ form_row(venueForm.streetName) }}
-                                    {{ form_row(venueForm.houseNb) }}
-                                    {{ form_row(venueForm.locality, {'attr':{'class':'js-example-basic-single floatleft fontsize14 marginbottom20'}}) }}
+                                    {{ form_row(venueForm.name, {'label':'Nom'}) }}
+                                    {{ form_row(venueForm.streetName, {'label':'Rue'}) }}
+                                    {{ form_row(venueForm.houseNb, {'label':'N°'}) }}
+                                    {{ form_row(venueForm.locality, {'label':'Localité', 'attr':{'class':'js-example-basic-single floatleft fontsize14 marginbottom20'}}) }}
                                     {{ form_row(venueForm.mail) }}
-                                    {{ form_row(venueForm.phone) }}
+                                    {{ form_row(venueForm.phone, {'label':'Téléphone'}) }}
                                     {{ form_row(venueForm.website) }}
                                 </div>
                                 <div class="profile-edit-header fl-wrap">
@@ -42,7 +42,7 @@
                                     {{ form_row(venueForm.styles, {'attr':{'class':'js-example-basic-multiple fullwidth'}}) }}
                                     {{ form_row(venueForm.description) }}
                                     {{ form_row(venueForm.photo) }}
-                                    <button class="btn  big-btn  color-bg flat-btn">Save Changes<i
+                                    <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
                                                 class="fa fa-angle-right"></i></button>
                                 </div>
                             </div>
